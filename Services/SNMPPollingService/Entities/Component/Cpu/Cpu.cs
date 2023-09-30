@@ -9,12 +9,4 @@ public class Cpu : ICpu
     public float FifteenMinuteLoad { get; set; }
     
     public List<ICpuCore> Cores { get; set; } = new();
-    
-    public Cpu(float oneMinuteLoad, float fiveMinuteLoad, float fifteenMinuteLoad, List<ICpuCore> cores)
-    {
-        OneMinuteLoad = oneMinuteLoad;
-        FiveMinuteLoad = fiveMinuteLoad;
-        FifteenMinuteLoad = fifteenMinuteLoad;
-        Cores = cores;
-    }
 }

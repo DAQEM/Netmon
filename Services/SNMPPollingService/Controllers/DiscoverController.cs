@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using SNMPPollingService.Entities.Device;
 using SNMPPollingService.SNMP.Manager;
 using SNMPPollingService.SNMP.MIB.System;
+using SNMPPollingService.SNMP.Poll.Device;
 using SNMPPollingService.SNMP.Request;
 
 namespace SNMPPollingService.Controllers;
@@ -9,27 +11,26 @@ namespace SNMPPollingService.Controllers;
 [Route("Discover")]
 public class DiscoverController : Controller
 {
-    private readonly ISNMPManager _snmpManager;
+    private readonly IDevicePoller _devicePoller;
     
-    public DiscoverController(ISNMPManager snmpManager)
+    public DiscoverController(IDevicePoller devicePoller)
     {
-        _snmpManager = snmpManager;
+        _devicePoller = devicePoller;
     }
     
     [HttpPost("Details")]
     public async Task<IActionResult> Details([FromBody] SNMPConnectionInfo connectionInfo)
     {
-        SystemMIB systemMIB = await new SystemMIB().Poll(_snmpManager, connectionInfo);
-
+        IDevice device = await _devicePoller.PollDetails(connectionInfo);
+        
         return Ok(new
         {
-            SysDescr = systemMIB.SysDescr.ToString(),
-            SysObjectID = systemMIB.SysObjectID.ToString(),
-            SysUpTime = systemMIB.SysUpTime.ToTimeSpan(),
-            SysContact = systemMIB.SysContact.ToString(),
-            SysName = systemMIB.SysName.ToString(),
-            SysLocation = systemMIB.SysLocation.ToString(),
-            SysServices = systemMIB.SysServices.ToInt32() 
+            device.IpAddress,
+            device.Port,
+            device.Community,
+            device.Name,
+            device.Location,
+            device.Contact
         });
     }
 }

@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SNMPPollingService.Entities.Device;
-using SNMPPollingService.SNMP.Converter;
-using SNMPPollingService.SNMP.Manager;
-using SNMPPollingService.SNMP.MIB.HostResources;
-using SNMPPollingService.SNMP.MIB.If;
-using SNMPPollingService.SNMP.MIB.System;
-using SNMPPollingService.SNMP.MIB.UCDavis;
+using SNMPPollingService.SNMP.Poll.Device;
 using SNMPPollingService.SNMP.Request;
 
 namespace SNMPPollingService.Controllers;
@@ -13,24 +8,17 @@ namespace SNMPPollingService.Controllers;
 [Route("SNMP")]
 public class SNMPController : Controller
 {
-    private readonly ISNMPManager _snmpManager;
+    private readonly IDevicePoller _devicePoller;
     
-    public SNMPController(ISNMPManager snmpManager)
+    public SNMPController(IDevicePoller devicePoller)
     {
-        _snmpManager = snmpManager;
+        _devicePoller = devicePoller;
     }
 
     [HttpPost("Test")]
     public async Task<IActionResult> Test([FromBody] SNMPConnectionInfo snmpConnectionInfo)
     {
-        SystemMIB systemMIB = await new SystemMIB().Poll(_snmpManager, snmpConnectionInfo);
-        HostResourcesMIB hostResourcesMIB = await new HostResourcesMIB().Poll(_snmpManager, snmpConnectionInfo);
-
-        UCDavisMIB ucDavisMIB = await new UCDavisMIB().Poll(_snmpManager, snmpConnectionInfo);
-        
-        IfMIB ifMIB = await new IfMIB().Poll(_snmpManager, snmpConnectionInfo);
-        
-        IDevice device = MIBToDeviceConverter.ConvertToDevice(snmpConnectionInfo, systemMIB, hostResourcesMIB, ucDavisMIB, ifMIB);
+        IDevice device = await _devicePoller.PollFull(snmpConnectionInfo);
 
         return Ok(device);
     }

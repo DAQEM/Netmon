@@ -1,9 +1,5 @@
-﻿using SNMPPollingService.SNMP.Manager;
-using SNMPPollingService.SNMP.Request;
+﻿namespace SNMPPollingService.SNMP.MIB;
 
-namespace SNMPPollingService.SNMP.MIB;
-
-public interface IMIB<T> where T : IMIB<T>
+public interface IMIB
 {
-    Task<T> Poll(ISNMPManager snmpManager, SNMPConnectionInfo connectionInfo);
 }

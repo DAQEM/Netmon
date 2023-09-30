@@ -1,5 +1,4 @@
 ﻿using Lextm.SharpSnmpLib;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SNMPPollingService.SNMP.Deserializer;
 using SNMPPollingService.SNMP.Result;
 

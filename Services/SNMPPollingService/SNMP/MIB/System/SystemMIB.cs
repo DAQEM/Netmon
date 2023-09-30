@@ -6,7 +6,7 @@ using SNMPPollingService.SNMP.Result;
 
 namespace SNMPPollingService.SNMP.MIB.System;
 
-public class SystemMIB : IMIB<SystemMIB>
+public class SystemMIB:  IMIB
 {
     public static readonly string OID = "1.3.6.1.2.1.1";
     
@@ -19,12 +19,6 @@ public class SystemMIB : IMIB<SystemMIB>
     public Integer32 SysServices { get; set; }
     
     public static ISNMPDeserializer<SystemMIB> Deserializer { get; } = new SystemMIBDeserializer();
-
-    public async Task<SystemMIB> Poll(ISNMPManager snmpManager, SNMPConnectionInfo connectionInfo)
-    {
-        ISNMPResult sysSystemResult = await snmpManager.BulkWalkAsync(connectionInfo, OID);
-        return Deserializer.Deserialize(sysSystemResult);
-    }
 
     private class SystemMIBDeserializer : ISNMPDeserializer<SystemMIB>
     {
