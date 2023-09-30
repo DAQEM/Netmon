@@ -1,0 +1,37 @@
+﻿namespace SNMPPollingService.Entities.Component.Interface;
+
+public enum InterfaceType
+{
+    Other = 1,
+    Regular1822 = 2,
+    Hdh1822 = 3,
+    DdnX25 = 4,
+    Rfc877X25 = 5,
+    EthernetCsmacd = 6,
+    Iso88023Csmacd = 7,
+    Iso88024TokenBus = 8,
+    Iso88025TokenRing = 9,
+    Iso88026Man = 10,
+    StarLan = 11,
+    Proteon10Mbit = 12,
+    Proteon80Mbit = 13,
+    Hyperchannel = 14,
+    Fddi = 15,
+    Lapb = 16,
+    Sdlc = 17,
+    Ds1 = 18,
+    E1 = 19,
+    BasicISDN = 20,
+    PrimaryISDN = 21,
+    PropPointToPointSerial = 22,
+    Ppp = 23,
+    SoftwareLoopback = 24,
+    Eon = 25,
+    Ethernet3Mbit = 26,
+    Nsip = 27,
+    Slip = 28,
+    Ultra = 29,
+    Ds3 = 30,
+    Sip = 31,
+    FrameRelay = 32
+}

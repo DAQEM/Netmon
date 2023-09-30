@@ -1,0 +1,96 @@
+version: '3.1'
+
+services:
+
+  netmon-user-web-app:
+    build: Services/UserWebApp
+    container_name: netmon-user-web-app
+    environment:
+      - ENV=production
+    ports:
+      - "80:3000"
+    networks:
+      network1:
+        ipv4_address: 192.168.178.2
+
+  netmon-admin-web-app:
+    build: Services/AdminWebApp
+    container_name: netmon-admin-web-app
+    environment:
+      - ENV=production
+    ports:
+      - "81:3000"
+    networks:
+      network1:
+        ipv4_address: 192.168.178.3
+
+  netmon-api-gateway:
+    build: Services/APIGateway
+    container_name: netmon-api-gateway
+    environment:
+      - ENV=production
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5000:80"
+    networks:
+      network1:
+        ipv4_address: 192.168.178.254
+
+  netmon-account-service:
+    build: Services/AccountService
+    container_name: netmon-account-service
+    environment:
+      - ENV=production
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5001:80"
+    networks:
+      network1:
+        ipv4_address: 192.168.178.4
+
+  netmon-device-manager-service:
+    build:
+      context: ./
+      dockerfile: ./Services/DeviceManagerService/Dockerfile
+    container_name: netmon-device-manager-service
+    environment:
+      - ENV=production
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5002:80"
+    networks:
+      network1:
+        ipv4_address: 192.168.178.5
+
+  netmon-snmp-polling-service:
+    build:
+      context: ./
+      dockerfile: ./Services/SNMPPollingService/Dockerfile
+    container_name: netmon-snmp-polling-service
+    environment:
+      - ENV=production
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5003:80"
+    networks:
+      network1:
+        ipv4_address: 192.168.178.6
+
+  netmon-snmp-polling-service-snmpd-test:
+    build: Tests/SNMPPollingService.smpd.Tests
+    container_name: netmon-snmp-polling-service-snmpd-test
+    hostname: snmpd-test
+    ports:
+      - "161:161/udp"
+    depends_on:
+      - netmon-snmp-polling-service
+    networks:
+      network1:
+        ipv4_address: 192.168.178.7
+
+networks:
+  network1:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.178.0/24

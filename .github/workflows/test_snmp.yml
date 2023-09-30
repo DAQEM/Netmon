@@ -1,0 +1,64 @@
+name: SNMP Manager Test
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Docker Compose Action
+      uses: isbang/compose-action@v1.5.1
+      with:
+        compose-file: "./docker-compose.yml"
+        services: |
+          netmon-snmp-polling-service-snmpd-test
+
+    - name: ping test 1
+      run: |
+        echo "Sending ping..."
+        docker exec netmon-snmp-polling-service-snmpd-test ping 192.168.178.6 -c 3
+
+    - name: ping test 2
+      run: |
+        echo "Sending ping..."
+        docker exec netmon-snmp-polling-service apt-get install iputils-ping -y
+        docker exec netmon-snmp-polling-service ping 192.168.178.7 -c 3
+
+    - name: 'Setup jq'
+      uses: dcarbone/install-jq-action@v2.0.1
+
+    - name: 'Check jq'
+      # language=sh
+      run: |
+        which jq
+        jq --version
+
+    - name: Test API
+      run: |
+        echo "Sending HTTP POST request..."
+        json_output=$(docker exec netmon-snmp-polling-service-snmpd-test curl -s -X 'POST' 'http://192.168.178.6/Discover/Details' -H 'accept: */*' -H 'Content-Type: application/json' -d '{"version": "V2","ipAddress":"192.168.178.7","port":161,"username":"public"}')
+
+        expected_sysContact="Root <root@snmpd.test>"
+        expected_sysName="snmpd-test"
+        expected_sysLocation="SNMPD Test"
+
+        sysContact=$(echo "$json_output" | jq -r '.sysContact')
+        sysName=$(echo "$json_output" | jq -r '.sysName')
+        sysLocation=$(echo "$json_output" | jq -r '.sysLocation')
+
+        if [ "$sysContact" == "$expected_sysContact" ] && [ "$sysName" == "$expected_sysName" ] && [ "$sysLocation" == "$expected_sysLocation" ]; then
+            echo "All values are as expected!"
+        else
+            echo "Test failed!"
+            echo "sysContact: $sysContact (Expected: $expected_sysContact)"
+            echo "sysName: $sysName (Expected: $expected_sysName)"
+            echo "sysLocation: $sysLocation (Expected: $expected_sysLocation)"
+        fi

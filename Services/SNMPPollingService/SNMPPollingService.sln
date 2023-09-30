@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNMPPollingService", "SNMPPollingService.csproj", "{62F3BAB2-BDA6-4FD8-9B1B-1CCC0142EA90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevicesLib", "..\..\Shared\DevicesLib\DevicesLib.csproj", "{2937BD2F-7810-48F4-8453-B4EF87B7F1EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SNMPPollingService.Tests", "..\..\Tests\SNMPPollingService.Tests\SNMPPollingService.Tests.csproj", "{E139CFA0-37A8-47CC-9889-ED8D45ED5056}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62F3BAB2-BDA6-4FD8-9B1B-1CCC0142EA90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62F3BAB2-BDA6-4FD8-9B1B-1CCC0142EA90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62F3BAB2-BDA6-4FD8-9B1B-1CCC0142EA90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62F3BAB2-BDA6-4FD8-9B1B-1CCC0142EA90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2937BD2F-7810-48F4-8453-B4EF87B7F1EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2937BD2F-7810-48F4-8453-B4EF87B7F1EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2937BD2F-7810-48F4-8453-B4EF87B7F1EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2937BD2F-7810-48F4-8453-B4EF87B7F1EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E139CFA0-37A8-47CC-9889-ED8D45ED5056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E139CFA0-37A8-47CC-9889-ED8D45ED5056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E139CFA0-37A8-47CC-9889-ED8D45ED5056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E139CFA0-37A8-47CC-9889-ED8D45ED5056}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
