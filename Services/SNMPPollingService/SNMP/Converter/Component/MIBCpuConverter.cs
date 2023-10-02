@@ -17,10 +17,12 @@ public class MIBCpuConverter : IMIBComponentConverter<ICpu>
         
         if (hostResourcesMIB != null)
         {
+            cpu.Index = 1;
             cpu.Cores = hostResourcesMIB.HrDevice.HrProcessorTable.HrProcessorEntries
                 .Select(e => new CpuCore(
+                    e.HrProcessorIndex.ToInt32(),
                     hostResourcesMIB.HrDevice.HrDeviceTable.HrDeviceEntries
-                        .FirstOrDefault(e1 => e1.HrDeviceIndex.ToInt32() == e.HrProcessorOID.ToInt32())?.HrDeviceDescr
+                        .FirstOrDefault(e1 => e1.HrDeviceIndex.ToInt32() == e.HrProcessorIndex.ToInt32())?.HrDeviceDescr
                         .ToString() ?? "Unknown",
                     e.HrProcessorLoad.ToInt32()
                 ))

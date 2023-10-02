@@ -18,6 +18,7 @@ public class MIBDiskConverter : IMIBComponentConverter<IDisk>
         return hostResourcesMIB.HrStorage.HrStorageTable.HrStorageEntries
             .Where(e => e.HrStorageType == HrStorageEntry.StorageType.FixedDisk)
             .Select(e => new Disk(
+                e.HrStorageIndex.ToInt32(),
                 e.HrStorageDescr.ToString(),
                 e.HrStorageAllocationUnits.ToInt32(),
                 e.HrStorageSize.ToInt32(),

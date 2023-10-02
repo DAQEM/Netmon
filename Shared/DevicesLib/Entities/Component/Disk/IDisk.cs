@@ -2,6 +2,7 @@
 
 public interface IDisk : IComponent
 {
+    public int Index { get; }
     public string MountingPoint { get; }
     public int AllocationUnits { get; }
     public int TotalSpace { get; }

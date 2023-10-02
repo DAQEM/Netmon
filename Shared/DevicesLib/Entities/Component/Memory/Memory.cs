@@ -2,6 +2,7 @@
 
 public class Memory : IMemory
 {
+    public int Index { get; }
     public string Name { get; }
     public long AllocationUnits { get; }
     public long TotalSpace { get; }
@@ -15,8 +16,9 @@ public class Memory : IMemory
     //     UsedSpace = memory.UsedSpace;
     // }
     
-    public Memory(string name, long allocationUnits, long totalSpace, long usedSpace)
+    public Memory(int index, string name, long allocationUnits, long totalSpace, long usedSpace)
     {
+        Index = index;
         Name = name;
         AllocationUnits = allocationUnits;
         TotalSpace = totalSpace;

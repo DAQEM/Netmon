@@ -7,7 +7,7 @@ namespace SNMPPollingService.SNMP.MIB.HostResources.Storage;
 public class HrStorageEntry
 {
     public static readonly string OID = "1.3.6.1.2.1.25.2.3.1";
-
+    
     public Integer32 HrStorageIndex { get; set; }
     public StorageType HrStorageType { get; set; }
     public OctetString HrStorageDescr { get; set; }

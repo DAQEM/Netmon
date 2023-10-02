@@ -19,6 +19,7 @@ public class MIBMemoryConverter : IMIBComponentConverter<IMemory>
         return hostResourcesMIB.HrStorage.HrStorageTable.HrStorageEntries
             .Where(e => e.HrStorageType == HrStorageEntry.StorageType.Ram)
             .Select(e => new Memory(
+                e.HrStorageIndex.ToInt32(),
                 e.HrStorageDescr.ToString(),
                 e.HrStorageAllocationUnits.ToInt32(),
                 e.HrStorageSize.ToInt32(),

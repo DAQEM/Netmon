@@ -2,6 +2,7 @@
 
 public interface ICpuCore
 {
+    public int Index { get; }
     public string Name { get; set; }
     public int Load { get; set; }
 }

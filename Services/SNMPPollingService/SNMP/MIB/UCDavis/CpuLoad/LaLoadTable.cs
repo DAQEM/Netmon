@@ -6,7 +6,7 @@ namespace SNMPPollingService.SNMP.MIB.UCDavis.CpuLoad;
 
 public class LaLoadTable
 {
-    public static readonly string OID = "1.3.6.1.4.1.2021.10.1";
+        public static readonly string OID = "1.3.6.1.4.1.2021.10.1";
 
     public List<LaLoadEntry> LaLoadEntries { get; set; } = new();
     
