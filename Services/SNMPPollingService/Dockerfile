@@ -29,7 +29,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 WORKDIR /app
 
 # Copy the published files from the previous stage
-COPY ["Services/SNMPPollingService/test.sh", "./"]
 COPY --from=publish /app/publish .
 
 # Install prerequisites
