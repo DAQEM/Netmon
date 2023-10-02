@@ -37,66 +37,77 @@ public class DevicesDatabase : DbContext
             .HasOne(d => d.Device)
             .WithOne(d => d.DeviceConnection)
             .HasForeignKey<DeviceConnectionDBO>(d => d.DeviceId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         modelBuilder.Entity<CpuDBO>()
             .HasOne(c => c.Device)
             .WithMany(c => c.Cpus)
             .HasForeignKey(c => c.DeviceId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         modelBuilder.Entity<CpuMetricsDBO>()
             .HasOne(c => c.Cpu)
             .WithMany(c => c.CpuMetrics)
             .HasForeignKey(c => c.CpuId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         modelBuilder.Entity<CpuCoreDBO>()
             .HasOne(c => c.Cpu)
             .WithMany(c => c.CpuCores)
             .HasForeignKey(c => c.CpuId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         modelBuilder.Entity<CpuCoreMetricsDBO>()
             .HasOne(c => c.CpuCore)
             .WithMany(c => c.CpuCoreMetrics)
             .HasForeignKey(c => c.CpuCoreId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         modelBuilder.Entity<DiskDBO>()
             .HasOne(d => d.Device)
             .WithMany(d => d.Disks)
             .HasForeignKey(d => d.DeviceId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         modelBuilder.Entity<DiskMetricsDBO>()
             .HasOne(d => d.Disk)
             .WithMany(d => d.DiskMetrics)
             .HasForeignKey(d => d.DiskId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         modelBuilder.Entity<InterfaceDBO>()
             .HasOne(i => i.Device)
             .WithMany(i => i.Interfaces)
             .HasForeignKey(i => i.DeviceId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         modelBuilder.Entity<InterfaceMetricsDBO>()
             .HasOne(i => i.Interface)
             .WithMany(i => i.InterfaceMetrics)
             .HasForeignKey(i => i.InterfaceId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         modelBuilder.Entity<MemoryDBO>()
             .HasOne(m => m.Device)
             .WithMany(m => m.Memory)
             .HasForeignKey(m => m.DeviceId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         modelBuilder.Entity<MemoryMetricsDBO>()
             .HasOne(m => m.Memory)
             .WithMany(m => m.MemoryMetrics)
             .HasForeignKey(m => m.MemoryId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         modelBuilder.Entity<CpuDBO>()

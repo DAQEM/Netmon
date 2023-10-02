@@ -11,13 +11,15 @@ public class MIBCpuConverter : IMIBComponentConverter<ICpu>
 {
     public List<ICpu> ConvertMIBsToComponent(List<IMIB> mibs)
     {
-        Cpu cpu = new();
-        
+        Cpu cpu = new()
+        {
+            Index = 1
+        };
+
         HostResourcesMIB? hostResourcesMIB = mibs.OfType<HostResourcesMIB>().FirstOrDefault();
         
         if (hostResourcesMIB != null)
         {
-            cpu.Index = 1;
             cpu.Cores = hostResourcesMIB.HrDevice.HrProcessorTable.HrProcessorEntries
                 .Select(e => new CpuCore(
                     e.HrProcessorIndex.ToInt32(),
