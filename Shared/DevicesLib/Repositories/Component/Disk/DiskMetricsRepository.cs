@@ -20,6 +20,10 @@ public class DiskMetricsRepository : IDiskMetricsRepository
         }
         
         await _database.DiskMetrics.AddAsync(diskMetrics);
+    }
+    
+    public async Task SaveChanges()
+    {
         await _database.SaveChangesAsync();
     }
 }

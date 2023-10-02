@@ -23,25 +23,31 @@ public class MemoryRepository : IMemoryRepository
             throw new ArgumentNullException(nameof(memory));
         }
         
-        MemoryDBO? existingMemory = await _database.Memory.FirstOrDefaultAsync(m => m.Id == memory.Id);
+        MemoryDBO? existingMemory = await _database.Memory.FirstOrDefaultAsync(m => m.DeviceId == memory.DeviceId && m.Index == memory.Index);
 
         if (existingMemory == null)
         {
-            _database.Entry(memory).CurrentValues.SetValues(memory);
+            memory.Id = Guid.NewGuid();
+            await _database.Memory.AddAsync(memory);
         }
         else
         {
-            await _database.Memory.AddAsync(memory);
-        }
-        
-        await _database.SaveChangesAsync();
-        
-        if (memory.MemoryMetrics != null!)
-        {
-            foreach (MemoryMetricsDBO memoryMetrics in memory.MemoryMetrics)
+            memory.Id = existingMemory.Id;
+            _database.Entry(existingMemory).CurrentValues.SetValues(memory);
+            
+            if (memory.MemoryMetrics != null!)
             {
-                await _memoryMetricsRepository.Add(memoryMetrics);
+                foreach (MemoryMetricsDBO memoryMetrics in memory.MemoryMetrics)
+                {
+                    memoryMetrics.MemoryId = memory.Id;
+                    await _memoryMetricsRepository.Add(memoryMetrics);
+                }
             }
         }
+    }
+    
+    public async Task SaveChanges()
+    {
+        await _database.SaveChangesAsync();
     }
 }

@@ -1,27 +1,41 @@
-﻿namespace DevicesLib.Entities.Component.Memory;
+﻿using DevicesLib.DBO.Component.Memory;
+
+namespace DevicesLib.Entities.Component.Memory;
 
 public class Memory : IMemory
 {
     public int Index { get; }
     public string Name { get; }
-    public long AllocationUnits { get; }
-    public long TotalSpace { get; }
-    public long UsedSpace { get; }
-    
-    // public Memory(MemoryDTO memory)
-    // {
-    //     Name = memory.Name;
-    //     AllocationUnits = memory.AllocationUnits;
-    //     TotalSpace = memory.TotalSpace;
-    //     UsedSpace = memory.UsedSpace;
-    // }
-    
-    public Memory(int index, string name, long allocationUnits, long totalSpace, long usedSpace)
+    public int AllocationUnits { get; }
+    public int TotalSpace { get; }
+    public int UsedSpace { get; }
+
+    public Memory(int index, string name, int allocationUnits, int totalSpace, int usedSpace)
     {
         Index = index;
         Name = name;
         AllocationUnits = allocationUnits;
         TotalSpace = totalSpace;
         UsedSpace = usedSpace;
+    }
+
+    public MemoryDBO ToDBO()
+    {
+        return new MemoryDBO
+        {
+            Index = Index,
+            Name = Name,
+            MemoryMetrics = new List<MemoryMetricsDBO>
+            {
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    Timestamp = DateTime.Now,
+                    AllocationUnits = AllocationUnits,
+                    TotalSpace = TotalSpace,
+                    UsedSpace = UsedSpace
+                }
+            }
+        };
     }
 }

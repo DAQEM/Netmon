@@ -5,4 +5,6 @@ namespace DevicesLib.Repositories.Component.Memory;
 public interface IMemoryMetricsRepository
 {
     public Task Add(MemoryMetricsDBO memoryMetrics);
+    
+    Task SaveChanges();
 }

@@ -1,5 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using System.Text.Json.Serialization;
+using DevicesLib.DBO.Component.Interface;
 using DevicesLib.Json.Converter;
 
 namespace DevicesLib.Entities.Component.Interface;
@@ -27,4 +28,6 @@ public interface IInterface : IComponent
     public ulong OutMulticastPackets { get; set; }
     public ulong InUnicastPackets { get; set; }
     public ulong OutUnicastPackets { get; set; }
+    
+    public InterfaceDBO ToDBO();
 }

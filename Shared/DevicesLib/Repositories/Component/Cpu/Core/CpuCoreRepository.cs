@@ -23,25 +23,31 @@ public class CpuCoreRepository : ICpuCoreRepository
             throw new ArgumentNullException(nameof(cpuCore));
         }
         
-        CpuCoreDBO? existingCpuCore = await _database.CpuCores.FirstOrDefaultAsync(c => c.Id == cpuCore.Id);
+        CpuCoreDBO? existingCpuCore = await _database.CpuCores.FirstOrDefaultAsync(c => c.CpuId == cpuCore.CpuId && c.Index == cpuCore.Index);
 
         if (existingCpuCore == null)
         {
-            _database.Entry(cpuCore).CurrentValues.SetValues(cpuCore);
+            cpuCore.Id = Guid.NewGuid();
+            await _database.CpuCores.AddAsync(cpuCore);
         }
         else
         {
-            await _database.CpuCores.AddAsync(cpuCore);
-        }
-        
-        await _database.SaveChangesAsync();
-        
-        if (cpuCore.CpuCoreMetrics != null!)
-        {
-            foreach (CpuCoreMetricsDBO cpuCoreMetrics in cpuCore.CpuCoreMetrics)
+            cpuCore.Id = existingCpuCore.Id;
+            _database.Entry(existingCpuCore).CurrentValues.SetValues(cpuCore);
+            
+            if (cpuCore.CpuCoreMetrics != null!)
             {
-                await _cpuCoreMetricsRepository.Add(cpuCoreMetrics);
+                foreach (CpuCoreMetricsDBO cpuCoreMetrics in cpuCore.CpuCoreMetrics)
+                {
+                    cpuCoreMetrics.CpuCoreId = cpuCore.Id;
+                    await _cpuCoreMetricsRepository.Add(cpuCoreMetrics);
+                }
             }
         }
+    }
+
+    public async Task SaveChanges()
+    {
+        await _database.SaveChangesAsync();
     }
 }

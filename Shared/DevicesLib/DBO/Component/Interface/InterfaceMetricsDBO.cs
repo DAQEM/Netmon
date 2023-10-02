@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net.NetworkInformation;
+using DevicesLib.Entities.Component.Interface;
 
 namespace DevicesLib.DBO.Component.Interface;
 
@@ -16,10 +17,13 @@ public class InterfaceMetricsDBO
     public DateTime Timestamp { get; set; }
     
     [Required]
-    public uint Speed { get; set; }
+    public InterfaceStatus AdminStatus { get; set; }
     
     [Required]
-    public PhysicalAddress PhysAddress { get; set; } = null!;
+    public InterfaceStatus OperationStatus { get; set; }
+    
+    [Required]
+    public uint Speed { get; set; }
     
     [Required]
     public long Mtu { get; set; }

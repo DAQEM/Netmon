@@ -1,5 +1,9 @@
 ﻿using System.Diagnostics.SymbolStore;
 using DevicesLib.Database;
+using DevicesLib.DBO.Component.Cpu;
+using DevicesLib.DBO.Component.Disk;
+using DevicesLib.DBO.Component.Interface;
+using DevicesLib.DBO.Component.Memory;
 using DevicesLib.DBO.Device;
 using DevicesLib.Repositories.Component.Cpu;
 using DevicesLib.Repositories.Component.Disk;
@@ -13,14 +17,16 @@ public class DeviceRepository : IDeviceRepository
 {
     private readonly DevicesDatabase _database;
     
+    private readonly IDeviceConnectionRepository _deviceConnectionRepository;
     private readonly ICpuRepository _cpuRepository;
     private readonly IDiskRepository _diskRepository;
     private readonly IInterfaceRepository _interfaceRepository;
     private readonly IMemoryRepository _memoryRepository;
 
-    public DeviceRepository(DevicesDatabase database, ICpuRepository cpuRepository, IDiskRepository diskRepository, IInterfaceRepository interfaceRepository, IMemoryRepository memoryRepository)
+    public DeviceRepository(DevicesDatabase database, IDeviceConnectionRepository deviceConnectionRepository, ICpuRepository cpuRepository, IDiskRepository diskRepository, IInterfaceRepository interfaceRepository, IMemoryRepository memoryRepository)
     {
         _database = database;
+        _deviceConnectionRepository = deviceConnectionRepository;
         _cpuRepository = cpuRepository;
         _diskRepository = diskRepository;
         _interfaceRepository = interfaceRepository;
@@ -37,27 +43,44 @@ public class DeviceRepository : IDeviceRepository
         await AddOrUpdateDevice(device);
         if (device.DeviceConnection != null!)
         {
-            await AddOrUpdateDeviceConnection(device.DeviceConnection);
+            device.DeviceConnection.DeviceId = device.Id;
+            await _deviceConnectionRepository.AddOrUpdateDeviceConnection(device.DeviceConnection);
         }
 
         if (device.Cpus != null!)
         {
-            device.Cpus.ForEach(async cpu => await _cpuRepository.AddOrUpdateCpu(cpu));
+            foreach (CpuDBO cpu in device.Cpus)
+            {
+                cpu.DeviceId = device.Id;
+                await _cpuRepository.AddOrUpdateCpu(cpu);
+            }
         }
         
         if (device.Disks != null!)
         {
-            device.Disks.ForEach(async disk => await _diskRepository.AddOrUpdateDisk(disk));
+            foreach (DiskDBO disk in device.Disks)
+            {
+                disk.DeviceId = device.Id;
+                await _diskRepository.AddOrUpdateDisk(disk);
+            }
         }
         
         if (device.Interfaces != null!)
         {
-            device.Interfaces.ForEach(async @interface => await _interfaceRepository.AddOrUpdateInterface(@interface));
+            foreach (InterfaceDBO @interface in device.Interfaces)
+            {
+                @interface.DeviceId = device.Id;
+                await _interfaceRepository.AddOrUpdateInterface(@interface);
+            }
         }
-        
+
         if (device.Memory != null!)
         {
-            device.Memory.ForEach(async memory => await _memoryRepository.AddOrUpdateMemory(memory));
+            foreach (MemoryDBO memory in device.Memory)
+            {
+                memory.DeviceId = device.Id;
+                await _memoryRepository.AddOrUpdateMemory(memory);
+            }
         }
     }
 
@@ -68,38 +91,22 @@ public class DeviceRepository : IDeviceRepository
             throw new ArgumentNullException(nameof(device));
         }
         
-        DeviceDBO? existingDevice = await _database.Devices.FirstOrDefaultAsync(d => d.Id == device.Id);
+        DeviceDBO? existingDevice = await _database.Devices.FirstOrDefaultAsync(d => d.IpAddress == device.IpAddress);
         
         if (existingDevice != null)
         {
+            device.Id = existingDevice.Id;
             _database.Entry(existingDevice).CurrentValues.SetValues(device);
         }
         else
         {
+            device.Id = Guid.NewGuid();
             await _database.Devices.AddAsync(device);
         }
-
-        await _database.SaveChangesAsync();
     }
-
-    public async Task AddOrUpdateDeviceConnection(DeviceConnectionDBO deviceConnection)
+    
+    public async Task SaveChanges()
     {
-        if (deviceConnection == null)
-        {
-            throw new ArgumentNullException(nameof(deviceConnection));
-        }
-        
-        DeviceConnectionDBO? existingDeviceConnection = await _database.DeviceConnections.FirstOrDefaultAsync(d => d.Id == deviceConnection.Id);
-        
-        if (existingDeviceConnection != null)
-        {
-            _database.Entry(existingDeviceConnection).CurrentValues.SetValues(deviceConnection);
-        }
-        else
-        {
-            await _database.DeviceConnections.AddAsync(deviceConnection);
-        }
-        
         await _database.SaveChangesAsync();
     }
 }

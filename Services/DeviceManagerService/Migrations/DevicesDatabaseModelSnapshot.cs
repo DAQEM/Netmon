@@ -177,17 +177,16 @@ namespace DeviceManagerService.Migrations
                     b.Property<int>("Index")
                         .HasColumnType("int");
 
-                    b.Property<string>("MacAddress")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("PhysAddress")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -202,6 +201,9 @@ namespace DeviceManagerService.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
+
+                    b.Property<int>("AdminStatus")
+                        .HasColumnType("int");
 
                     b.Property<ulong>("InBroadcastPackets")
                         .HasColumnType("bigint unsigned");
@@ -227,6 +229,9 @@ namespace DeviceManagerService.Migrations
                     b.Property<long>("Mtu")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("OperationStatus")
+                        .HasColumnType("int");
+
                     b.Property<ulong>("OutBroadcastPackets")
                         .HasColumnType("bigint unsigned");
 
@@ -244,10 +249,6 @@ namespace DeviceManagerService.Migrations
 
                     b.Property<ulong>("OutUnicastPackets")
                         .HasColumnType("bigint unsigned");
-
-                    b.Property<string>("PhysAddress")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
 
                     b.Property<uint>("Speed")
                         .HasColumnType("int unsigned");
@@ -324,9 +325,8 @@ namespace DeviceManagerService.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("AuthProtocol")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("AuthProtocol")
+                        .HasColumnType("int");
 
                     b.Property<string>("Community")
                         .IsRequired()
@@ -346,13 +346,11 @@ namespace DeviceManagerService.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("PrivacyProtocol")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("PrivacyProtocol")
+                        .HasColumnType("int");
 
-                    b.Property<string>("SNMPVersion")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("SNMPVersion")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -373,7 +371,7 @@ namespace DeviceManagerService.Migrations
 
                     b.Property<string>("IpAddress")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Location")
                         .HasColumnType("longtext");
@@ -383,6 +381,9 @@ namespace DeviceManagerService.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IpAddress")
+                        .IsUnique();
 
                     b.ToTable("Devices");
                 });

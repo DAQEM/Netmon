@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net.NetworkInformation;
 using DevicesLib.DBO.Device;
+using DevicesLib.Entities.Component.Interface;
 
 namespace DevicesLib.DBO.Component.Interface;
 
@@ -19,10 +21,10 @@ public class InterfaceDBO
     public string Name { get; set; } = null!;
     
     [Required]
-    public string Type { get; set; } = null!;
+    public InterfaceType Type { get; set; }
     
     [Required]
-    public string MacAddress { get; set; } = null!;
+    public PhysicalAddress PhysAddress { get; set; } = null!;
     
     public List<InterfaceMetricsDBO> InterfaceMetrics { get; set; } = null!;
     

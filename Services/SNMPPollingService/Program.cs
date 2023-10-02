@@ -4,6 +4,12 @@ using DevicesLib.Entities.Component.Cpu;
 using DevicesLib.Entities.Component.Disk;
 using DevicesLib.Entities.Component.Interface;
 using DevicesLib.Entities.Component.Memory;
+using DevicesLib.Repositories.Component.Cpu;
+using DevicesLib.Repositories.Component.Cpu.Core;
+using DevicesLib.Repositories.Component.Disk;
+using DevicesLib.Repositories.Component.Interface;
+using DevicesLib.Repositories.Component.Memory;
+using DevicesLib.Repositories.Device;
 using Microsoft.EntityFrameworkCore;
 using SNMPPollingService.Middleware;
 using SNMPPollingService.SNMP.Converter.Component;
@@ -47,6 +53,19 @@ builder.Services.AddScoped<IMIBComponentConverter<IDisk>, MIBDiskConverter>();
 builder.Services.AddScoped<IMIBComponentConverter<IMemory>, MIBMemoryConverter>();
 builder.Services.AddScoped<IMIBComponentConverter<ICpu>, MIBCpuConverter>();
 builder.Services.AddScoped<IMIBComponentConverter<IInterface>, MIBInterfaceConverter>();
+
+builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
+builder.Services.AddScoped<IDeviceConnectionRepository, DeviceConnectionRepository>();
+builder.Services.AddScoped<IDiskRepository, DiskRepository>();
+builder.Services.AddScoped<IDiskMetricsRepository, DiskMetricsRepository>();
+builder.Services.AddScoped<IInterfaceRepository, InterfaceRepository>();
+builder.Services.AddScoped<IInterfaceMetricsRepository, InterfaceMetricsRepository>();
+builder.Services.AddScoped<IMemoryRepository, MemoryRepository>();
+builder.Services.AddScoped<IMemoryMetricsRepository, MemoryMetricsRepository>();
+builder.Services.AddScoped<ICpuRepository, CpuRepository>();
+builder.Services.AddScoped<ICpuMetricsRepository, CpuMetricsRepository>();
+builder.Services.AddScoped<ICpuCoreRepository, CpuCoreRepository>();
+builder.Services.AddScoped<ICpuCoreMetricsRepository, CpuCoreMetricsRepository>();
 
 WebApplication app = builder.Build();
 

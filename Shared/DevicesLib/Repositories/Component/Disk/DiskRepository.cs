@@ -23,25 +23,31 @@ public class DiskRepository : IDiskRepository
             throw new ArgumentNullException(nameof(disk));
         }
         
-        DiskDBO? existingDisk = await _database.Disks.FirstOrDefaultAsync(d => d.Id == disk.Id);
+        DiskDBO? existingDisk = await _database.Disks.FirstOrDefaultAsync(d => d.DeviceId == disk.DeviceId && d.Index == disk.Index);
 
         if (existingDisk == null)
         {
-            _database.Entry(disk).CurrentValues.SetValues(disk);
+            disk.Id = Guid.NewGuid();
+            await _database.Disks.AddAsync(disk);
         }
         else
         {
-            await _database.Disks.AddAsync(disk);
-        }
-        
-        await _database.SaveChangesAsync();
-        
-        if (disk.DiskMetrics != null!)
-        {
-            foreach (DiskMetricsDBO diskMetrics in disk.DiskMetrics)
+            disk.Id = existingDisk.Id;
+            _database.Entry(existingDisk).CurrentValues.SetValues(disk);
+            
+            if (disk.DiskMetrics != null!)
             {
-                await _diskMetricsRepository.Add(diskMetrics);
+                foreach (DiskMetricsDBO diskMetrics in disk.DiskMetrics)
+                {
+                    diskMetrics.DiskId = disk.Id;
+                    await _diskMetricsRepository.Add(diskMetrics);
+                }
             }
         }
+    }
+    
+    public async Task SaveChanges()
+    {
+        await _database.SaveChangesAsync();
     }
 }

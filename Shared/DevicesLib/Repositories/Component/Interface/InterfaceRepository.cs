@@ -23,25 +23,31 @@ public class InterfaceRepository : IInterfaceRepository
             throw new ArgumentNullException(nameof(@interface));
         }
         
-        InterfaceDBO? existingInterface = await _database.Interfaces.FirstOrDefaultAsync(i => i.Id == @interface.Id);
+        InterfaceDBO? existingInterface = await _database.Interfaces.FirstOrDefaultAsync(i => i.DeviceId == @interface.DeviceId && i.Index == @interface.Index);
         
         if (existingInterface == null)
         {
-            _database.Entry(@interface).CurrentValues.SetValues(@interface);
+            @interface.Id = Guid.NewGuid();
+            await _database.Interfaces.AddAsync(@interface);
         }
         else
         {
-            await _database.Interfaces.AddAsync(@interface);
-        }
-        
-        await _database.SaveChangesAsync();
-        
-        if (@interface.InterfaceMetrics != null!)
-        {
-            foreach (InterfaceMetricsDBO interfaceMetrics in @interface.InterfaceMetrics)
+            @interface.Id = existingInterface.Id;
+            _database.Entry(existingInterface).CurrentValues.SetValues(@interface);
+            
+            if (@interface.InterfaceMetrics != null!)
             {
-                await _interfaceMetricsRepository.Add(interfaceMetrics);
+                foreach (InterfaceMetricsDBO interfaceMetrics in @interface.InterfaceMetrics)
+                {
+                    interfaceMetrics.InterfaceId = @interface.Id;
+                    await _interfaceMetricsRepository.Add(interfaceMetrics);
+                }
             }
         }
+    }
+    
+    public async Task SaveChanges()
+    {
+        await _database.SaveChangesAsync();
     }
 }

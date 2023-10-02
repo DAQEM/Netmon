@@ -28,24 +28,25 @@ public class CpuRepository : ICpuRepository
             throw new ArgumentNullException(nameof(cpu));
         }
         
-        CpuDBO? existingCpu = await _database.Cpus.FirstOrDefaultAsync(c => c.Id == cpu.Id);
+        CpuDBO? existingCpu = await _database.Cpus.FirstOrDefaultAsync(c => c.DeviceId == cpu.DeviceId && c.Index == cpu.Index);
 
         if (existingCpu == null)
         {
-            _database.Entry(cpu).CurrentValues.SetValues(cpu);
+            cpu.Id = Guid.NewGuid();
+            await _database.Cpus.AddAsync(cpu);
         }
         else
         {
-            await _database.Cpus.AddAsync(cpu);
-        }
-        
-        await _database.SaveChangesAsync();
-
-        if (cpu.CpuMetrics != null!)
-        {
-            foreach (CpuMetricsDBO cpuMetrics in cpu.CpuMetrics)
+            cpu.Id = existingCpu.Id;
+            _database.Entry(existingCpu).CurrentValues.SetValues(cpu);
+            
+            if (cpu.CpuMetrics != null!)
             {
-                await _cpuMetricsRepository.Add(cpuMetrics);
+                foreach (CpuMetricsDBO cpuMetrics in cpu.CpuMetrics)
+                {
+                    cpuMetrics.CpuId = cpu.Id;
+                    await _cpuMetricsRepository.Add(cpuMetrics);
+                }
             }
         }
         
@@ -53,8 +54,14 @@ public class CpuRepository : ICpuRepository
         {
             foreach (CpuCoreDBO cpuCore in cpu.CpuCores)
             {
+                cpuCore.CpuId = cpu.Id;
                 await _cpuCoreRepository.AddOrUpdateCpu(cpuCore);
             }
         }
+    }
+    
+    public async Task SaveChanges()
+    {
+        await _database.SaveChangesAsync();
     }
 }

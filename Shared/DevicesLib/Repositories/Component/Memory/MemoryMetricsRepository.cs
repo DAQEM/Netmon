@@ -20,6 +20,10 @@ public class MemoryMetricsRepository : IMemoryMetricsRepository
         }
         
         await _database.MemoryMetrics.AddAsync(memoryMetrics);
+    }
+    
+    public async Task SaveChanges()
+    {
         await _database.SaveChangesAsync();
     }
 }

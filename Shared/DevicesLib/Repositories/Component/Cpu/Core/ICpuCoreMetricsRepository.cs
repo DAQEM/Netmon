@@ -5,4 +5,6 @@ namespace DevicesLib.Repositories.Component.Cpu.Core;
 public interface ICpuCoreMetricsRepository
 {
     public Task Add(CpuCoreMetricsDBO cpuCoreMetrics);
+    
+    Task SaveChanges();
 }

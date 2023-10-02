@@ -20,6 +20,10 @@ public class CpuMetricsRepository : ICpuMetricsRepository
         }
         
         await _database.CpuMetrics.AddAsync(cpuMetrics);
+    }
+
+    public async Task SaveChanges()
+    {
         await _database.SaveChangesAsync();
     }
 }

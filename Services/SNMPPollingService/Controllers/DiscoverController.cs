@@ -1,8 +1,11 @@
+using DevicesLib.Database;
+using DevicesLib.DBO.Device;
 using DevicesLib.Entities.Component.Cpu;
 using DevicesLib.Entities.Component.Disk;
 using DevicesLib.Entities.Component.Interface;
 using DevicesLib.Entities.Component.Memory;
 using DevicesLib.Entities.Device;
+using DevicesLib.Repositories.Device;
 using Microsoft.AspNetCore.Mvc;
 using SNMPPollingService.SNMP.Poll.Device;
 using SNMPPollingService.SNMP.Request;
@@ -13,10 +16,12 @@ namespace SNMPPollingService.Controllers;
 [Route("Discover")]
 public class DiscoverController : Controller
 {
+    private readonly IDeviceRepository _deviceRepository;
     private readonly IDevicePoller _devicePoller;
     
-    public DiscoverController(IDevicePoller devicePoller)
+    public DiscoverController(IDeviceRepository deviceRepository, IDevicePoller devicePoller)
     {
+        _deviceRepository = deviceRepository;
         _devicePoller = devicePoller;
     }
     
@@ -40,6 +45,9 @@ public class DiscoverController : Controller
     public async Task<IActionResult> Device([FromBody] SNMPConnectionInfo connectionInfo)
     {
         IDevice device = await _devicePoller.PollFull(connectionInfo);
+
+        await _deviceRepository.AddOrUpdateFullDevice(device.ToDBO());
+        await _deviceRepository.SaveChanges();
         
         return Ok(device);
     }

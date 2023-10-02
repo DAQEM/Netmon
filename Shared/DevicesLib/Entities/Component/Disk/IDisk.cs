@@ -1,4 +1,6 @@
-﻿namespace DevicesLib.Entities.Component.Disk;
+﻿using DevicesLib.DBO.Component.Disk;
+
+namespace DevicesLib.Entities.Component.Disk;
 
 public interface IDisk : IComponent
 {
@@ -7,4 +9,6 @@ public interface IDisk : IComponent
     public int AllocationUnits { get; }
     public int TotalSpace { get; }
     public int UsedSpace { get; }
+    
+    public DiskDBO ToDBO();
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net.NetworkInformation;
+using DevicesLib.DBO.Component.Interface;
 
 namespace DevicesLib.Entities.Component.Interface;
 
@@ -47,5 +48,40 @@ public class Interface : IInterface
         OutMulticastPackets = outMulticastPackets;
         InUnicastPackets = inUnicastPackets;
         OutUnicastPackets = outUnicastPackets;
+    }
+
+    public InterfaceDBO ToDBO()
+    {
+        return new InterfaceDBO
+        {
+            Index = Index,
+            Name = Name,
+            Type = Type,
+            PhysAddress = PhysAddress,
+            InterfaceMetrics = new List<InterfaceMetricsDBO>
+            {
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    Timestamp = DateTime.Now,
+                    AdminStatus = AdminStatus,
+                    OperationStatus = OperationStatus,
+                    Speed = Speed,
+                    Mtu = Mtu,
+                    InOctets = InOctets,
+                    OutOctets = OutOctets,
+                    InErrors = InErrors,
+                    OutErrors = OutErrors,
+                    InDiscards = InDiscards,
+                    OutDiscards = OutDiscards,
+                    InBroadcastPackets = InBroadcastPackets,
+                    OutBroadcastPackets = OutBroadcastPackets,
+                    InMulticastPackets = InMulticastPackets,
+                    OutMulticastPackets = OutMulticastPackets,
+                    InUnicastPackets = InUnicastPackets,
+                    OutUnicastPackets = OutUnicastPackets
+                }
+            }
+        };
     }
 }

@@ -20,6 +20,10 @@ public class InterfaceMetricsRepository : IInterfaceMetricsRepository
         }
         
         await _database.InterfaceMetrics.AddAsync(interfaceMetrics);
+    }
+    
+    public async Task SaveChanges()
+    {
         await _database.SaveChangesAsync();
     }
 }

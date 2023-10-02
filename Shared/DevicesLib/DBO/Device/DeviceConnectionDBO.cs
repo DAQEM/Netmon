@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DevicesLib.Protocol;
 
 namespace DevicesLib.DBO.Device;
 
@@ -21,8 +22,8 @@ public class DeviceConnectionDBO
     public string Community { get; set; } = null!;
     
     [Required]
-    [DefaultValue("V2")]
-    public string SNMPVersion { get; set; } = null!;
+    [DefaultValue(1)]
+    public int SNMPVersion { get; set; }
     
     [Required]
     [DefaultValue("")]
@@ -34,11 +35,11 @@ public class DeviceConnectionDBO
     
     [Required]
     [DefaultValue("")]
-    public string AuthProtocol { get; set; } = null!;
+    public AuthProtocol AuthProtocol { get; set; }
     
     [Required]
     [DefaultValue("")]
-    public string PrivacyProtocol { get; set; } = null!;
+    public PrivacyProtocol PrivacyProtocol { get; set; }
     
     [Required]
     [DefaultValue("")]

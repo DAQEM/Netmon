@@ -1,7 +1,7 @@
+using DevicesLib.Protocol;
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Security;
 using SNMPPollingService.Exception.SNMP;
-using SNMPPollingService.SNMP.Protocol;
 
 namespace SNMPPollingService.SNMP.Security;
 

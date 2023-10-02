@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using DevicesLib.Attribute.Validator;
+using DevicesLib.Protocol;
 using Lextm.SharpSnmpLib;
-using SNMPPollingService.SNMP.Protocol;
 
 namespace SNMPPollingService.SNMP.Request;
 

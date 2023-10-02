@@ -1,4 +1,4 @@
-namespace SNMPPollingService.SNMP.Protocol;
+namespace DevicesLib.Protocol;
 
 public enum PrivacyProtocol
 {

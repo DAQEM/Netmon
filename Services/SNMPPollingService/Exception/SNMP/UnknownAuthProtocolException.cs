@@ -1,4 +1,4 @@
-using SNMPPollingService.SNMP.Protocol;
+using DevicesLib.Protocol;
 
 namespace SNMPPollingService.Exception.SNMP;
 

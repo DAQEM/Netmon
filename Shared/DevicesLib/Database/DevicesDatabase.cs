@@ -130,5 +130,9 @@ public class DevicesDatabase : DbContext
             .HasIndex(memory => new { memory.DeviceId, memory.Index })
             .IsUnique();
 
+        modelBuilder.Entity<DeviceDBO>()
+            .HasIndex(device => device.IpAddress)
+            .IsUnique();
+        
     }
 }

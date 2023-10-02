@@ -5,4 +5,6 @@ namespace DevicesLib.Repositories.Component.Interface;
 public interface IInterfaceMetricsRepository
 {
     public Task Add(InterfaceMetricsDBO interfaceMetrics);
+    
+    Task SaveChanges();
 }

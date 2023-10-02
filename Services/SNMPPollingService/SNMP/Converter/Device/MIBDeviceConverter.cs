@@ -1,4 +1,5 @@
 ﻿using DevicesLib.Entities.Device;
+using DevicesLib.Protocol;
 using SNMPPollingService.SNMP.MIB;
 using SNMPPollingService.SNMP.MIB.System;
 using SNMPPollingService.SNMP.Request;
@@ -13,7 +14,13 @@ public class MIBDeviceConverter : IMIBDeviceConverter
         {
             IpAddress = connectionInfo.IpAddress,
             Port = connectionInfo.Port,
-            Community = connectionInfo.Community
+            Community = connectionInfo.Community,
+            AuthPassword = connectionInfo.AuthPassword ?? string.Empty,
+            PrivacyPassword = connectionInfo.PrivacyPassword ?? string.Empty,
+            AuthProtocol = connectionInfo.AuthProtocol ?? AuthProtocol.SHA256,
+            PrivacyProtocol = connectionInfo.PrivacyProtocol ?? PrivacyProtocol.AES,
+            ContextName = connectionInfo.ContextName ?? string.Empty,
+            SNMPVersion = (int) connectionInfo.Version
         };
 
         SystemMIB? systemMIB = mibs.OfType<SystemMIB>().FirstOrDefault();

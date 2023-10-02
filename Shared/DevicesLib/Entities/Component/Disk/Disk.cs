@@ -1,4 +1,6 @@
-﻿namespace DevicesLib.Entities.Component.Disk;
+﻿using DevicesLib.DBO.Component.Disk;
+
+namespace DevicesLib.Entities.Component.Disk;
 
 public class Disk : IDisk
 {
@@ -17,4 +19,24 @@ public class Disk : IDisk
     public int AllocationUnits { get; }
     public int TotalSpace { get; }
     public int UsedSpace { get; }
+    
+    public DiskDBO ToDBO()
+    {
+        return new DiskDBO
+        {
+            Index = Index,
+            MountingPoint = MountingPoint,
+            DiskMetrics = new List<DiskMetricsDBO>
+            {
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    Timestamp = DateTime.Now,
+                    AllocationUnits = AllocationUnits,
+                    TotalSpace = TotalSpace,
+                    UsedSpace = UsedSpace
+                }
+            }
+        };
+    }
 }
