@@ -3,5 +3,5 @@
 public interface ICpuCore
 {
     public string Name { get; set; }
-    public float Load { get; set; }
+    public int Load { get; set; }
 }

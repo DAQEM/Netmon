@@ -1,4 +1,5 @@
-﻿using DevicesLib.Entities.Component.Interface;
+﻿using System.Net.NetworkInformation;
+using DevicesLib.Entities.Component.Interface;
 using SNMPPollingService.SNMP.MIB;
 using SNMPPollingService.SNMP.MIB.If;
 using SNMPPollingService.SNMP.MIB.If.InterfaceX;
@@ -27,7 +28,7 @@ public class MIBInterfaceConverter : IMIBComponentConverter<IInterface>
                     e.IfAdminStatus,
                     e.IfOperationalStatus,
                     e.IfSpeed.ToUInt32(),
-                    e.IfPhysAddress.ToString(),
+                    e.IfPhysAddress.GetRaw().Length >= 6 ? e.IfPhysAddress.ToPhysicalAddress() : PhysicalAddress.None,
                     e.IfMtu.ToInt32(),
                     ifXEntry.IfHCInOctets.ToUInt64(),
                     ifXEntry.IfHCOutOctets.ToUInt64(),

@@ -4,9 +4,9 @@ namespace DevicesLib.Entities.Component.Cpu;
 
 public class Cpu : ICpu
 {
-    public float OneMinuteLoad { get; set; }
-    public float FiveMinuteLoad { get; set; }
-    public float FifteenMinuteLoad { get; set; }
+    public int OneMinuteLoad { get; set; }
+    public int FiveMinuteLoad { get; set; }
+    public int FifteenMinuteLoad { get; set; }
     
     public List<ICpuCore> Cores { get; set; } = new();
 }

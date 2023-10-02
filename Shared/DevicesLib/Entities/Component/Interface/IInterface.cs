@@ -1,4 +1,8 @@
-﻿namespace DevicesLib.Entities.Component.Interface;
+﻿using System.Net.NetworkInformation;
+using System.Text.Json.Serialization;
+using DevicesLib.Json.Converter;
+
+namespace DevicesLib.Entities.Component.Interface;
 
 public interface IInterface : IComponent
 {
@@ -8,6 +12,8 @@ public interface IInterface : IComponent
     public InterfaceStatus AdminStatus { get; set; }
     public InterfaceStatus OperationStatus { get; set; }
     public uint Speed { get; set; }
+    [JsonConverter(typeof(PhysicalAddressConverter))]
+    public PhysicalAddress PhysAddress { get; set; }
     public long Mtu { get; set; }
     public ulong InOctets { get; set; }
     public ulong OutOctets { get; set; }

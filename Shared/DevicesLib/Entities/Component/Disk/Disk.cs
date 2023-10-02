@@ -3,7 +3,7 @@
 public class Disk : IDisk
 {
     
-    public Disk(string mountingPoint, long allocationUnits, long totalSpace, long usedSpace)
+    public Disk(string mountingPoint, int allocationUnits, int totalSpace, int usedSpace)
     {
         MountingPoint = mountingPoint;
         AllocationUnits = allocationUnits;
@@ -11,8 +11,8 @@ public class Disk : IDisk
         UsedSpace = usedSpace;
     }
 
-    public string MountingPoint { get; private set; }
-    public long AllocationUnits { get; private set; }
-    public long TotalSpace { get; private set; }
-    public long UsedSpace { get; private set; }
+    public string MountingPoint { get; }
+    public int AllocationUnits { get; }
+    public int TotalSpace { get; }
+    public int UsedSpace { get; }
 }

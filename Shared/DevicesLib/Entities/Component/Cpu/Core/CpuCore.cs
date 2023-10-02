@@ -3,9 +3,9 @@
 public class CpuCore : ICpuCore
 {
     public string Name { get; set; }
-    public float Load { get; set; }
+    public int Load { get; set; }
     
-    public CpuCore(string name, float load)
+    public CpuCore(string name, int load)
     {
         Name = name;
         Load = load;

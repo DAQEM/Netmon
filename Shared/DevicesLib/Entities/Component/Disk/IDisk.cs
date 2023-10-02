@@ -3,7 +3,7 @@
 public interface IDisk : IComponent
 {
     public string MountingPoint { get; }
-    public long AllocationUnits { get; }
-    public long TotalSpace { get; }
-    public long UsedSpace { get; }
+    public int AllocationUnits { get; }
+    public int TotalSpace { get; }
+    public int UsedSpace { get; }
 }

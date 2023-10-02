@@ -1,4 +1,6 @@
-﻿namespace DevicesLib.Entities.Component.Interface;
+﻿using System.Net.NetworkInformation;
+
+namespace DevicesLib.Entities.Component.Interface;
 
 public class Interface : IInterface
 {
@@ -8,7 +10,7 @@ public class Interface : IInterface
     public InterfaceStatus AdminStatus { get; set; }
     public InterfaceStatus OperationStatus { get; set; }
     public uint Speed { get; set; }
-    public string PhysAddress { get; set; }
+    public PhysicalAddress PhysAddress { get; set; }
     public long Mtu { get; set; }
     public ulong InOctets { get; set; }
     public ulong OutOctets { get; set; }
@@ -23,7 +25,7 @@ public class Interface : IInterface
     public ulong InUnicastPackets { get; set; }
     public ulong OutUnicastPackets { get; set; }
 
-    public Interface(int index, string name, InterfaceType type, InterfaceStatus adminStatus, InterfaceStatus operationStatus, uint speed, string physAddress, long mtu, ulong inOctets, ulong outOctets, ulong inErrors, ulong outErrors, ulong inDiscards, ulong outDiscards, ulong inBroadcastPackets, ulong outBroadcastPackets, ulong inMulticastPackets, ulong outMulticastPackets, ulong inUnicastPackets, ulong outUnicastPackets)
+    public Interface(int index, string name, InterfaceType type, InterfaceStatus adminStatus, InterfaceStatus operationStatus, uint speed, PhysicalAddress physAddress, long mtu, ulong inOctets, ulong outOctets, ulong inErrors, ulong outErrors, ulong inDiscards, ulong outDiscards, ulong inBroadcastPackets, ulong outBroadcastPackets, ulong inMulticastPackets, ulong outMulticastPackets, ulong inUnicastPackets, ulong outUnicastPackets)
     {
         Index = index;
         Name = name;
