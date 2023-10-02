@@ -15,21 +15,8 @@ public class SNMPManager : ISNMPManager
         List<Variable> result = new();
         
         IPEndPoint ipEndPoint = new(IPAddress.Parse(snmpConnectionInfo.IpAddress), snmpConnectionInfo.Port);
-
-
-        IPrivacyProvider? privacy = null;
-
-        if (snmpConnectionInfo.Version == VersionCode.V3)
-        {
-            if (snmpConnectionInfo is { AuthProtocol: not null, PrivacyProtocol: not null })
-            {
-                privacy = PrivacyProvider.GetPrivacyProvider(
-                    snmpConnectionInfo.AuthPassword ?? string.Empty,
-                    snmpConnectionInfo.PrivacyPassword ?? string.Empty,
-                    snmpConnectionInfo.AuthProtocol,
-                    snmpConnectionInfo.PrivacyProtocol);
-            }
-        }
+        
+        IPrivacyProvider? privacy = GetPrivacyProvider(snmpConnectionInfo);
         
         Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
         ReportMessage report = await discovery.GetResponseAsync(ipEndPoint);
@@ -46,5 +33,22 @@ public class SNMPManager : ISNMPManager
             report);
         
         return new SNMPResult(result);
+    }
+
+    private static IPrivacyProvider? GetPrivacyProvider(SNMPConnectionInfo snmpConnectionInfo)
+    {
+        if (snmpConnectionInfo.Version == VersionCode.V3)
+        {
+            if (snmpConnectionInfo is { AuthProtocol: not null, PrivacyProtocol: not null })
+            {
+                return PrivacyProvider.GetPrivacyProvider(
+                    snmpConnectionInfo.AuthPassword ?? string.Empty,
+                    snmpConnectionInfo.PrivacyPassword ?? string.Empty,
+                    snmpConnectionInfo.AuthProtocol,
+                    snmpConnectionInfo.PrivacyProtocol);
+            }
+        }
+
+        return null;
     }
 }

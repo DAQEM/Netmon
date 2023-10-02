@@ -1,6 +1,6 @@
 ﻿namespace DevicesLib.Entities;
 
-public class CpuMetricDTO
+public interface IEntity
 {
     
 }

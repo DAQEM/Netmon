@@ -1,5 +1,5 @@
-﻿using Lextm.SharpSnmpLib;
-using SNMPPollingService.Entities.Component.Interface;
+﻿using DevicesLib.Entities.Component.Interface;
+using Lextm.SharpSnmpLib;
 using SNMPPollingService.SNMP.Deserializer;
 using SNMPPollingService.SNMP.Result;
 

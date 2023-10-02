@@ -1,10 +1,11 @@
 using System.Text.Json.Serialization;
 using DevicesLib.Database;
+using DevicesLib.Entities.Component.Cpu;
+using DevicesLib.Entities.Component.Disk;
+using DevicesLib.Entities.Component.Interface;
+using DevicesLib.Entities.Component.Memory;
 using Microsoft.EntityFrameworkCore;
-using SNMPPollingService.Entities.Component.Cpu;
-using SNMPPollingService.Entities.Component.Disk;
-using SNMPPollingService.Entities.Component.Interface;
-using SNMPPollingService.Entities.Component.Memory;
+using SNMPPollingService.Middleware;
 using SNMPPollingService.SNMP.Converter.Component;
 using SNMPPollingService.SNMP.Converter.Device;
 using SNMPPollingService.SNMP.Manager;
@@ -55,5 +56,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapControllers();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.Run();

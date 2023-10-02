@@ -1,4 +1,4 @@
-﻿using SNMPPollingService.Entities.Component.Memory;
+﻿using DevicesLib.Entities.Component.Memory;
 using SNMPPollingService.SNMP.MIB;
 using SNMPPollingService.SNMP.MIB.HostResources;
 using SNMPPollingService.SNMP.MIB.HostResources.Storage;

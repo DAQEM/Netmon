@@ -1,4 +1,4 @@
-﻿namespace SNMPPollingService.Entities.Component.Disk;
+﻿namespace DevicesLib.Entities.Component.Disk;
 
 public interface IDisk : IComponent
 {

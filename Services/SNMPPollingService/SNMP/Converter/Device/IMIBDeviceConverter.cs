@@ -1,4 +1,4 @@
-﻿using SNMPPollingService.Entities.Device;
+﻿using DevicesLib.Entities.Device;
 using SNMPPollingService.SNMP.MIB;
 using SNMPPollingService.SNMP.Request;
 

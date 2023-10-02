@@ -1,6 +1,6 @@
-﻿using SNMPPollingService.Entities.Component.Cpu.Core;
+﻿using DevicesLib.Entities.Component.Cpu.Core;
 
-namespace SNMPPollingService.Entities.Component.Cpu;
+namespace DevicesLib.Entities.Component.Cpu;
 
 public interface ICpu : IComponent
 {

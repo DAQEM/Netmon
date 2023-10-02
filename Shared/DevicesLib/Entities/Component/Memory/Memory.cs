@@ -1,4 +1,4 @@
-﻿namespace SNMPPollingService.Entities.Component.Memory;
+﻿namespace DevicesLib.Entities.Component.Memory;
 
 public class Memory : IMemory
 {

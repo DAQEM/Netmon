@@ -1,4 +1,4 @@
-﻿using SNMPPollingService.Entities.Component.Interface;
+﻿using DevicesLib.Entities.Component.Interface;
 using SNMPPollingService.SNMP.MIB;
 using SNMPPollingService.SNMP.MIB.If;
 using SNMPPollingService.SNMP.MIB.If.InterfaceX;

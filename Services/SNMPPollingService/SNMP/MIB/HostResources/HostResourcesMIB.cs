@@ -1,7 +1,5 @@
 using SNMPPollingService.SNMP.MIB.HostResources.Device;
 using SNMPPollingService.SNMP.MIB.HostResources.Storage;
-using SNMPPollingService.SNMP.Request;
-using SNMPPollingService.SNMP.Result;
 
 namespace SNMPPollingService.SNMP.MIB.HostResources;
 

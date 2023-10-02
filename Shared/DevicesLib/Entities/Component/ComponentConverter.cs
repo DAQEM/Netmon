@@ -1,11 +1,11 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using SNMPPollingService.Entities.Component.Cpu;
-using SNMPPollingService.Entities.Component.Disk;
-using SNMPPollingService.Entities.Component.Interface;
-using SNMPPollingService.Entities.Component.Memory;
+using DevicesLib.Entities.Component.Cpu;
+using DevicesLib.Entities.Component.Disk;
+using DevicesLib.Entities.Component.Interface;
+using DevicesLib.Entities.Component.Memory;
 
-namespace SNMPPollingService.Entities.Component;
+namespace DevicesLib.Entities.Component;
 
 public class ComponentConverter : JsonConverter<IComponent>
 {

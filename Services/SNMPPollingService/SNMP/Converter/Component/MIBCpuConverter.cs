@@ -1,5 +1,5 @@
-﻿using SNMPPollingService.Entities.Component.Cpu;
-using SNMPPollingService.Entities.Component.Cpu.Core;
+﻿using DevicesLib.Entities.Component.Cpu;
+using DevicesLib.Entities.Component.Cpu.Core;
 using SNMPPollingService.SNMP.MIB;
 using SNMPPollingService.SNMP.MIB.HostResources;
 using SNMPPollingService.SNMP.MIB.UCDavis;

@@ -1,16 +1,7 @@
-﻿using DevicesLib.Entities;
-
-namespace SNMPPollingService.Entities.Component.Disk;
+﻿namespace DevicesLib.Entities.Component.Disk;
 
 public class Disk : IDisk
 {
-    public Disk(DiskDTO disk)
-    {
-        MountingPoint = disk.MountingPoint;
-        AllocationUnits = disk.AllocationUnits;
-        TotalSpace = disk.TotalSpace;
-        UsedSpace = disk.UsedSpace;
-    }
     
     public Disk(string mountingPoint, long allocationUnits, long totalSpace, long usedSpace)
     {

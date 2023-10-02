@@ -1,25 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SNMPPollingService.Entities.Device;
-using SNMPPollingService.SNMP.Poll.Device;
+using SNMPPollingService.SNMP.Manager;
 using SNMPPollingService.SNMP.Request;
+using SNMPPollingService.SNMP.Result;
 
 namespace SNMPPollingService.Controllers;
 
 [Route("SNMP")]
 public class SNMPController : Controller
 {
-    private readonly IDevicePoller _devicePoller;
+    private readonly ISNMPManager _snmpManager;
     
-    public SNMPController(IDevicePoller devicePoller)
+    public SNMPController(ISNMPManager snmpManager)
     {
-        _devicePoller = devicePoller;
+        _snmpManager = snmpManager;
     }
 
-    [HttpPost("Test")]
-    public async Task<IActionResult> Test([FromBody] SNMPConnectionInfo snmpConnectionInfo)
+    [HttpPost("GetBulkWalk")]
+    public async Task<IActionResult> GetBulkWalk([FromBody] SNMPConnectionInfo snmpConnectionInfo, string oid)
     {
-        IDevice device = await _devicePoller.PollFull(snmpConnectionInfo);
+        ISNMPResult result = await _snmpManager.BulkWalkAsync(snmpConnectionInfo, oid);
 
-        return Ok(device);
+        return Ok(result.Variables.Select(variable => new
+        {
+            oid = variable.Id.ToString(),
+            value = variable.Data.ToString()
+        }));
     }
 }

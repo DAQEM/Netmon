@@ -1,7 +1,5 @@
 using Lextm.SharpSnmpLib;
 using SNMPPollingService.SNMP.Deserializer;
-using SNMPPollingService.SNMP.Manager;
-using SNMPPollingService.SNMP.Request;
 using SNMPPollingService.SNMP.Result;
 
 namespace SNMPPollingService.SNMP.MIB.System;

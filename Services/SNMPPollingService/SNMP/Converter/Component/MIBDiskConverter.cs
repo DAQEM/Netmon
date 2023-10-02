@@ -1,4 +1,4 @@
-﻿using SNMPPollingService.Entities.Component.Disk;
+﻿using DevicesLib.Entities.Component.Disk;
 using SNMPPollingService.SNMP.MIB;
 using SNMPPollingService.SNMP.MIB.HostResources;
 using SNMPPollingService.SNMP.MIB.HostResources.Storage;

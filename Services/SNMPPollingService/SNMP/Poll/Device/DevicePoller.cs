@@ -1,11 +1,10 @@
-﻿using SNMPPollingService.Entities.Component.Cpu;
-using SNMPPollingService.Entities.Component.Disk;
-using SNMPPollingService.Entities.Component.Interface;
-using SNMPPollingService.Entities.Component.Memory;
-using SNMPPollingService.Entities.Device;
+﻿using DevicesLib.Entities.Component.Cpu;
+using DevicesLib.Entities.Component.Disk;
+using DevicesLib.Entities.Component.Interface;
+using DevicesLib.Entities.Component.Memory;
+using DevicesLib.Entities.Device;
 using SNMPPollingService.SNMP.Converter.Component;
 using SNMPPollingService.SNMP.Converter.Device;
-using SNMPPollingService.SNMP.Manager;
 using SNMPPollingService.SNMP.MIB;
 using SNMPPollingService.SNMP.MIB.System;
 using SNMPPollingService.SNMP.Poll.MIB.MIBs;
@@ -54,5 +53,33 @@ public class DevicePoller : IDevicePoller
         SystemMIB mib = await _mibsPoller.PollSystemMIB(connectionInfo);
         
         return _deviceConverter.ConvertMIBsToDevice(connectionInfo, new List<IMIB> { mib });
+    }
+    
+    public async Task<List<IDisk>> PollDisks(SNMPConnectionInfo connectionInfo)
+    {
+        List<IMIB> mibs = await _mibsPoller.PollAllMIBs(connectionInfo);
+
+        return _disksConverter.ConvertMIBsToComponent(mibs);
+    }
+    
+    public async Task<List<IMemory>> PollMemory(SNMPConnectionInfo connectionInfo)
+    {
+        List<IMIB> mibs = await _mibsPoller.PollAllMIBs(connectionInfo);
+
+        return _memoryConverter.ConvertMIBsToComponent(mibs);
+    }
+    
+    public async Task<List<ICpu>> PollCpus(SNMPConnectionInfo connectionInfo)
+    {
+        List<IMIB> mibs = await _mibsPoller.PollAllMIBs(connectionInfo);
+
+        return _cpusConverter.ConvertMIBsToComponent(mibs);
+    }
+    
+    public async Task<List<IInterface>> PollInterfaces(SNMPConnectionInfo connectionInfo)
+    {
+        List<IMIB> mibs = await _mibsPoller.PollAllMIBs(connectionInfo);
+
+        return _interfacesConverter.ConvertMIBsToComponent(mibs);
     }
 }

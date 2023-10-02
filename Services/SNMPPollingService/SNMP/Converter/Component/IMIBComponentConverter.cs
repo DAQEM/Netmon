@@ -1,4 +1,4 @@
-﻿using SNMPPollingService.Entities.Component;
+﻿using DevicesLib.Entities.Component;
 using SNMPPollingService.SNMP.MIB;
 
 namespace SNMPPollingService.SNMP.Converter.Component;

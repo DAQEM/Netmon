@@ -1,4 +1,4 @@
-﻿namespace SNMPPollingService.Entities.Component.Cpu.Core;
+﻿namespace DevicesLib.Entities.Component.Cpu.Core;
 
 public interface ICpuCore
 {

@@ -1,4 +1,4 @@
-﻿namespace SNMPPollingService.Entities.Component.Interface;
+﻿namespace DevicesLib.Entities.Component.Interface;
 
 public class Interface : IInterface
 {

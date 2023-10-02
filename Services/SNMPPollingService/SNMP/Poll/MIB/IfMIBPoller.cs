@@ -1,5 +1,4 @@
 ﻿using SNMPPollingService.SNMP.Manager;
-using SNMPPollingService.SNMP.MIB;
 using SNMPPollingService.SNMP.MIB.If;
 using SNMPPollingService.SNMP.MIB.If.Interface;
 using SNMPPollingService.SNMP.MIB.If.InterfaceX;

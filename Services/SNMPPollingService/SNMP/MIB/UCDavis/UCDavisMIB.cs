@@ -1,6 +1,4 @@
-﻿using SNMPPollingService.SNMP.Manager;
-using SNMPPollingService.SNMP.MIB.UCDavis.CpuLoad;
-using SNMPPollingService.SNMP.Request;
+﻿using SNMPPollingService.SNMP.MIB.UCDavis.CpuLoad;
 
 namespace SNMPPollingService.SNMP.MIB.UCDavis;
 

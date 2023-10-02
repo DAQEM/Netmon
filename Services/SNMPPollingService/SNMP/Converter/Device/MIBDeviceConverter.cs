@@ -1,4 +1,4 @@
-﻿using SNMPPollingService.Entities.Device;
+﻿using DevicesLib.Entities.Device;
 using SNMPPollingService.SNMP.MIB;
 using SNMPPollingService.SNMP.MIB.System;
 using SNMPPollingService.SNMP.Request;
@@ -9,7 +9,7 @@ public class MIBDeviceConverter : IMIBDeviceConverter
 {
     public IDevice ConvertMIBsToDevice(SNMPConnectionInfo connectionInfo, List<IMIB> mibs)
     {
-        IDevice device = new Entities.Device.Device
+        IDevice device = new DevicesLib.Entities.Device.Device
         {
             IpAddress = connectionInfo.IpAddress,
             Port = connectionInfo.Port,
