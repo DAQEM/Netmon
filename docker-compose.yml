@@ -58,6 +58,8 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5002:80"
+    depends_on:
+      - netmon-mongo
     networks:
       network1:
         ipv4_address: 192.168.178.5
@@ -87,6 +89,35 @@ services:
     networks:
       network1:
         ipv4_address: 192.168.178.7
+
+  netmon-mongo:
+    image: mongo
+    container_name: netmon-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongopwd
+    networks:
+      network1:
+        ipv4_address: 192.168.178.8
+
+  netmon-mongo-web-viewer:
+    image: mongo-express
+    container_name: netmon-mongo-web-viewer
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongopwd
+      ME_CONFIG_MONGODB_URL: mongodb://root:mongopwd@192.168.178.8:27017/
+    links:
+      - netmon-mongo
+    depends_on:
+      - netmon-mongo
+    networks:
+      network1:
+        ipv4_address: 192.168.178.9
 
 networks:
   network1:
