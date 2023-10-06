@@ -44,7 +44,7 @@ jobs:
     - name: Test API
       run: |
         echo "Sending HTTP POST request..."
-        json_output=$(docker exec netmon-snmp-polling-service-snmpd-test curl -s -X 'POST' 'http://192.168.178.6/Discover/Details' -H 'accept: */*' -H 'Content-Type: application/json' -d '{"version": "V2","ipAddress":"192.168.178.7","port":161,"community":"public"}')
+        json_output=$(docker exec netmon-snmp-polling-service-snmpd-test curl -s -X 'POST' 'http://192.168.178.6/Discover/Details' -H 'accept: */*' -H 'Content-Type: application/json' -d '{"version":"V2","ipAddress":"192.168.178.7","port":161,"community":"public"}')
 
         expected_sysContact="Root <root@snmpd.test>"
         expected_sysName="snmpd-test"
