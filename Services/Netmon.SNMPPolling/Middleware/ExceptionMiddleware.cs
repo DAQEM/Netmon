@@ -22,6 +22,7 @@ public class ExceptionMiddleware
         catch (System.Exception ex)
         {
             await HandleExceptionAsync(context, ex);
+            Console.WriteLine(ex);
         }
     }
 
