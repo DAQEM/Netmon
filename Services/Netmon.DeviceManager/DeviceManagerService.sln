@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceManagerService", "DeviceManagerService.csproj", "{38FD1CBD-35BC-4172-80BE-9ED9300D3F44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Data.EntityFramework", "..\..\Shared\Netmon.Data.EntityFramework\Netmon.Data.EntityFramework.csproj", "{7D67AC35-F2F0-439D-8637-9CC269E5DB76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Data", "..\..\Shared\Netmon.Data\Netmon.Data.csproj", "{95DCDF09-51EA-412B-ADF6-94F9AB963AF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Models", "..\..\Shared\Netmon.Models\Netmon.Models.csproj", "{9EDF5E6A-FDBA-47C2-942D-E496BFC4E669}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38FD1CBD-35BC-4172-80BE-9ED9300D3F44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38FD1CBD-35BC-4172-80BE-9ED9300D3F44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38FD1CBD-35BC-4172-80BE-9ED9300D3F44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38FD1CBD-35BC-4172-80BE-9ED9300D3F44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D67AC35-F2F0-439D-8637-9CC269E5DB76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D67AC35-F2F0-439D-8637-9CC269E5DB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D67AC35-F2F0-439D-8637-9CC269E5DB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D67AC35-F2F0-439D-8637-9CC269E5DB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95DCDF09-51EA-412B-ADF6-94F9AB963AF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95DCDF09-51EA-412B-ADF6-94F9AB963AF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95DCDF09-51EA-412B-ADF6-94F9AB963AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95DCDF09-51EA-412B-ADF6-94F9AB963AF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EDF5E6A-FDBA-47C2-942D-E496BFC4E669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EDF5E6A-FDBA-47C2-942D-E496BFC4E669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EDF5E6A-FDBA-47C2-942D-E496BFC4E669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EDF5E6A-FDBA-47C2-942D-E496BFC4E669}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

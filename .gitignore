@@ -1,1 +1,4 @@
-/Services/AccountService/bin
+**/bin/
+**/obj/
+**/.idea/
+**/.vs/

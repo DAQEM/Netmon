@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Data", "Shared\Netmon.Data\Netmon.Data.csproj", "{864F50FE-7BA9-4659-8964-AFE7AAFE4931}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Data.EntityFramework", "Shared\Netmon.Data.EntityFramework\Netmon.Data.EntityFramework.csproj", "{F28347C0-7968-4462-A710-B69F66FD3FCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Models", "Shared\Netmon.Models\Netmon.Models.csproj", "{C262FFE3-D957-4858-95E5-A7B3C0A9AD83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.DeviceManager", "Services\Netmon.DeviceManager\Netmon.DeviceManager.csproj", "{3BC8D557-1CC1-4974-87C3-9363F5626C29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.SNMPPolling", "Services\Netmon.SNMPPolling\Netmon.SNMPPolling.csproj", "{5BC5215F-9D12-4C53-903E-1F49913E685C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Data.EntityFramework.Read", "Shared\Netmon.Data.EntityFramework.Read\Netmon.Data.EntityFramework.Read.csproj", "{D34CA3A5-C9F6-41CF-A2C5-7198350B8803}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Data.EntityFramework.Write", "Shared\Netmon.Data.EntityFramework.Write\Netmon.Data.EntityFramework.Write.csproj", "{786BC353-1961-4CAB-9FFE-7E6199D6DC95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{864F50FE-7BA9-4659-8964-AFE7AAFE4931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{864F50FE-7BA9-4659-8964-AFE7AAFE4931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{864F50FE-7BA9-4659-8964-AFE7AAFE4931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{864F50FE-7BA9-4659-8964-AFE7AAFE4931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F28347C0-7968-4462-A710-B69F66FD3FCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F28347C0-7968-4462-A710-B69F66FD3FCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F28347C0-7968-4462-A710-B69F66FD3FCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F28347C0-7968-4462-A710-B69F66FD3FCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C262FFE3-D957-4858-95E5-A7B3C0A9AD83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C262FFE3-D957-4858-95E5-A7B3C0A9AD83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C262FFE3-D957-4858-95E5-A7B3C0A9AD83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C262FFE3-D957-4858-95E5-A7B3C0A9AD83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BC8D557-1CC1-4974-87C3-9363F5626C29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC8D557-1CC1-4974-87C3-9363F5626C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC8D557-1CC1-4974-87C3-9363F5626C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC8D557-1CC1-4974-87C3-9363F5626C29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BC5215F-9D12-4C53-903E-1F49913E685C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BC5215F-9D12-4C53-903E-1F49913E685C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BC5215F-9D12-4C53-903E-1F49913E685C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BC5215F-9D12-4C53-903E-1F49913E685C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D34CA3A5-C9F6-41CF-A2C5-7198350B8803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34CA3A5-C9F6-41CF-A2C5-7198350B8803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34CA3A5-C9F6-41CF-A2C5-7198350B8803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34CA3A5-C9F6-41CF-A2C5-7198350B8803}.Release|Any CPU.Build.0 = Release|Any CPU
+		{786BC353-1961-4CAB-9FFE-7E6199D6DC95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{786BC353-1961-4CAB-9FFE-7E6199D6DC95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{786BC353-1961-4CAB-9FFE-7E6199D6DC95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{786BC353-1961-4CAB-9FFE-7E6199D6DC95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
