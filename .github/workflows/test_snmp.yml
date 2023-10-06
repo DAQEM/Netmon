@@ -62,4 +62,5 @@ jobs:
             echo "sysName: $sysName (Expected: $expected_sysName)"
             echo "sysLocation: $sysLocation (Expected: $expected_sysLocation)"
             echo "Test failed!"
+            exit 1
         fi
