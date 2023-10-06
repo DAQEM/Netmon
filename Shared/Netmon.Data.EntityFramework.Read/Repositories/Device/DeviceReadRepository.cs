@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Netmon.Data.DBO.Component.Cpu;
-using Netmon.Data.DBO.Component.Disk;
-using Netmon.Data.DBO.Component.Interface;
-using Netmon.Data.DBO.Component.Memory;
 using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Read.Component.Cpu;

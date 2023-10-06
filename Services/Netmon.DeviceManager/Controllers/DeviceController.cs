@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Netmon.Data.DBO.Device;
 using Netmon.Data.Repositories.Read.Device;
-using Netmon.Data.Repositories.Write.Device;
-using Netmon.Data.Write.Repositories.Device;
 
 namespace Netmon.DeviceManager.Controllers;
 

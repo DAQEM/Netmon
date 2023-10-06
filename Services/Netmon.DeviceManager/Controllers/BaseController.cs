@@ -1,5 +1,4 @@
-﻿using Netmon.Data.EntityFramework.Database;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Netmon.DeviceManager.Controllers;
 

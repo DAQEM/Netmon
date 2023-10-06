@@ -3,7 +3,6 @@ using Netmon.Models.Component.Disk;
 using Netmon.Models.Component.Interface;
 using Netmon.Models.Component.Memory;
 using Netmon.Models.Device.Connection;
-using Netmon.Models.Device.Connection.Protocol;
 
 namespace Netmon.Models.Device;
 

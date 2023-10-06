@@ -30,6 +30,7 @@ using Netmon.Data.Write.Repositories.Component.Disk;
 using Netmon.Data.Write.Repositories.Component.Interface;
 using Netmon.Data.Write.Repositories.Component.Memory;
 using Netmon.Data.Write.Repositories.Device;
+using Netmon.DeviceManager.Jobs.Poll;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -99,6 +100,8 @@ builder.Services.AddScoped<ICpuMetricReadRepository, CpuMetricsReadRepository>()
 builder.Services.AddScoped<ICpuCoreReadRepository, CpuCoreReadRepository>();
 builder.Services.AddScoped<ICpuCoreMetricReadRepository, CpuCoreMetricsReadRepository>();
 
+builder.Services.AddSingleton<IPollDeviceJob, PollDeviceJob>();
+
 WebApplication app = builder.Build();
 
 app.UsePathBase(new PathString("/api"));
@@ -113,6 +116,8 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
 
 app.MapControllers();
 
-RecurringJob.AddOrUpdate("poll", () => Console.WriteLine("test"), "*/1 * * * *");
+IPollDeviceJob pollDeviceJob = app.Services.GetRequiredService<IPollDeviceJob>();
+
+RecurringJob.AddOrUpdate("poll", () => pollDeviceJob.Execute(), "*/5 * * * *");
 
 app.Run();

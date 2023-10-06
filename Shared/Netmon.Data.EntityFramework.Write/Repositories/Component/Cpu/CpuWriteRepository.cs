@@ -4,7 +4,6 @@ using Netmon.Data.DBO.Component.Cpu.Core;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Write.Component.Cpu;
 using Netmon.Data.Repositories.Write.Component.Cpu.Core;
-using Netmon.Data.Write.Repositories.Component.Cpu.Core;
 
 namespace Netmon.Data.Write.Repositories.Component.Cpu;
 

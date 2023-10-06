@@ -1,7 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Netmon.Data.DBO.Device;
-using Netmon.Data.Repositories.Write.Device;
-using Netmon.Data.Write.Repositories.Device;
 using Netmon.Models.Component.Cpu;
 using Netmon.Models.Component.Disk;
 using Netmon.Models.Component.Interface;
