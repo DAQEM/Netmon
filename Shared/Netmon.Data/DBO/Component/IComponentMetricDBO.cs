@@ -1,6 +1,6 @@
 ﻿namespace Netmon.Data.DBO.Component;
 
-public interface IComponentMetricDBO
+public interface IComponentMetricDBO : IDBO
 {
     
 }

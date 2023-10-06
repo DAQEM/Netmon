@@ -7,7 +7,7 @@ using Netmon.Models.Device;
 
 namespace Netmon.Data.DBO.Device;
 
-public class DeviceDBO
+public class DeviceDBO : IDBO
 {
     [Key]
     public Guid Id { get; set; }

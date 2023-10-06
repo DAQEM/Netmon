@@ -10,8 +10,4 @@
       <ProjectReference Include="..\Netmon.Models\Netmon.Models.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Repositories\Read" />
-    </ItemGroup>
-
 </Project>

@@ -6,6 +6,18 @@ using Hangfire.Mongo.Migration.Strategies;
 using Hangfire.Mongo.Migration.Strategies.Backup;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
+using Netmon.Data.EntityFramework.Read.Repositories.Component.Cpu;
+using Netmon.Data.EntityFramework.Read.Repositories.Component.Cpu.Core;
+using Netmon.Data.EntityFramework.Read.Repositories.Component.Disk;
+using Netmon.Data.EntityFramework.Read.Repositories.Component.Interface;
+using Netmon.Data.EntityFramework.Read.Repositories.Component.Memory;
+using Netmon.Data.EntityFramework.Read.Repositories.Device;
+using Netmon.Data.Repositories.Read.Component.Cpu;
+using Netmon.Data.Repositories.Read.Component.Cpu.Core;
+using Netmon.Data.Repositories.Read.Component.Disk;
+using Netmon.Data.Repositories.Read.Component.Interface;
+using Netmon.Data.Repositories.Read.Component.Memory;
+using Netmon.Data.Repositories.Read.Device;
 using Netmon.Data.Repositories.Write.Component.Cpu;
 using Netmon.Data.Repositories.Write.Component.Cpu.Core;
 using Netmon.Data.Repositories.Write.Component.Disk;
@@ -73,6 +85,19 @@ builder.Services.AddScoped<ICpuWriteRepository, CpuWriteRepository>();
 builder.Services.AddScoped<ICpuMetricsWriteRepository, CpuMetricsWriteRepository>();
 builder.Services.AddScoped<ICpuCoreWriteRepository, CpuCoreWriteRepository>();
 builder.Services.AddScoped<ICpuCoreMetricsWriteRepository, CpuCoreMetricsWriteRepository>();
+
+builder.Services.AddScoped<IDeviceReadRepository, DeviceReadRepository>();
+builder.Services.AddScoped<IDeviceConnectionReadRepository, DeviceConnectionReadRepository>();
+builder.Services.AddScoped<IDiskReadRepository, DiskReadRepository>();
+builder.Services.AddScoped<IDiskMetricReadRepository, DiskMetricsReadRepository>();
+builder.Services.AddScoped<IInterfaceReadRepository, InterfaceReadRepository>();
+builder.Services.AddScoped<IInterfaceMetricReadRepository, InterfaceMetricsReadRepository>();
+builder.Services.AddScoped<IMemoryReadRepository, MemoryReadRepository>();
+builder.Services.AddScoped<IMemoryMetricReadRepository, MemoryMetricsReadRepository>();
+builder.Services.AddScoped<ICpuReadRepository, CpuReadRepository>();
+builder.Services.AddScoped<ICpuMetricReadRepository, CpuMetricsReadRepository>();
+builder.Services.AddScoped<ICpuCoreReadRepository, CpuCoreReadRepository>();
+builder.Services.AddScoped<ICpuCoreMetricReadRepository, CpuCoreMetricsReadRepository>();
 
 WebApplication app = builder.Build();
 

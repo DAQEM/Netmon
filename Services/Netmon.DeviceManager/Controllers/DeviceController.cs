@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Netmon.Data.DBO.Device;
+using Netmon.Data.Repositories.Read.Device;
 using Netmon.Data.Repositories.Write.Device;
 using Netmon.Data.Write.Repositories.Device;
 
@@ -9,16 +10,16 @@ namespace Netmon.DeviceManager.Controllers;
 [Route("Device")]
 public class DeviceController : BaseController
 {
-    private readonly IDeviceWriteRepository _deviceWriteRepository;
+    private readonly IDeviceReadRepository _deviceReadRepository;
     
-    public DeviceController(IDeviceWriteRepository deviceWriteRepository)
+    public DeviceController(IDeviceReadRepository deviceReadRepository)
     {
-        _deviceWriteRepository = deviceWriteRepository;
+        _deviceReadRepository = deviceReadRepository;
     }
 
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        return Ok();
+        return Ok(await _deviceReadRepository.GetAll());
     }
 }
