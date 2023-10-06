@@ -16,12 +16,10 @@ namespace Netmon.SNMPPolling.Controllers;
 [Route("Discover")]
 public class DiscoverController : Controller
 {
-    private readonly IDeviceWriteRepository _deviceWriteRepository;
     private readonly IDevicePoller _devicePoller;
     
-    public DiscoverController(IDeviceWriteRepository deviceWriteRepository, IDevicePoller devicePoller)
+    public DiscoverController(IDevicePoller devicePoller)
     {
-        _deviceWriteRepository = deviceWriteRepository;
         _devicePoller = devicePoller;
     }
     
@@ -45,9 +43,6 @@ public class DiscoverController : Controller
     public async Task<IActionResult> Device([FromBody] SNMPConnectionInfo connectionInfo)
     {
         IDevice device = await _devicePoller.PollFull(connectionInfo);
-
-        await _deviceWriteRepository.AddOrUpdateFullDevice(DeviceDBO.FromDevice(device));
-        await _deviceWriteRepository.SaveChanges();
         
         return Ok(device);
     }
