@@ -51,7 +51,7 @@ services:
   netmon-device-manager-service:
     build:
       context: ./
-      dockerfile: ./Services/DeviceManagerService/Dockerfile
+      dockerfile: ./Services/Netmon.DeviceManager/Dockerfile
     container_name: netmon-device-manager-service
     environment:
       - ENV=production
@@ -67,7 +67,7 @@ services:
   netmon-snmp-polling-service:
     build:
       context: ./
-      dockerfile: ./Services/SNMPPollingService/Dockerfile
+      dockerfile: ./Services/Netmon.SNMPPolling/Dockerfile
     container_name: netmon-snmp-polling-service
     environment:
       - ENV=production

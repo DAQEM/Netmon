@@ -36,7 +36,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      working-directory: Services/DeviceManagerService
+      working-directory: Services/Netmon.DeviceManager
 
     steps:
     - uses: actions/checkout@v3
@@ -58,7 +58,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      working-directory: Services/SNMPPollingService
+      working-directory: Services/Netmon.SNMPPolling
 
     steps:
     - uses: actions/checkout@v3

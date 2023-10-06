@@ -2,27 +2,41 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
-# Copy the DeviceManagerService.csproj
-COPY ["Services/DeviceManagerService/DeviceManagerService.csproj", "./"]
-COPY ["Shared/Netmon.Data.EntityFramework/Netmon.Data.EntityFramework.csproj", "/Shared/Netmon.Data.EntityFramework/"]
+# Copy the Netmon.DeviceManager.csproj
+COPY ["Services/Netmon.DeviceManager/Netmon.DeviceManager.csproj", "./"]
 
-# Restore dependencies for DeviceManagerService
-RUN dotnet restore "DeviceManagerService.csproj"
+COPY ["Shared/Netmon.Data/Netmon.Data.csproj", "/Shared/Netmon.Data/"]
+COPY ["Shared/Netmon.Data.EntityFramework/Netmon.Data.EntityFramework.csproj", "/Shared/Netmon.Data.EntityFramework/"]
+COPY ["Shared/Netmon.Data.EntityFramework.Read/Netmon.Data.EntityFramework.Read.csproj", "/Shared/Netmon.Data.EntityFramework.Read/"]
+COPY ["Shared/Netmon.Data.EntityFramework.Write/Netmon.Data.EntityFramework.Write.csproj", "/Shared/Netmon.Data.EntityFramework.Write/"]
+COPY ["Shared/Netmon.Models/Netmon.Models.csproj", "/Shared/Netmon.Models/"]
+
+# Restore dependencies for Netmon.DeviceManager
+RUN dotnet restore "Netmon.DeviceManager.csproj"
 
 # Copy the Shared project
+RUN dotnet restore "/Shared/Netmon.Data/Netmon.Data.csproj"
 RUN dotnet restore "/Shared/Netmon.Data.EntityFramework/Netmon.Data.EntityFramework.csproj"
+RUN dotnet restore "/Shared/Netmon.Data.EntityFramework.Read/Netmon.Data.EntityFramework.Read.csproj"
+RUN dotnet restore "/Shared/Netmon.Data.EntityFramework.Write/Netmon.Data.EntityFramework.Write.csproj"
+RUN dotnet restore "/Shared/Netmon.Models/Netmon.Models.csproj"
 
 # Copy the rest of the source code
-COPY ["Services/DeviceManagerService/", "./"]
-COPY ["Shared/Netmon.Data.EntityFramework/", "/Shared/Netmon.Data.EntityFramework/"]
+COPY ["Services/Netmon.DeviceManager/", "./"]
 
-# Build DeviceManagerService
+COPY ["Shared/Netmon.Data/", "/Shared/Netmon.Data/"]
+COPY ["Shared/Netmon.Data.EntityFramework/", "/Shared/Netmon.Data.EntityFramework/"]
+COPY ["Shared/Netmon.Data.EntityFramework.Read/", "/Shared/Netmon.Data.EntityFramework.Read/"]
+COPY ["Shared/Netmon.Data.EntityFramework.Write/", "/Shared/Netmon.Data.EntityFramework.Write/"]
+COPY ["Shared/Netmon.Models/", "/Shared/Netmon.Models/"]
+
+# Build Netmon.DeviceManager
 WORKDIR "/src/"
-RUN dotnet build "DeviceManagerService.csproj" -c Release -o /app/build
+RUN dotnet build "Netmon.DeviceManager.csproj" -c Release -o /app/build
 
 # Stage 2: Publish the application
 FROM build AS publish
-RUN dotnet publish "DeviceManagerService.csproj" -c Release -o /app/publish
+RUN dotnet publish "Netmon.DeviceManager.csproj" -c Release -o /app/publish
 
 # Stage 3: Create the final image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
@@ -32,4 +46,4 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 # Set the entry point
-ENTRYPOINT ["dotnet", "DeviceManagerService.dll"]
+ENTRYPOINT ["dotnet", "Netmon.DeviceManager.dll"]
