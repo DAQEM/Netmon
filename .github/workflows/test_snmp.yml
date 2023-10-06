@@ -50,9 +50,9 @@ jobs:
         expected_sysName="snmpd-test"
         expected_sysLocation="SNMPD Test"
 
-        sysContact=$(echo "$json_output" | jq -r '.sysContact')
-        sysName=$(echo "$json_output" | jq -r '.sysName')
-        sysLocation=$(echo "$json_output" | jq -r '.sysLocation')
+        sysContact=$(echo "$json_output" | jq -r '.contact')
+        sysName=$(echo "$json_output" | jq -r '.name')
+        sysLocation=$(echo "$json_output" | jq -r '.location')
 
         if [ "$sysContact" == "$expected_sysContact" ] && [ "$sysName" == "$expected_sysName" ] && [ "$sysLocation" == "$expected_sysLocation" ]; then
             echo "All values are as expected!"
