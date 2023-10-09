@@ -50,6 +50,7 @@ builder.Services.AddHangfire(configuration => configuration
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
     .UseSimpleAssemblyNameTypeSerializer()
     .UseRecommendedSerializerSettings()
+    .UseFilter(new AutomaticRetryAttribute { Attempts = 0 })
     .UseMongoStorage(mongoClient, mongoUrlBuilder.DatabaseName, new MongoStorageOptions
     {
         MigrationOptions = new MongoMigrationOptions
@@ -100,7 +101,7 @@ builder.Services.AddScoped<ICpuMetricReadRepository, CpuMetricsReadRepository>()
 builder.Services.AddScoped<ICpuCoreReadRepository, CpuCoreReadRepository>();
 builder.Services.AddScoped<ICpuCoreMetricReadRepository, CpuCoreMetricsReadRepository>();
 
-builder.Services.AddSingleton<IPollDeviceJob, PollDeviceJob>();
+builder.Services.AddScoped<IPollDeviceJob, PollDeviceJob>();
 
 WebApplication app = builder.Build();
 
@@ -116,8 +117,11 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
 
 app.MapControllers();
 
-IPollDeviceJob pollDeviceJob = app.Services.GetRequiredService<IPollDeviceJob>();
+using (IServiceScope scope = app.Services.CreateScope())
+{
+    IPollDeviceJob pollDeviceJob = scope.ServiceProvider.GetRequiredService<IPollDeviceJob>();
 
-RecurringJob.AddOrUpdate("poll", () => pollDeviceJob.Execute(), "*/5 * * * *");
+    RecurringJob.AddOrUpdate("poll", () => pollDeviceJob.Execute(), "*/5 * * * *");
+}
 
 app.Run();

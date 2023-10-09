@@ -34,10 +34,12 @@ public class DevicePoller : IDevicePoller
         _interfacesConverter = interfacesConverter;
     }
 
-    public async Task<IDevice> PollFull(SNMPConnectionInfo connectionInfo)
+    public async Task<IDevice?> PollFull(SNMPConnectionInfo connectionInfo)
     {
         List<IMIB> mibs = await _mibsPoller.PollAllMIBs(connectionInfo);
 
+        if (!mibs.Any()) return null;
+        
         IDevice device = _deviceConverter.ConvertMIBsToDevice(connectionInfo, mibs);
         
         device.Disks = _disksConverter.ConvertMIBsToComponent(mibs);
@@ -48,38 +50,48 @@ public class DevicePoller : IDevicePoller
         return device;
     }
 
-    public async Task<IDevice> PollDetails(SNMPConnectionInfo connectionInfo)
+    public async Task<IDevice?> PollDetails(SNMPConnectionInfo connectionInfo)
     {
         SystemMIB mib = await _mibsPoller.PollSystemMIB(connectionInfo);
+        
+        if (mib == null) return null;
         
         return _deviceConverter.ConvertMIBsToDevice(connectionInfo, new List<IMIB> { mib });
     }
     
-    public async Task<List<IDisk>> PollDisks(SNMPConnectionInfo connectionInfo)
+    public async Task<List<IDisk>?> PollDisks(SNMPConnectionInfo connectionInfo)
     {
         List<IMIB> mibs = await _mibsPoller.PollAllMIBs(connectionInfo);
 
+        if (!mibs.Any()) return null;
+        
         return _disksConverter.ConvertMIBsToComponent(mibs);
     }
     
-    public async Task<List<IMemory>> PollMemory(SNMPConnectionInfo connectionInfo)
+    public async Task<List<IMemory>?> PollMemory(SNMPConnectionInfo connectionInfo)
     {
         List<IMIB> mibs = await _mibsPoller.PollAllMIBs(connectionInfo);
 
+        if (!mibs.Any()) return null;
+        
         return _memoryConverter.ConvertMIBsToComponent(mibs);
     }
     
-    public async Task<List<ICpu>> PollCpus(SNMPConnectionInfo connectionInfo)
+    public async Task<List<ICpu>?> PollCpus(SNMPConnectionInfo connectionInfo)
     {
         List<IMIB> mibs = await _mibsPoller.PollAllMIBs(connectionInfo);
 
+        if (!mibs.Any()) return null;
+        
         return _cpusConverter.ConvertMIBsToComponent(mibs);
     }
     
-    public async Task<List<IInterface>> PollInterfaces(SNMPConnectionInfo connectionInfo)
+    public async Task<List<IInterface>?> PollInterfaces(SNMPConnectionInfo connectionInfo)
     {
         List<IMIB> mibs = await _mibsPoller.PollAllMIBs(connectionInfo);
 
+        if (!mibs.Any()) return null;
+        
         return _interfacesConverter.ConvertMIBsToComponent(mibs);
     }
 }

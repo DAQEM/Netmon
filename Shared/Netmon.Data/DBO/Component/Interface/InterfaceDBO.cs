@@ -30,16 +30,29 @@ public class InterfaceDBO : IComponentDBO
     
     public DeviceDBO Device { get; set; } = null!;
 
-    public static InterfaceDBO FromInterface(IInterface arg)
+    public static InterfaceDBO FromInterface(IInterface? @interface)
     {
+        if (@interface == null) return new InterfaceDBO();
         return new InterfaceDBO
         {
             Id = Guid.NewGuid(),
-            Index = arg.Index,
-            Name = arg.Name,
-            Type = arg.Type,
-            PhysAddress = arg.PhysAddress,
-            InterfaceMetrics = arg.Metrics.Select(InterfaceMetricsDBO.FromInterfaceMetric).ToList()
+            Index = @interface.Index,
+            Name = @interface.Name,
+            Type = @interface.Type,
+            PhysAddress = @interface.PhysAddress,
+            InterfaceMetrics = @interface.Metrics.Select(InterfaceMetricsDBO.FromInterfaceMetric).ToList()
+        };
+    }
+
+    public IInterface ToInterface()
+    {
+        return new Models.Component.Interface.Interface
+        {
+            Index = Index,
+            Name = Name,
+            Type = Type,
+            PhysAddress = PhysAddress,
+            Metrics = InterfaceMetrics.Select(x => x.ToInterfaceMetric()).ToList()
         };
     }
 }

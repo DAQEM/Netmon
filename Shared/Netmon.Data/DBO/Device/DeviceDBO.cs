@@ -42,10 +42,26 @@ public class DeviceDBO : IDBO
             Location = device.Location,
             Contact = device.Contact,
             DeviceConnection = DeviceConnectionDBO.FromDeviceConnection(device.DeviceConnection),
-            Disks = device.Disks.Select(DiskDBO.FromDisk).ToList(),
-            Cpus = device.Cpus.Select(CpuDBO.FromCpu).ToList(),
-            Memory = device.Memory.Select(MemoryDBO.FromMemory).ToList(),
-            Interfaces = device.Interfaces.Select(InterfaceDBO.FromInterface).ToList()
+            Disks = device.Disks?.Select(DiskDBO.FromDisk).ToList() ?? new List<DiskDBO>(),
+            Cpus = device.Cpus?.Select(CpuDBO.FromCpu).ToList() ?? new List<CpuDBO>(),
+            Memory = device.Memory?.Select(MemoryDBO.FromMemory).ToList() ?? new List<MemoryDBO>(),
+            Interfaces = device.Interfaces?.Select(InterfaceDBO.FromInterface).ToList() ?? new List<InterfaceDBO>()
+        };
+    }
+
+    public IDevice ToDevice()
+    {
+        return new Models.Device.Device
+        {
+            Name = Name,
+            IpAddress = IpAddress,
+            Location = Location,
+            Contact = Contact,
+            DeviceConnection = DeviceConnection.ToDeviceConnection(),
+            Disks = Disks.Select(disk => disk.ToDisk()).ToList(),
+            Cpus = Cpus.Select(cpu => cpu.ToCpu()).ToList(),
+            Memory = Memory.Select(memory => memory.ToMemory()).ToList(),
+            Interfaces = Interfaces.Select(@interface => @interface.ToInterface()).ToList()
         };
     }
 }

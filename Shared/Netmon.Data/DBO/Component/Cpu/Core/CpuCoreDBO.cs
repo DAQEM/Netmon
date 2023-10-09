@@ -32,4 +32,14 @@ public class CpuCoreDBO : IComponentDBO
             CpuCoreMetrics = arg.Metrics.Select(CpuCoreMetricsDBO.FromCpuCoreMetric).ToList()
         };
     }
+
+    public ICpuCore ToCpuCore()
+    {
+        return new CpuCore
+        {
+            Index = Index,
+            Name = Name,
+            Metrics = CpuCoreMetrics.Select(x => x.ToCpuCoreMetric()).ToList()
+        };
+    }
 }

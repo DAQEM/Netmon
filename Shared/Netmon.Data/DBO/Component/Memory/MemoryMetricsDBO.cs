@@ -37,4 +37,15 @@ public class MemoryMetricsDBO : IComponentMetricDBO
             UsedSpace = arg.UsedSpace
         };
     }
+
+    public IMemoryMetric ToMemoryMetric()
+    {
+        return new MemoryMetric
+        {
+            Timestamp = Timestamp,
+            AllocationUnits = AllocationUnits,
+            TotalSpace = TotalSpace,
+            UsedSpace = UsedSpace
+        };
+    }
 }

@@ -23,8 +23,10 @@ public class PollController : ControllerBase
     [HttpPost("Device")]
     public async Task<IActionResult> Device([FromBody] SNMPConnectionInfo connectionInfo)
     {
-        IDevice device = await _devicePoller.PollFull(connectionInfo);
+        IDevice? device = await _devicePoller.PollFull(connectionInfo);
 
+        if (device == null) return NotFound();
+        
         await _deviceWriteRepository.AddOrUpdateFullDevice(DeviceDBO.FromDevice(device));
         await _deviceWriteRepository.SaveChanges();
         

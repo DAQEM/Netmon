@@ -69,4 +69,19 @@ public class DeviceConnectionDBO : IComponentDBO
             ContextName = deviceConnection.ContextName
         };
     }
+
+    public IDeviceConnection ToDeviceConnection()
+    {
+        return new DeviceConnection
+        {
+            Port = Port,
+            Community = Community,
+            SNMPVersion = SNMPVersion,
+            AuthPassword = AuthPassword,
+            PrivacyPassword = PrivacyPassword,
+            AuthProtocol = AuthProtocol,
+            PrivacyProtocol = PrivacyProtocol,
+            ContextName = ContextName
+        };
+    }
 }

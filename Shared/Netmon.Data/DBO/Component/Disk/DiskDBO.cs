@@ -23,14 +23,26 @@ public class DiskDBO : IComponentDBO
 
     public DeviceDBO Device { get; set; } = null!;
 
-    public static DiskDBO FromDisk(IDisk disk)
+    public static DiskDBO FromDisk(IDisk? disk)
     {
+        if (disk == null) return new DiskDBO();
+        
         return new DiskDBO
         {
             Id = Guid.NewGuid(),
             Index = disk.Index,
             MountingPoint = disk.MountingPoint,
             DiskMetrics = disk.Metrics.Select(DiskMetricsDBO.FromDiskMetric).ToList()
+        };
+    }
+
+    public IDisk ToDisk()
+    {
+        return new Models.Component.Disk.Disk
+        {
+            Index = Index,
+            MountingPoint = MountingPoint,
+            Metrics = DiskMetrics.Select(x => x.ToDiskMetric()).ToList()
         };
     }
 }

@@ -23,7 +23,9 @@ public class DiscoverController : Controller
     [HttpPost("Details")]
     public async Task<IActionResult> Details([FromBody] SNMPConnectionInfo connectionInfo)
     {
-        IDevice device = await _devicePoller.PollDetails(connectionInfo);
+        IDevice? device = await _devicePoller.PollDetails(connectionInfo);
+        
+        if (device == null) return NotFound();
         
         return Ok(new
         {
@@ -39,7 +41,9 @@ public class DiscoverController : Controller
     [HttpPost("Device")]
     public async Task<IActionResult> Device([FromBody] SNMPConnectionInfo connectionInfo)
     {
-        IDevice device = await _devicePoller.PollFull(connectionInfo);
+        IDevice? device = await _devicePoller.PollFull(connectionInfo);
+        
+        if (device == null) return NotFound();
         
         return Ok(device);
     }
@@ -47,7 +51,9 @@ public class DiscoverController : Controller
     [HttpPost("Disks")]
     public async Task<IActionResult> Disks([FromBody] SNMPConnectionInfo connectionInfo)
     {
-        List<IDisk> disks = await _devicePoller.PollDisks(connectionInfo);
+        List<IDisk>? disks = await _devicePoller.PollDisks(connectionInfo);
+        
+        if (disks == null) return NotFound();
         
         return Ok(disks);
     }
@@ -55,7 +61,9 @@ public class DiscoverController : Controller
     [HttpPost("Memory")]
     public async Task<IActionResult> Memory([FromBody] SNMPConnectionInfo connectionInfo)
     {
-        List<IMemory> memory = await _devicePoller.PollMemory(connectionInfo);
+        List<IMemory>? memory = await _devicePoller.PollMemory(connectionInfo);
+        
+        if (memory == null) return NotFound();
         
         return Ok(memory);
     }
@@ -63,7 +71,9 @@ public class DiscoverController : Controller
     [HttpPost("Cpus")]
     public async Task<IActionResult> Cpus([FromBody] SNMPConnectionInfo connectionInfo)
     {
-        List<ICpu> cpus = await _devicePoller.PollCpus(connectionInfo);
+        List<ICpu>? cpus = await _devicePoller.PollCpus(connectionInfo);
+        
+        if (cpus == null) return NotFound();
         
         return Ok(cpus);
     }
@@ -71,7 +81,9 @@ public class DiscoverController : Controller
     [HttpPost("Interfaces")]
     public async Task<IActionResult> Interfaces([FromBody] SNMPConnectionInfo connectionInfo)
     {
-        List<IInterface> interfaces = await _devicePoller.PollInterfaces(connectionInfo);
+        List<IInterface>? interfaces = await _devicePoller.PollInterfaces(connectionInfo);
+        
+        if (interfaces == null) return NotFound();
         
         return Ok(interfaces);
     }

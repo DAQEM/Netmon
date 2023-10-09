@@ -5,5 +5,5 @@ namespace Netmon.SNMPPolling.SNMP.Manager;
 
 public interface ISNMPManager
 {
-    Task<ISNMPResult> BulkWalkAsync(SNMPConnectionInfo snmpConnectionInfo, string oid);
+    Task<ISNMPResult> BulkWalkAsync(SNMPConnectionInfo snmpConnectionInfo, string oid, int timeoutMillis);
 }

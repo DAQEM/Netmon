@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Net;
+using Microsoft.EntityFrameworkCore;
 using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.DeviceManager.Util;
@@ -18,9 +19,13 @@ public class PollDeviceJob : IPollDeviceJob
     {
         string url = URLHandler.GetSNMPPollingURL("poll/device");
         
-        foreach (DeviceDBO deviceDBO in _database.Devices.Include(d => d.DeviceConnection))
+        List<DeviceDBO> devices = await _database.Devices
+            .Include(d => d.DeviceConnection)
+            .ToListAsync();
+
+        var tasks = devices.Select(async deviceDBO =>
         {
-            HttpClient client = new();
+            using HttpClient client = new();
             HttpResponseMessage response = await client.PostAsJsonAsync(url, new
             {
                 Version = deviceDBO.DeviceConnection.SNMPVersion,
@@ -33,9 +38,23 @@ public class PollDeviceJob : IPollDeviceJob
                 PrivacyProtocol = deviceDBO.DeviceConnection.PrivacyProtocol,
                 ContextName = deviceDBO.DeviceConnection.ContextName
             });
-            response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(responseBody);
+    
+            return new { Device = deviceDBO, StatusCode = response.StatusCode, ResponseBody = responseBody };
+        });
+
+        var results = await Task.WhenAll(tasks);
+
+        foreach (var result in results)
+        {
+            if (result.StatusCode == HttpStatusCode.NotFound)
+            {
+                Console.WriteLine($"Device {result.Device.IpAddress} not found.");
+            }
+            else
+            {
+                Console.WriteLine(result.ResponseBody);
+            }
         }
     }
 }

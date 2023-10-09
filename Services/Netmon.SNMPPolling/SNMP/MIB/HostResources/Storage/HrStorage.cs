@@ -11,15 +11,17 @@ public class HrStorage
     public Integer32 HrMemorySize { get; set; }
     public HrStorageTable HrStorageTable { get; set; } = new();
 
-    public static ISNMPDeserializer<HrStorage> Deserializer { get; } = new HrDeviceDeserializer();
+    public static ISNMPDeserializer<HrStorage> Deserializer { get; } = new HrStorageDeserializer();
 
-    private class HrDeviceDeserializer : ISNMPDeserializer<HrStorage>
+    private class HrStorageDeserializer : ISNMPDeserializer<HrStorage>
     {
         public HrStorage Deserialize(ISNMPResult isnmpResult)
         {
+            List<Variable> variables = isnmpResult.GetTable(OID);
+
             return new HrStorage
             {
-                HrMemorySize = (Integer32) isnmpResult.GetTable(OID)[0].Data,
+                HrMemorySize = variables.Count > 0 ? (Integer32) variables[0].Data : new Integer32(0),
                 HrStorageTable = HrStorageTable.Deserializer.Deserialize(new SNMPResult(isnmpResult.GetTable(HrStorageTable.OID))),
             };
         }

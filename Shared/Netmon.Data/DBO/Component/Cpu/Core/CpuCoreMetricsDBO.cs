@@ -29,4 +29,13 @@ public class CpuCoreMetricsDBO : IComponentMetricDBO
             Load = arg.Load
         };
     }
+
+    public ICpuCoreMetric ToCpuCoreMetric()
+    {
+        return new CpuCoreMetric
+        {
+            Timestamp = Timestamp,
+            Load = Load
+        };
+    }
 }

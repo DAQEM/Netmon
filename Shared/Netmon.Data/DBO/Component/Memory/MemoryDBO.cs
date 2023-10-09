@@ -23,14 +23,25 @@ public class MemoryDBO : IComponentDBO
     
     public DeviceDBO Device { get; set; } = null!;
 
-    public static MemoryDBO FromMemory(IMemory arg)
+    public static MemoryDBO FromMemory(IMemory? memory)
     {
+        if (memory == null) return new MemoryDBO();
         return new MemoryDBO
         {
             Id = Guid.NewGuid(),
-            Index = arg.Index,
-            Name = arg.Name,
-            MemoryMetrics = arg.Metrics.Select(MemoryMetricsDBO.FromMemoryMetric).ToList()
+            Index = memory.Index,
+            Name = memory.Name,
+            MemoryMetrics = memory.Metrics.Select(MemoryMetricsDBO.FromMemoryMetric).ToList()
+        };
+    }
+
+    public IMemory ToMemory()
+    {
+        return new Models.Component.Memory.Memory
+        {
+            Index = Index,
+            Name = Name,
+            Metrics = MemoryMetrics.Select(x => x.ToMemoryMetric()).ToList()
         };
     }
 }

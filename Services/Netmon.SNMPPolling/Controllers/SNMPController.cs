@@ -16,9 +16,9 @@ public class SNMPController : Controller
     }
 
     [HttpPost("GetBulkWalk")]
-    public async Task<IActionResult> GetBulkWalk([FromBody] SNMPConnectionInfo snmpConnectionInfo, string oid)
+    public async Task<IActionResult> GetBulkWalk([FromBody] SNMPConnectionInfo snmpConnectionInfo, string oid, int timeoutMillis)
     {
-        ISNMPResult result = await _snmpManager.BulkWalkAsync(snmpConnectionInfo, oid);
+        ISNMPResult result = await _snmpManager.BulkWalkAsync(snmpConnectionInfo, oid, timeoutMillis);
 
         return Ok(result.Variables.Select(variable => new
         {

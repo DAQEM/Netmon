@@ -21,15 +21,26 @@ public class CpuDBO : IComponentDBO
     public List<CpuCoreDBO> CpuCores { get; set; } = null!;
     
     public DeviceDBO Device { get; set; } = null!;
-
-    public static CpuDBO FromCpu(ICpu arg)
+    
+    public static CpuDBO FromCpu(ICpu? cpu)
     {
+        if (cpu == null) return new CpuDBO();
         return new CpuDBO
         {
             Id = Guid.NewGuid(),
-            Index = arg.Index,
-            CpuMetrics = arg.Metrics.Select(CpuMetricsDBO.FromCpuMetric).ToList(),
-            CpuCores = arg.Cores.Select(CpuCoreDBO.FromCpuCore).ToList()
+            Index = cpu.Index,
+            CpuMetrics = cpu.Metrics.Select(CpuMetricsDBO.FromCpuMetric).ToList(),
+            CpuCores = cpu.Cores.Select(CpuCoreDBO.FromCpuCore).ToList()
+        };
+    }
+
+    public ICpu ToCpu()
+    {
+        return new Models.Component.Cpu.Cpu
+        {
+            Index = Index,
+            Metrics = CpuMetrics.Select(x => x.ToCpuMetric()).ToList(),
+            Cores = CpuCores.Select(x => x.ToCpuCore()).ToList()
         };
     }
 }

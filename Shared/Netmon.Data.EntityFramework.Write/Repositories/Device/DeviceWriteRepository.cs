@@ -10,6 +10,7 @@ using Netmon.Data.Repositories.Write.Component.Disk;
 using Netmon.Data.Repositories.Write.Component.Interface;
 using Netmon.Data.Repositories.Write.Component.Memory;
 using Netmon.Data.Repositories.Write.Device;
+using Netmon.Models.Device;
 
 namespace Netmon.Data.Write.Repositories.Device;
 
@@ -103,6 +104,23 @@ public class DeviceWriteRepository : IDeviceWriteRepository
             device.Id = Guid.NewGuid();
             await _database.Devices.AddAsync(device);
         }
+    }
+    
+    public async Task<IDevice> AddDeviceWithConnection(IDevice toDevice)
+    {
+        if (toDevice == null)
+        {
+            throw new ArgumentNullException(nameof(toDevice));
+        }
+        
+        if (toDevice.DeviceConnection == null)
+        {
+            throw new ArgumentNullException(nameof(toDevice.DeviceConnection));
+        }
+        
+        DeviceDBO device = DeviceDBO.FromDevice(toDevice);
+        await _database.Devices.AddAsync(device);
+        return device.ToDevice();
     }
     
     public async Task SaveChanges()

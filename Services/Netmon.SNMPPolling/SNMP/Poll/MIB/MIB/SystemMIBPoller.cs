@@ -14,9 +14,12 @@ public class SystemMIBPoller : IMIBPoller<SystemMIB>
         _snmpManager = snmpManager;
     }
     
-    public async Task<SystemMIB> PollMIB(SNMPConnectionInfo connectionInfo)
+    public async Task<SystemMIB?> PollMIB(SNMPConnectionInfo connectionInfo)
     {
-        ISNMPResult sysSystemResult = await _snmpManager.BulkWalkAsync(connectionInfo, SystemMIB.OID);
+        ISNMPResult sysSystemResult = await _snmpManager.BulkWalkAsync(connectionInfo, SystemMIB.OID, 10000);
+        
+        if (!sysSystemResult.Variables.Any()) return null;
+        
         return SystemMIB.Deserializer.Deserialize(sysSystemResult);
     }
 }

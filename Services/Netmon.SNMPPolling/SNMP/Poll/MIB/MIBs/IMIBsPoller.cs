@@ -8,5 +8,5 @@ public interface IMIBsPoller
 {
     public Task<List<IMIB>> PollAllMIBs(SNMPConnectionInfo snmpConnectionInfo);
     
-    public Task<SystemMIB> PollSystemMIB(SNMPConnectionInfo snmpConnectionInfo);
+    public Task<SystemMIB?> PollSystemMIB(SNMPConnectionInfo snmpConnectionInfo);
 }

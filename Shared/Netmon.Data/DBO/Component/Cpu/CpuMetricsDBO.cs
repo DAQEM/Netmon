@@ -37,4 +37,15 @@ public class CpuMetricsDBO : IComponentMetricDBO
             FifteenMinuteLoad = arg.FifteenMinuteLoad
         };
     }
+
+    public ICpuMetric ToCpuMetric()
+    {
+        return new CpuMetric
+        {
+            Timestamp = Timestamp,
+            OneMinuteLoad = OneMinuteLoad,
+            FiveMinuteLoad = FiveMinuteLoad,
+            FifteenMinuteLoad = FifteenMinuteLoad
+        };
+    }
 }

@@ -37,4 +37,15 @@ public class DiskMetricsDBO : IComponentMetricDBO
             UsedSpace = diskMetric.UsedSpace
         };
     }
+
+    public IDiskMetric ToDiskMetric()
+    {
+        return new DiskMetric
+        {
+            Timestamp = Timestamp,
+            AllocationUnits = AllocationUnits,
+            TotalSpace = TotalSpace,
+            UsedSpace = UsedSpace
+        };
+    }
 }

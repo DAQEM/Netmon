@@ -11,6 +11,7 @@ public class MIBDeviceConverter : IMIBDeviceConverter
 {
     public IDevice ConvertMIBsToDevice(SNMPConnectionInfo connectionInfo, List<IMIB> mibs)
     {
+        Console.WriteLine("Found {0} MIBs", mibs.Count);
         IDevice device = new Models.Device.Device
         {
             IpAddress = connectionInfo.IpAddress,

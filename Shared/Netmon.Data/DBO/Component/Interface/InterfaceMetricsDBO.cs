@@ -90,4 +90,28 @@ public class InterfaceMetricsDBO : IComponentMetricDBO
             OutUnicastPackets = arg.OutUnicastPackets
         };
     }
+
+    public IInterfaceMetric ToInterfaceMetric()
+    {
+        return new InterfaceMetric
+        {
+            Timestamp = Timestamp,
+            AdminStatus = AdminStatus,
+            OperationStatus = OperationStatus,
+            Speed = Speed,
+            Mtu = Mtu,
+            InOctets = InOctets,
+            OutOctets = OutOctets,
+            InErrors = InErrors,
+            OutErrors = OutErrors,
+            InDiscards = InDiscards,
+            OutDiscards = OutDiscards,
+            InBroadcastPackets = InBroadcastPackets,
+            OutBroadcastPackets = OutBroadcastPackets,
+            InMulticastPackets = InMulticastPackets,
+            OutMulticastPackets = OutMulticastPackets,
+            InUnicastPackets = InUnicastPackets,
+            OutUnicastPackets = OutUnicastPackets
+        };
+    }
 }

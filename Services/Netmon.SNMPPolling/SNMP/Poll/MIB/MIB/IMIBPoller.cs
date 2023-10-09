@@ -5,5 +5,5 @@ namespace Netmon.SNMPPolling.SNMP.Poll.MIB.MIB;
 
 public interface IMIBPoller<T> where T : IMIB
 {
-    Task<T> PollMIB(SNMPConnectionInfo connectionInfo);
+    Task<T?> PollMIB(SNMPConnectionInfo connectionInfo);
 }
