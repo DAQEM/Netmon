@@ -16,7 +16,7 @@ async Task ForwardRequest(HttpContext context, string url)
       context.Response.StatusCode = (int)response.StatusCode;
       return;
    }
-   await context.Response.WriteAsync(await response.Content.ReadAsStringAsync());
+   await response.Content.CopyToAsync(context.Response.Body);
 }
 
 string GetHost(int port) => app.Environment.IsDevelopment() ? $"http://localhost:{port}/api/" : $"http://host.docker.internal:{port}/api/";

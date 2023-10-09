@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Services\SNMPPollingService\SNMPPollingService.csproj" />
+      <ProjectReference Include="..\..\Services\Netmon.SNMPPolling\Netmon.SNMPPolling.csproj" />
     </ItemGroup>
 
 </Project>

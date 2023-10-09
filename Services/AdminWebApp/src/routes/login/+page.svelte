@@ -1,4 +1,4 @@
 <script lang="ts">
 </script>
 
-<h1>Admin Page</h1>
+<h1>Login page</h1>

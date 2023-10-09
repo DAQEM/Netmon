@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Data.EntityFramework
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.SNMPPolling.Tests", "Tests\Netmon.SNMPPolling.Tests\Netmon.SNMPPolling.Tests.csproj", "{F04F7CD1-8080-4341-9781-5C604BE144D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGateway", "Services\APIGateway\APIGateway.csproj", "{39805855-A904-4126-A782-FDE701B62E85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +56,9 @@ Global
 		{F04F7CD1-8080-4341-9781-5C604BE144D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F04F7CD1-8080-4341-9781-5C604BE144D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F04F7CD1-8080-4341-9781-5C604BE144D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39805855-A904-4126-A782-FDE701B62E85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39805855-A904-4126-A782-FDE701B62E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39805855-A904-4126-A782-FDE701B62E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39805855-A904-4126-A782-FDE701B62E85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
