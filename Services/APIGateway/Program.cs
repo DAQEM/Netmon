@@ -1,38 +1,31 @@
-using Microsoft.AspNetCore.Mvc;
+using AspNetCore.Proxy;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient();
+builder.Services.AddProxies();
 
 WebApplication app = builder.Build();
 
-async Task ForwardRequest(HttpContext context, string url)
+app.UseRouting();
+
+app.UseProxies(proxies =>
 {
-   HttpClient client = context.RequestServices.GetRequiredService<HttpClient>();
-   string? remainder = context.Request.RouteValues["remainder"] as string;
-   HttpResponseMessage response = await client.GetAsync(url + remainder);
-   if (!response.IsSuccessStatusCode)
-   {
-      context.Response.StatusCode = (int)response.StatusCode;
-      return;
-   }
-   await response.Content.CopyToAsync(context.Response.Body);
-}
-
-string GetHost(int port) => app.Environment.IsDevelopment() ? $"http://localhost:{port}/api/" : $"http://host.docker.internal:{port}/api/";
-
-app.MapGet("/api/account/{*remainder}", async context => {
-   await ForwardRequest(context, GetHost(5001));
+    proxies.Map("/api/account/{**remainder}", proxy =>
+    {
+        proxy.UseHttp((_, args) => GetHost(5001) + args["remainder"]);
+    });
+    proxies.Map("/api/device/{**remainder}", proxy =>
+    {
+        proxy.UseHttp((_, args) => GetHost(5002) + args["remainder"]);
+    });
+    proxies.Map("/api/polling/{**remainder}", proxy =>
+    {
+        proxy.UseHttp((_, args) => GetHost(5003) + args["remainder"]);
+    });
 });
-
-app.MapGet("/api/device/{*remainder}", async context => {
-   await ForwardRequest(context, GetHost(5002));
-});
-
-app.MapGet("/api/polling/{*remainder}", async context => {
-   await ForwardRequest(context, GetHost(5003));
-});
-
-
 
 app.Run();
+return;
+
+string GetHost(int port) => app.Environment.IsDevelopment() ? $"http://localhost:{port}/api/" : $"http://host.docker.internal:{port}/api/";
