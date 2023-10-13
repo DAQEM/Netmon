@@ -50,10 +50,28 @@
 					class="mr-3 w-3 h-3 ml-2 text-primary-800 dark:text-white inline focus:outline-none"
 				/>Devices
 			</DropdownItem>
-            <DropdownItem href="/device/add">
+			<DropdownItem href="/device/add">
 				<PlusSolid
 					class="mr-3 w-3 h-3 ml-2 text-primary-800 dark:text-white inline focus:outline-none"
-				/>Add new
+				/>Add New Device
+			</DropdownItem>
+		</Dropdown>
+
+		<NavLi class="cursor-pointer">
+			Users<ChevronDownOutline
+				class="w-3 h-3 ml-2 text-primary-800 dark:text-white inline focus:outline-none"
+			/>
+		</NavLi>
+		<Dropdown class="w-44 z-20">
+			<DropdownItem href="/user">
+				<ListSolid
+					class="mr-3 w-3 h-3 ml-2 text-primary-800 dark:text-white inline focus:outline-none"
+				/>Users
+			</DropdownItem>
+			<DropdownItem href="/user/add">
+				<PlusSolid
+					class="mr-3 w-3 h-3 ml-2 text-primary-800 dark:text-white inline focus:outline-none"
+				/>Add New User
 			</DropdownItem>
 		</Dropdown>
 	</NavUl>

@@ -26,7 +26,6 @@ using Netmon.SNMPPolling.SNMP.MIB.If;
 using Netmon.SNMPPolling.SNMP.MIB.System;
 using Netmon.SNMPPolling.SNMP.MIB.UCDavis;
 using Netmon.SNMPPolling.SNMP.Poll.Device;
-using Netmon.SNMPPolling.SNMP.Poll.MIB;
 using Netmon.SNMPPolling.SNMP.Poll.MIB.MIB;
 using Netmon.SNMPPolling.SNMP.Poll.MIB.MIBs;
 

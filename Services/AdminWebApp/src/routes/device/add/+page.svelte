@@ -6,10 +6,7 @@
 
 	export let form: ActionData;
 
-	console.log(form);
-	console.log(process.env.NODE_ENV);
-
-	let versionGroup: number = form?.version || 2;
+	let versionGroup: number = form?.version || 1;
 </script>
 
 <div class="flex justify-center mt-12">
