@@ -33,4 +33,9 @@ public class DeviceReadRepository : IDeviceReadRepository
     {
         return await _database.Devices.ToListAsync();
     }
+
+    public async Task<DeviceDBO?> GetById(Guid id)
+    {
+        return await _database.Devices.FirstOrDefaultAsync(device => device.Id == id);
+    }
 }

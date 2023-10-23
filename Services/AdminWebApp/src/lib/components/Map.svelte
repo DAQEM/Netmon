@@ -2,25 +2,29 @@
 	import { browser } from '$app/environment';
 	import { onDestroy, onMount } from 'svelte';
 
-	export let id: string;
 	export let height: number;
 	export let width: number;
+
+	export let latitude: number;
+	export let longitude: number;
 
 	let mapElement: HTMLDivElement;
 	let map: any;
 
 	onMount(async () => {
 		if (browser) {
+			mapElement.style.width = `${width}px`;
+			mapElement.style.height = `${height}px`;
+
 			//@ts-ignore
 			const leaflet = await import('leaflet');
 
 			map = leaflet.map(mapElement, {
-				center: [51.714 + 0.013, 5.273],
-				zoom: 13
+				center: [latitude, longitude],
+				zoom: 10
 			});
 
 			map.zoomControl.remove();
-			// map.dragging.disable();
 
 			leaflet
 				.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -29,10 +33,13 @@
 				})
 				.addTo(map);
 
-			leaflet.marker([51.714, 5.273]).addTo(map);
+			leaflet.marker([latitude, longitude]).addTo(map);
 
-			mapElement.style.width = `${width}px`;
-			mapElement.style.height = `${height + 20}px`;
+			map.on('click', () => {
+				window.open(`https://www.google.com/maps/search/${latitude},${longitude}`, '_blank');
+			});
+
+			map.panTo([latitude, longitude]);
 		}
 	});
 
@@ -44,10 +51,13 @@
 	});
 </script>
 
-<div {id}>
+<main>
 	<div bind:this={mapElement} />
-</div>
+</main>
 
 <style>
 	@import 'leaflet/dist/leaflet.css';
+	main div {
+		height: 800px;
+	}
 </style>

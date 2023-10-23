@@ -18,4 +18,14 @@ public class DeviceConnectionReadRepository : IDeviceConnectionReadRepository
     {
         return await _database.DeviceConnections.ToListAsync();
     }
+
+    public async Task<DeviceConnectionDBO?> GetById(Guid id)
+    {
+        return await _database.DeviceConnections.FirstOrDefaultAsync(device => device.Id == id);
+    }
+
+    public async Task<DeviceConnectionDBO?> GetByDeviceId(Guid id)
+    {
+        return await _database.DeviceConnections.FirstOrDefaultAsync(device => device.DeviceId == id);
+    }
 }

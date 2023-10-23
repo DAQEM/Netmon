@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Netmon.Data.DBO.Component.Memory;
+using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Read.Component.Memory;
 
@@ -20,5 +21,10 @@ public class MemoryReadRepository : IMemoryReadRepository
     public async Task<List<MemoryDBO>> GetAll()
     {
         return await _database.Memory.ToListAsync();
+    }
+
+    public async Task<MemoryDBO?> GetById(Guid id)
+    {
+        return await _database.Memory.FirstOrDefaultAsync(device => device.Id == id);
     }
 }

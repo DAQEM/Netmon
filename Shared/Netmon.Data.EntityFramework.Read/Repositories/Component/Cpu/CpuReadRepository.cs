@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Netmon.Data.DBO.Component.Cpu;
+using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Read.Component.Cpu;
 using Netmon.Data.Repositories.Read.Component.Cpu.Core;
@@ -24,5 +25,10 @@ public class CpuReadRepository : ICpuReadRepository
     public async Task<List<CpuDBO>> GetAll()
     {
         return await _database.Cpus.ToListAsync();
+    }
+
+    public async Task<CpuDBO?> GetById(Guid id)
+    {
+        return await _database.Cpus.FirstOrDefaultAsync(device => device.Id == id);
     }
 }

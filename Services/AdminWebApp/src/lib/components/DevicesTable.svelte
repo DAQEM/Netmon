@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Map from '$lib/components/Map.svelte';
 	import {
 		Button,
 		Table,
@@ -8,7 +9,6 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import Map from '$lib/components/Map.svelte';
 	import { slide } from 'svelte/transition';
 
 	export let devices: Device[];
@@ -31,6 +31,9 @@
 		<TableHeadCell>
 			<span class="sr-only">Edit</span>
 		</TableHeadCell>
+		<TableHeadCell>
+			<span class="sr-only">View</span>
+		</TableHeadCell>
 	</TableHead>
 	<TableBody tableBodyClass="divide-y">
 		{#each devices as device, i}
@@ -43,19 +46,22 @@
 					/>
 				</TableBodyCell>
 				<TableBodyCell>{device.name}</TableBodyCell>
-				<TableBodyCell>{device.ipAddress}</TableBodyCell>
+				<TableBodyCell>{device.ip_address}</TableBodyCell>
 				<TableBodyCell>
 					<Button color="none" class="text-primary-700" href="/device/{device.id}/edit">Edit</Button
 					>
 				</TableBodyCell>
+				<TableBodyCell>
+					<Button color="none" class="text-primary-700" href="/device/{device.id}">View</Button>
+				</TableBodyCell>
 			</TableBodyRow>
 			{#if openRow === i}
 				<TableBodyRow on:dblclick={() => (details = device)}>
-					<TableBodyCell colspan="4" class="p-0">
+					<TableBodyCell colspan="5" class="p-0">
 						<div class="px-2 py-3" transition:slide={{ duration: 300, axis: 'y' }}>
 							<div class="flex gap-4">
 								<div class="h-64 w-64 rounded-2xl overflow-hidden">
-									<Map id={device.id} height={256} width={256} />
+									<Map height={256} width={256} latitude={52.0} longitude={5.0} />
 								</div>
 								<div class="flex items-center">
 									<div class="flex gap-16">
@@ -66,7 +72,7 @@
 											</div>
 											<div>
 												<h2 class="text-xs font-bold">IP Address</h2>
-												<h3>{device.ipAddress}</h3>
+												<h3>{device.ip_address}</h3>
 											</div>
 											<div>
 												<h2 class="text-xs font-bold">Location</h2>

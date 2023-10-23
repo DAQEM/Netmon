@@ -1,5 +1,13 @@
 import deviceApi from '$lib/api/device_api';
+import type { PageServerLoad } from '../$types';
 import type { Actions } from './$types';
+
+export const load: PageServerLoad = async ({ params }) => {
+	const result = await deviceApi.getDeviceWithConnection(params.id);
+	const device: Device = JSON.parse(JSON.stringify(result));
+	console.log(device);
+	return {};
+};
 
 export const actions = {
 	default: async (event) => {
@@ -50,28 +58,20 @@ export const actions = {
 			});
 
 			console.log(result);
-			return {
-				success: true,
-				device: result
-			}
 		}
 
 		return {
 			errors,
-			device: {
-				ip_address: data.get('ip_address') as string,
-				connection: {
-					version: Number.parseInt(data.get('version') as string),
-					port: Number.parseInt(data.get('port') as string),
-					community: data.get('community') as string,
-					username: data.get('username') as string,
-					auth_password: data.get('auth_password') as string,
-					privacy_password: data.get('privacy_password') as string,
-					auth_protocol: Number.parseInt(data.get('auth_protocol') as string),
-					privacy_protocol: Number.parseInt(data.get('privacy_protocol') as string),
-					context_name: data.get('context_name') as string
-				}
-			}
+			version: Number.parseInt(data.get('version') as string),
+			ip_address: data.get('ip_address') as string,
+			port: Number.parseInt(data.get('port') as string),
+			community: data.get('community') as string,
+			username: data.get('username') as string,
+			auth_password: data.get('auth_password') as string,
+			privacy_password: data.get('privacy_password') as string,
+			auth_protocol: Number.parseInt(data.get('auth_protocol') as string),
+			privacy_protocol: Number.parseInt(data.get('privacy_protocol') as string),
+			context_name: data.get('context_name') as string
 		};
 	}
 } satisfies Actions;

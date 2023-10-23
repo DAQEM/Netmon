@@ -106,23 +106,39 @@ public class DeviceWriteRepository : IDeviceWriteRepository
         }
     }
     
-    public async Task<IDevice> AddDeviceWithConnection(IDevice toDevice)
+    public async Task<DeviceDBO> AddDeviceWithConnection(DeviceDBO device)
     {
-        if (toDevice == null)
+        if (device == null)
         {
-            throw new ArgumentNullException(nameof(toDevice));
+            throw new ArgumentNullException(nameof(device));
         }
         
-        if (toDevice.DeviceConnection == null)
+        if (device.DeviceConnection == null)
         {
-            throw new ArgumentNullException(nameof(toDevice.DeviceConnection));
+            throw new ArgumentNullException(nameof(device.DeviceConnection));
         }
         
-        DeviceDBO device = DeviceDBO.FromDevice(toDevice);
         await _database.Devices.AddAsync(device);
-        return device.ToDevice();
+        return device;
     }
-    
+
+    public Task UpdateWithConnection(DeviceDBO deviceDBO)
+    {
+        if (deviceDBO == null)
+        {
+            throw new ArgumentNullException(nameof(deviceDBO));
+        }
+        
+        if (deviceDBO.DeviceConnection == null)
+        {
+            throw new ArgumentNullException(nameof(deviceDBO.DeviceConnection));
+        }
+        
+        _database.Entry(deviceDBO).CurrentValues.SetValues(deviceDBO);
+        _database.Entry(deviceDBO.DeviceConnection).CurrentValues.SetValues(deviceDBO.DeviceConnection);
+        return Task.CompletedTask;
+    }
+
     public async Task SaveChanges()
     {
         await _database.SaveChangesAsync();

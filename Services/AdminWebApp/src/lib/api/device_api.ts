@@ -10,13 +10,18 @@ const deviceApi = {
 	async getDevice(id: string): Promise<Device> {
 		return await fetch(this.getUrl('/' + id)).then((res) => res.json());
 	},
-	async addDevice(data: DeviceConnectionInfo) {
+	async getDeviceWithConnection(id: string): Promise<Device> {
+		return await fetch(this.getUrl('/' + id + '?includeConnection=true')).then((res) => res.json());
+	},
+	async addDevice(data: Device) {
+		const json = JSON.stringify(data);
+		console.log('json',json);
 		return await fetch(this.getUrl('/'), {
 			method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-			body: JSON.stringify(data)
+			body: json
 		}).then((res) => (res.ok ? res.json() : res.json().then((err) => Promise.reject(err))));
 	}
 };

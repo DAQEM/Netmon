@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Netmon.Data.DBO.Component.Disk;
+using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Read.Component.Disk;
 
@@ -20,5 +21,10 @@ public class DiskReadRepository : IDiskReadRepository
     public async Task<List<DiskDBO>> GetAll()
     {
         return await _database.Disks.ToListAsync();
+    }
+
+    public async Task<DiskDBO?> GetById(Guid id)
+    {
+        return await _database.Disks.FirstOrDefaultAsync(device => device.Id == id);
     }
 }

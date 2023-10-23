@@ -2,9 +2,9 @@
 	import DevicesTable from '$lib/components/DevicesTable.svelte';
 	import UserTable from '$lib/components/UserTable.svelte';
 	import type { User } from '@auth/core/types';
-	import type { PageData } from './$types';
 	import { Button, TableBodyCell, TableBodyRow } from 'flowbite-svelte';
-	import { ArrowLeftSolid, ArrowRightSolid } from 'flowbite-svelte-icons';
+	import { ArrowRightSolid } from 'flowbite-svelte-icons';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 
@@ -19,7 +19,7 @@
 			<div class="col-span-3 row-span-2">
 				<DevicesTable {devices}>
 					<TableBodyRow>
-						<TableBodyCell colspan="4">
+						<TableBodyCell colspan="5">
 							<div class="flex justify-end">
 								<Button color="primary" href="/device">
 									View More

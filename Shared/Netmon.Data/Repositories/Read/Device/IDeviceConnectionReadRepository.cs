@@ -5,5 +5,5 @@ namespace Netmon.Data.Repositories.Read.Device;
 
 public interface IDeviceConnectionReadRepository : IComponentReadRepository<DeviceConnectionDBO>
 {
-    
+    public Task<DeviceConnectionDBO?> GetByDeviceId(Guid id);
 }

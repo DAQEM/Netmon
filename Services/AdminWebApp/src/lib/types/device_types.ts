@@ -1,21 +1,21 @@
+//eslint-disable-next-line
 interface Device {
-    id: string,
-    name: string,
-    ipAddress: string,
-    location: string,
-    contact: string
+	id?: string | undefined;
+	name?: string | undefined;
+	ip_address?: string | undefined;
+	location?: string | undefined;
+	contact?: string | undefined;
+	connection?: DeviceConnectionInfo | undefined;
 }
 
+//eslint-disable-next-line
 interface DeviceConnectionInfo {
-	connection: {
-		ip_address: string;
-		port: number;
-		community: string;
-		version: number;
-		auth_password?: string;
-		privacy_password?: string;
-		auth_protocol?: number;
-		privacy_protocol?: number;
-		context?: string;
-	};
+	port: number | undefined;
+	community: string | undefined;
+	version: number | undefined;
+	auth_password?: string | undefined;
+	privacy_password?: string | undefined;
+	auth_protocol?: number | undefined;
+	privacy_protocol?: number | undefined;
+	context_name?: string | undefined;
 }

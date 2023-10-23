@@ -1,14 +1,11 @@
 ﻿using System.Text.Json.Serialization;
-using Netmon.Data.EntityFramework.Attribute.Validator;
+using Netmon.Data.DBO.Device;
 using Netmon.Models.Device.Connection.Protocol;
 
 namespace Netmon.DeviceManager.DTO.Device;
 
 public class DeviceConnectionDTO
 {
-    [ValidateIpAddress]
-    [JsonPropertyName("ip_address")]
-    public string IpAddress { get; set; } = null!;
     [JsonPropertyName("port")]
     public int Port { get; set; }
     [JsonPropertyName("community")]
@@ -23,6 +20,21 @@ public class DeviceConnectionDTO
     public AuthProtocol? AuthProtocol { get; set; }
     [JsonPropertyName("privacy_protocol")]
     public PrivacyProtocol? PrivacyProtocol { get; set; }
-    [JsonPropertyName("context")]
-    public string? Context { get; set; }
+    [JsonPropertyName("context_name")]
+    public string? ContextName { get; set; }
+
+    public static DeviceConnectionDTO FromDeviceConnectionDBO(DeviceConnectionDBO deviceConnection)
+    {
+        return new DeviceConnectionDTO
+        {
+            Port = deviceConnection.Port,
+            Community = deviceConnection.Community,
+            Version = deviceConnection.SNMPVersion,
+            AuthPassword = deviceConnection.AuthPassword,
+            PrivacyPassword = deviceConnection.PrivacyPassword,
+            AuthProtocol = deviceConnection.AuthProtocol,
+            PrivacyProtocol = deviceConnection.PrivacyProtocol,
+            ContextName = deviceConnection.ContextName
+        };
+    }
 }

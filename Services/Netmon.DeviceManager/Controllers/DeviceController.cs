@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Netmon.Data.DBO.Device;
 using Netmon.Data.Repositories.Read.Device;
 using Netmon.Data.Repositories.Write.Device;
 using Netmon.DeviceManager.DTO.Device;
@@ -12,24 +13,60 @@ public class DeviceController : BaseController
 {
     private readonly IDeviceReadRepository _deviceReadRepository;
     private readonly IDeviceWriteRepository _deviceWriteRepository;
-    
-    public DeviceController(IDeviceReadRepository deviceReadRepository, IDeviceWriteRepository deviceWriteRepository)
+    private readonly IDeviceConnectionReadRepository _deviceConnectionReadRepository;
+
+    public DeviceController(IDeviceReadRepository deviceReadRepository, IDeviceWriteRepository deviceWriteRepository, 
+        IDeviceConnectionReadRepository deviceConnectionReadRepository)
     {
         _deviceReadRepository = deviceReadRepository;
         _deviceWriteRepository = deviceWriteRepository;
+        _deviceConnectionReadRepository = deviceConnectionReadRepository;
     }
 
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        return Ok(await _deviceReadRepository.GetAll());
+        return Ok((await _deviceReadRepository.GetAll())
+            .Select(DeviceDTO.FromDeviceDBO));
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetDeviceById(Guid id, bool includeConnection = false)
+    {
+        DeviceDBO? deviceDBO = await _deviceReadRepository.GetById(id);
+        if (deviceDBO == null) return NoContent();
+        DeviceWithConnectionDTO device = DeviceWithConnectionDTO.FromDeviceDBO(deviceDBO);
+        
+        if (includeConnection)
+        {
+            DeviceConnectionDBO? deviceConnectionDBO = await _deviceConnectionReadRepository.GetByDeviceId(id);
+            if (deviceConnectionDBO != null)
+            {
+                device.Connection = DeviceConnectionDTO.FromDeviceConnectionDBO(deviceConnectionDBO);
+            }
+        }
+
+        return Ok(device);
     }
     
     [HttpPost]
     public async Task<IActionResult> Post(DeviceCreateDTO deviceCreateDTO)
     {
-        IDevice device = await _deviceWriteRepository.AddDeviceWithConnection(deviceCreateDTO.ToDevice());
+        DeviceDBO deviceDBO = deviceCreateDTO.ToDeviceDBO();
+        deviceDBO = await _deviceWriteRepository.AddDeviceWithConnection(deviceDBO);
         await _deviceWriteRepository.SaveChanges();
-        return Ok(device);
+        DeviceWithConnectionDTO deviceDTO = DeviceWithConnectionDTO.FromDeviceDBOWithConnection(deviceDBO);
+        return CreatedAtAction(nameof(GetDeviceById), new { id = deviceDBO.Id }, deviceDTO);
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Guid id, DeviceUpdateDTO deviceUpdateDTO)
+    {
+        DeviceDBO? deviceDBO = await _deviceReadRepository.GetById(id);
+        if (deviceDBO == null) return NoContent();
+        deviceUpdateDTO.UpdateDeviceDBO(deviceDBO);
+        await _deviceWriteRepository.UpdateWithConnection(deviceDBO);
+        await _deviceWriteRepository.SaveChanges();
+        return Ok();
     }
 }

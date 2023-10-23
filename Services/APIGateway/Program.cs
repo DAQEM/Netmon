@@ -13,15 +13,15 @@ app.UseProxies(proxies =>
 {
     proxies.Map("/api/account/{**remainder}", proxy =>
     {
-        proxy.UseHttp((_, args) => GetHost(5001) + args["remainder"]);
+        proxy.UseHttp((context, args) => GetHost(5001) + args["remainder"] + context.Request.QueryString);
     });
     proxies.Map("/api/device/{**remainder}", proxy =>
     {
-        proxy.UseHttp((_, args) => GetHost(5002) + args["remainder"]);
+        proxy.UseHttp((context, args) => GetHost(5002) + args["remainder"] + context.Request.QueryString);
     });
     proxies.Map("/api/polling/{**remainder}", proxy =>
     {
-        proxy.UseHttp((_, args) => GetHost(5003) + args["remainder"]);
+        proxy.UseHttp((context, args) => GetHost(5003) + args["remainder"] + context.Request.QueryString);
     });
 });
 
