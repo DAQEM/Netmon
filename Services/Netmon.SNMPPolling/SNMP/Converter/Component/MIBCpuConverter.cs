@@ -13,43 +13,40 @@ public class MIBCpuConverter : IMIBComponentConverter<ICpu>
 {
     public List<ICpu> ConvertMIBsToComponent(List<IMIB> mibs)
     {
-        Cpu? cpu = null;
+        Cpu? cpu = new()
+        {
+            Index = 1,
+            Metrics = new List<ICpuMetric>(),
+            Cores = new List<ICpuCore>()
+        };
 
         HostResourcesMIB? hostResourcesMIB = mibs.OfType<HostResourcesMIB>().FirstOrDefault();
         
         if (hostResourcesMIB != null && hostResourcesMIB.HrDevice.HrProcessorTable.HrProcessorEntries.Any())
         {
-            cpu = new Cpu
-            {
-                Index = 1,
-                Cores = hostResourcesMIB.HrDevice.HrProcessorTable.HrProcessorEntries
-                    .Select(e => new CpuCore
+            cpu.Cores = hostResourcesMIB.HrDevice.HrProcessorTable.HrProcessorEntries
+                .Select(e => new CpuCore
+                {
+                    Index = e.HrProcessorIndex.ToInt32(),
+                    Name = hostResourcesMIB.HrDevice.HrDeviceTable.HrDeviceEntries
+                        .FirstOrDefault(e1 => e1.HrDeviceIndex.ToInt32() == e.HrProcessorIndex.ToInt32())?.HrDeviceDescr
+                        .ToString() ?? "Unknown",
+                    Metrics = new List<ICpuCoreMetric>
                     {
-                        Index = e.HrProcessorIndex.ToInt32(),
-                        Name = hostResourcesMIB.HrDevice.HrDeviceTable.HrDeviceEntries
-                            .FirstOrDefault(e1 => e1.HrDeviceIndex.ToInt32() == e.HrProcessorIndex.ToInt32())?.HrDeviceDescr
-                            .ToString() ?? "Unknown",
-                        Metrics = new List<ICpuCoreMetric>
+                        new CpuCoreMetric
                         {
-                            new CpuCoreMetric
-                            {
-                                Load = e.HrProcessorLoad.ToInt32()
-                            }
+                            Load = e.HrProcessorLoad.ToInt32()
                         }
-                    })
-                    .Cast<ICpuCore>()
-                    .ToList()
-            };
+                    }
+                })
+                .Cast<ICpuCore>()
+                .ToList();
         }
         
         UCDavisMIB? ucDavisMIB = mibs.OfType<UCDavisMIB>().FirstOrDefault();
 
         if (ucDavisMIB != null && ucDavisMIB.LaLoadTable.LaLoadEntries.Any())
         {
-            cpu ??= new Cpu
-            {
-                Index = 1
-            };
             List<LaLoadEntry> laLoadEntries = ucDavisMIB.LaLoadTable.LaLoadEntries;
             CpuMetric cpuMetric = new()
             {
@@ -60,6 +57,6 @@ public class MIBCpuConverter : IMIBComponentConverter<ICpu>
             cpu.Metrics = new List<ICpuMetric> { cpuMetric };
         }
         
-        return cpu == null ? new List<ICpu>() : new List<ICpu> { cpu };
+        return !cpu.Cores.Any() && !cpu.Metrics.Any() ? new List<ICpu>() : new List<ICpu> { cpu };
     }
 }

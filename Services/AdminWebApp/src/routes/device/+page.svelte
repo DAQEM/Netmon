@@ -62,6 +62,6 @@
 				</Button>
 			</div>
 		</div>
-		<DevicesTable {devices} />
+		<DevicesTable {devices} id={""} />
 	</div>
 </div>
