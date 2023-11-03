@@ -35,6 +35,11 @@ const deviceApi = {
 		}).then((res) => {
 			return res.ok ? res.json() : Error.fromResponse(res);
 		}).catch(() => Error.unknown());
+	},
+	async deleteDevice(id: string): Promise<void> {
+		await fetch(this.getUrl('/' + id), {
+			method: 'DELETE'
+		});
 	}
 };
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import DeviceConnectionTable from '$lib/components/DeviceConnectionTable.svelte';
 	import { Button } from 'flowbite-svelte';
-	import { PenSolid, PlusSolid } from 'flowbite-svelte-icons';
+	import { CloseSolid, PenSolid } from 'flowbite-svelte-icons';
 	import type { ActionData, PageData } from './$types';
 	import FormErrorChecker from '$lib/components/FormErrorChecker.svelte';
 
@@ -26,9 +26,15 @@
 					</div>
 				</div>
 				<DeviceConnectionTable {device} errors={form?.errors} />
-				<Button type="submit" class="col-span-2">
-					<PenSolid class="w-3.5 h-3.5 mr-2" /> Edit
-				</Button>
+				<div class="flex gap-4 col-span-2">
+					<Button color="light" href="/device/{device.id}" class="w-full">
+						<CloseSolid class="w-3.5 h-3.5 mr-2" />
+						Cancel
+					</Button>
+					<Button type="submit" class="w-full">
+						<PenSolid class="w-3.5 h-3.5 mr-2" /> Edit
+					</Button>
+				</div>
 			</div>
 		</form>
 	</div>

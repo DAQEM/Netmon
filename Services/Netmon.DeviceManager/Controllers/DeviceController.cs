@@ -71,4 +71,14 @@ public class DeviceController : BaseController
         await _deviceWriteRepository.SaveChanges();
         return Ok(DeviceWithConnectionDTO.FromDeviceDBOWithConnection(deviceDBO));
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        DeviceDBO? deviceDBO = await _deviceReadRepository.GetById(id);
+        if (deviceDBO == null) return NoContent();
+        await _deviceWriteRepository.Delete(deviceDBO);
+        await _deviceWriteRepository.SaveChanges();
+        return Ok();
+    }
 }

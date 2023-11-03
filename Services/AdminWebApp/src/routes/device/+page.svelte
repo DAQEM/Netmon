@@ -27,7 +27,7 @@
 <div class="flex justify-center mx-2 mt-10">
 	<div class="max-w-7xl w-full">
 		<div class="flex justify-between items-center">
-			<h1 class="text-3xl font-semibold mx-6 my-3">All devices</h1>
+			<h1 class="text-3xl font-semibold mx-6 my-3">All Devices</h1>
 			<div class="flex gap-4">
 				<div class="relative">
 					<div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">

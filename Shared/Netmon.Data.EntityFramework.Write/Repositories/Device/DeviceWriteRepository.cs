@@ -152,6 +152,17 @@ public class DeviceWriteRepository : IDeviceWriteRepository
         return Task.CompletedTask;
     }
 
+    public Task Delete(DeviceDBO deviceDBO)
+    {
+        if (deviceDBO == null)
+        {
+            throw new ArgumentNullException(nameof(deviceDBO));
+        }
+        
+        _database.Devices.Remove(deviceDBO);
+        return Task.CompletedTask;
+    }
+
     public async Task SaveChanges()
     {
         await _database.SaveChangesAsync();
