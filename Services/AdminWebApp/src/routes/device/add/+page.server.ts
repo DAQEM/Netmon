@@ -8,10 +8,10 @@ export const actions = {
 		const errors: Record<string, string> = {};
 
 		if (
-			Number.parseInt(data.get('version') as string) < 1 ||
-			Number.parseInt(data.get('version') as string) > 2
+			Number.parseInt(data.get('version') as string) < 2 ||
+			Number.parseInt(data.get('version') as string) > 3
 		) {
-			errors['version'] = 'Version must be 1 or 2';
+			errors['version'] = 'Version must be v2c or v3';
 		}
 
 		if (
@@ -33,7 +33,7 @@ export const actions = {
 		if (Object.keys(errors).length === 0) {
 			const version = Number.parseInt(data.get('version') as string);
 			const community =
-				version === 1 ? (data.get('community') as string) : (data.get('username') as string);
+				version === 2 ? (data.get('community') as string) : (data.get('username') as string);
 
 			const result = await deviceApi.addDevice({
 				ip_address: data.get('ip_address') as string,

@@ -53,6 +53,8 @@ public class DeviceController : BaseController
     public async Task<IActionResult> Post(DeviceCreateDTO deviceCreateDTO)
     {
         DeviceDBO deviceDBO = deviceCreateDTO.ToDeviceDBO();
+        DeviceDBO? existingDevice = await _deviceReadRepository.GetByIpAddress(deviceDBO.IpAddress);
+        if (existingDevice != null) return Conflict(new { message = "Device with this IP address already exists" });
         deviceDBO = await _deviceWriteRepository.AddDeviceWithConnection(deviceDBO);
         await _deviceWriteRepository.SaveChanges();
         DeviceWithConnectionDTO deviceDTO = DeviceWithConnectionDTO.FromDeviceDBOWithConnection(deviceDBO);
@@ -64,9 +66,9 @@ public class DeviceController : BaseController
     {
         DeviceDBO? deviceDBO = await _deviceReadRepository.GetById(id);
         if (deviceDBO == null) return NoContent();
-        deviceUpdateDTO.UpdateDeviceDBO(deviceDBO);
+        deviceDBO = deviceUpdateDTO.ToDeviceDBO(deviceDBO);
         await _deviceWriteRepository.UpdateWithConnection(deviceDBO);
         await _deviceWriteRepository.SaveChanges();
-        return Ok();
+        return Ok(DeviceWithConnectionDTO.FromDeviceDBOWithConnection(deviceDBO));
     }
 }

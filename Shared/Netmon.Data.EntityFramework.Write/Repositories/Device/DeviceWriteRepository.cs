@@ -134,8 +134,21 @@ public class DeviceWriteRepository : IDeviceWriteRepository
             throw new ArgumentNullException(nameof(deviceDBO.DeviceConnection));
         }
         
-        _database.Entry(deviceDBO).CurrentValues.SetValues(deviceDBO);
-        _database.Entry(deviceDBO.DeviceConnection).CurrentValues.SetValues(deviceDBO.DeviceConnection);
+        DeviceDBO existingDevice = _database.Devices.First(d => d.Id == deviceDBO.Id);
+
+        existingDevice.Name = deviceDBO.IpAddress;
+
+        DeviceConnectionDBO existingDeviceConnection = _database.DeviceConnections.First(dc => dc.DeviceId == deviceDBO.Id);
+        
+        existingDeviceConnection.Port = deviceDBO.DeviceConnection.Port;
+        existingDeviceConnection.Community = deviceDBO.DeviceConnection.Community;
+        existingDeviceConnection.SNMPVersion = deviceDBO.DeviceConnection.SNMPVersion;
+        existingDeviceConnection.AuthPassword = deviceDBO.DeviceConnection.AuthPassword;
+        existingDeviceConnection.PrivacyPassword = deviceDBO.DeviceConnection.PrivacyPassword;
+        existingDeviceConnection.AuthProtocol = deviceDBO.DeviceConnection.AuthProtocol;
+        existingDeviceConnection.PrivacyProtocol = deviceDBO.DeviceConnection.PrivacyProtocol;
+        existingDeviceConnection.ContextName = deviceDBO.DeviceConnection.ContextName;
+        
         return Task.CompletedTask;
     }
 

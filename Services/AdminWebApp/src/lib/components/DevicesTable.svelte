@@ -12,6 +12,7 @@
 	import { slide } from 'svelte/transition';
 
 	export let devices: Device[];
+	export let id: string;
 
 	let openRow: number | null = null;
 	let details: Device | null = null;
@@ -21,7 +22,7 @@
 	};
 </script>
 
-<Table noborder={true} hoverable={true} class="rounded-xl overflow-hidden">
+<Table noborder={true} hoverable={true} class="rounded-xl overflow-hidden" {id}>
 	<TableHead class="bg-primary-700 text-white">
 		<TableHeadCell>
 			<span class="sr-only">Image</span>
@@ -36,6 +37,13 @@
 		</TableHeadCell>
 	</TableHead>
 	<TableBody tableBodyClass="divide-y">
+		{#if devices.length === 0}
+			<TableBodyRow>
+				<TableBodyCell colspan="5" class="text-center">
+					No devices found
+				</TableBodyCell>
+			</TableBodyRow>
+		{/if} 
 		{#each devices as device, i}
 			<TableBodyRow on:click={() => toggleRow(i)} class="cursor-pointer">
 				<TableBodyCell>

@@ -1,12 +1,13 @@
 import deviceApi from '$lib/api/device_api';
+import { Error } from '$lib/types/error';
 import type { PageServerLoad } from '../$types';
 import type { Actions } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
-	const result = await deviceApi.getDeviceWithConnection(params.id);
-	const device: Device = JSON.parse(JSON.stringify(result));
-	console.log(device);
-	return {};
+	const device = await deviceApi.getDeviceWithConnection(params.id);
+	return {
+		device
+	};
 };
 
 export const actions = {
@@ -16,10 +17,10 @@ export const actions = {
 		const errors: Record<string, string> = {};
 
 		if (
-			Number.parseInt(data.get('version') as string) < 1 ||
-			Number.parseInt(data.get('version') as string) > 2
+			Number.parseInt(data.get('version') as string) < 2 ||
+			Number.parseInt(data.get('version') as string) > 3
 		) {
-			errors['version'] = 'Version must be 1 or 2';
+			errors['version'] = 'Version must be 2 or 3';
 		}
 
 		if (
@@ -41,9 +42,9 @@ export const actions = {
 		if (Object.keys(errors).length === 0) {
 			const version = Number.parseInt(data.get('version') as string);
 			const community =
-				version === 1 ? (data.get('community') as string) : (data.get('username') as string);
+				version === 2 ? (data.get('community') as string) : (data.get('username') as string);
 
-			const result = await deviceApi.addDevice({
+			const result = await deviceApi.editDevice(data.get('id') as string, {
 				ip_address: data.get('ip_address') as string,
 				connection: {
 					port: Number.parseInt(data.get('port') as string),
@@ -57,7 +58,15 @@ export const actions = {
 				}
 			});
 
-			console.log(result);
+			if (result instanceof Error) {
+				errors['device'] = result.message;
+			} else {
+				return {
+					success: true,
+					device: structuredClone(result)
+				};
+			}
+
 		}
 
 		return {

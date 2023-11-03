@@ -1,3 +1,4 @@
+import { Error } from '$lib/types/error';
 import urlHandler from './url_handler';
 
 const deviceApi = {
@@ -5,24 +6,35 @@ const deviceApi = {
 		return urlHandler.getDeviceManagerUrl('/device' + url);
 	},
 	async getAllDevices(): Promise<Device[]> {
-		return await fetch(this.getUrl('/')).then((res) => res.json());
+		return await fetch(this.getUrl('/')).then((res) => res.json()).catch(() => ([] as Device[]));
 	},
 	async getDevice(id: string): Promise<Device> {
-		return await fetch(this.getUrl('/' + id)).then((res) => res.json());
+		return await fetch(this.getUrl('/' + id)).then((res) => res.json()).catch(() => ({} as Device));
 	},
 	async getDeviceWithConnection(id: string): Promise<Device> {
-		return await fetch(this.getUrl('/' + id + '?includeConnection=true')).then((res) => res.json());
+		return await fetch(this.getUrl('/' + id + '?includeConnection=true')).then((res) => res.json()).catch(() => ({} as Device));
 	},
-	async addDevice(data: Device) {
-		const json = JSON.stringify(data);
-		console.log('json',json);
+	async addDevice(data: Device): Promise<Device | Error> {
 		return await fetch(this.getUrl('/'), {
 			method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-			body: json
-		}).then((res) => (res.ok ? res.json() : res.json().then((err) => Promise.reject(err))));
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		}).then((res) => {
+			return res.ok ? res.json() : Error.fromResponse(res);
+		}).catch(() => Error.unknown());
+	},
+	async editDevice(id: string, data: Device): Promise<Device | Error> {
+		return await fetch(this.getUrl('/' + id), {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		}).then((res) => {
+			return res.ok ? res.json() : Error.fromResponse(res);
+		}).catch(() => Error.unknown());
 	}
 };
 

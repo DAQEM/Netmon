@@ -1,4 +1,3 @@
-//eslint-disable-next-line
 interface Device {
 	id?: string | undefined;
 	name?: string | undefined;
@@ -8,7 +7,6 @@ interface Device {
 	connection?: DeviceConnectionInfo | undefined;
 }
 
-//eslint-disable-next-line
 interface DeviceConnectionInfo {
 	port: number | undefined;
 	community: string | undefined;

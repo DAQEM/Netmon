@@ -38,4 +38,9 @@ public class DeviceReadRepository : IDeviceReadRepository
     {
         return await _database.Devices.FirstOrDefaultAsync(device => device.Id == id);
     }
+
+    public async Task<DeviceDBO?> GetByIpAddress(string deviceDBOIpAddress)
+    {
+        return await _database.Devices.FirstOrDefaultAsync(device => device.IpAddress == deviceDBOIpAddress);
+    }
 }

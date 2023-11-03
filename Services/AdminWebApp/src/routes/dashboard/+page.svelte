@@ -17,21 +17,23 @@
 		<h1 class="text-2xl font-bold mb-5">Dashboard</h1>
 		<div class="w-full grid grid-cols-5 grid-rows-[max-content,max-content,max-content] gap-8">
 			<div class="col-span-3 row-span-2">
-				<DevicesTable {devices}>
-					<TableBodyRow>
-						<TableBodyCell colspan="5">
-							<div class="flex justify-end">
-								<Button color="primary" href="/device">
-									View More
-									<ArrowRightSolid class="w-4 h-4 ml-2" />
-								</Button>
-							</div>
-						</TableBodyCell>
-					</TableBodyRow>
+				<DevicesTable {devices} id="device-table">
+					{#if devices.length > 0}
+						<TableBodyRow>
+							<TableBodyCell colspan="5">
+								<div class="flex justify-end">
+									<Button color="primary" href="/device">
+										View More
+										<ArrowRightSolid class="w-4 h-4 ml-2" />
+									</Button>
+								</div>
+							</TableBodyCell>
+						</TableBodyRow>
+					{/if}
 				</DevicesTable>
 			</div>
 			<div class="col-span-2 row-span-3">
-				<UserTable users={[user, user, user, user, user]}>
+				<UserTable users={[user, user, user, user, user]} id="user-table">
 					<TableBodyRow>
 						<TableBodyCell colspan="4">
 							<div class="flex justify-end">

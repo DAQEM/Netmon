@@ -6,12 +6,14 @@
 	export let device: Device | undefined;
 	export let errors: Record<string, string> | undefined;
 
-	let versionGroup: number = device?.connection?.version || 1;
+	let versionGroup: number = device?.connection?.version || 2;
 </script>
 
 <div>
 	<h1 class="mb-4 font-bold">Connection Info</h1>
 	<div class="mb-6">
+		<Input type="hidden" name="id" value={device?.id} />
+
 		<FormErrorChecker name="version" {errors} />
 		<Label for="version" class="mb-1 font-bold"
 			>SNMP Version*
@@ -33,19 +35,14 @@
 			</div></Popover
 		>
 		<Select name="version" required={true} bind:value={versionGroup}>
-			<option value={1}>v2c</option>
-			<option value={2}>v3</option>
+			<option value={2}>v2c</option>
+			<option value={3}>v3</option>
 		</Select>
 	</div>
 	<div class="mb-6">
 		<FormErrorChecker name="ip_address" {errors} />
 		<Label for="ip_address" class="mb-1 font-bold">IP Address*</Label>
-		<Input
-			name="ip_address"
-			placeholder="127.0.0.1"
-			required={true}
-			value={device?.ip_address}
-		/>
+		<Input name="ip_address" placeholder="127.0.0.1" required={true} value={device?.ip_address} />
 	</div>
 	<div class="mb-6">
 		<FormErrorChecker name="port" {errors} />
@@ -61,7 +58,7 @@
 </div>
 <div>
 	<h1 class="mb-4 font-bold">Security Info</h1>
-	{#if versionGroup === 1}
+	{#if versionGroup === 2}
 		<div class="mb-6">
 			<Label for="community" class="mb-1 font-bold">Community*</Label>
 			<Input
@@ -71,7 +68,7 @@
 				value={device?.connection?.community}
 			/>
 		</div>
-	{:else if versionGroup === 2}
+	{:else if versionGroup === 3}
 		<div class="mb-6">
 			<Label for="username" class="mb-1 font-bold">Username*</Label>
 			<Input

@@ -13,19 +13,26 @@ public class DeviceUpdateDTO
     [JsonPropertyName("connection")]
     public DeviceConnectionDTO Connection { get; set; } = null!;
 
-    public void UpdateDeviceDBO(DeviceDBO deviceDBO)
+    public DeviceDBO ToDeviceDBO(DeviceDBO deviceDBO)
     {
-        deviceDBO.IpAddress = IpAddress;
-        deviceDBO.DeviceConnection = new DeviceConnectionDBO
+        return new DeviceDBO
         {
-            Port = Connection.Port,
-            Community = Connection.Community,
-            SNMPVersion = Connection.Version,
-            AuthPassword = Connection.AuthPassword ?? string.Empty,
-            PrivacyPassword = Connection.PrivacyPassword ?? string.Empty,
-            AuthProtocol = Connection.AuthProtocol ?? AuthProtocol.SHA256,
-            PrivacyProtocol = Connection.PrivacyProtocol ?? PrivacyProtocol.AES,
-            ContextName = Connection.ContextName ?? string.Empty
+            Id = deviceDBO.Id,
+            Name = deviceDBO.Name,
+            IpAddress = IpAddress,
+            Location = deviceDBO.Location,
+            Contact = deviceDBO.Contact,
+            DeviceConnection = new DeviceConnectionDBO
+            {
+                Port = Connection.Port,
+                Community = Connection.Community,
+                SNMPVersion = Connection.Version,
+                AuthPassword = Connection.AuthPassword ?? string.Empty,
+                PrivacyPassword = Connection.PrivacyPassword ?? string.Empty,
+                AuthProtocol = Connection.AuthProtocol ?? AuthProtocol.SHA256,
+                PrivacyProtocol = Connection.PrivacyProtocol ?? PrivacyProtocol.AES,
+                ContextName = Connection.ContextName ?? string.Empty
+            }
         };
     }
 }

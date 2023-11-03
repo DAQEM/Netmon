@@ -11,6 +11,7 @@
 	import type { User } from '@auth/core/types';
 
 	export let users: User[];
+	export let id: string;
 
 	let openRow: number | null = null;
 	let details: User | null = null;
@@ -20,7 +21,7 @@
 	};
 </script>
 
-<Table noborder={true} hoverable={true} class="rounded-xl overflow-hidden">
+<Table noborder={true} hoverable={true} class="rounded-xl overflow-hidden" {id}>
 	<TableHead class="bg-primary-700 text-white">
 		<TableHeadCell>
 			<span class="sr-only">Image</span>
