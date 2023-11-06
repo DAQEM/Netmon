@@ -81,6 +81,7 @@ services:
   netmon-snmp-test-agent:
     build: Tests/SNMPTestAgent
     container_name: netmon-snmp-test-agent
+    hostname: snmpd-test
     ports:
       - "161:161/udp"
     networks:

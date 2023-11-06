@@ -18,8 +18,13 @@ public class SNMPDiscoverIntegrationTests : IClassFixture<WebApplicationFactory<
     }
     
     [Theory]
-    [InlineData("/Discover/Details")]
-    public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
+    [InlineData("/Discover/Details", "{\"ipAddress\":\"127.0.0.1\",\"port\":161,\"community\":\"public\",\"name\":\"snmpd-test\",\"location\":\"SNMPD Test\",\"contact\":\"Root <root@snmpd.test>\"}")]
+    [InlineData("/Discover/Device", "{\"ipAddress\":\"127.0.0.1\",\"name\":\"snmpd-test\",\"location\":\"SNMPD Test\",\"contact\":\"Root <root@snmpd.test>\",\"deviceConnection\":{\"port\":161,\"community\":\"public\",\"authPassword\":\"\",\"privacyPassword\":\"\",\"authProtocol\":\"SHA256\",\"privacyProtocol\":\"AES\",\"contextName\":\"\",\"snmpVersion\":1},\"disks\":[],\"cpus\":[],\"memory\":[],\"interfaces\":[]}")]
+    [InlineData("/Discover/Disks", "[]")]
+    [InlineData("/Discover/Memory", "[]")]
+    [InlineData("/Discover/Cpus", "[]")]
+    [InlineData("/Discover/Interfaces", "[]")]
+    public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url, string expectedJsonResponse)
     {
         // Arrange
         HttpClient client = _factory.CreateClient();
@@ -33,10 +38,10 @@ public class SNMPDiscoverIntegrationTests : IClassFixture<WebApplicationFactory<
             community = "public"
         });
 
+        _testOutputHelper.WriteLine(await response.Content.ReadAsStringAsync());
         // Assert
-        _testOutputHelper.WriteLine("Status code: {0}", response.StatusCode);
-        _testOutputHelper.WriteLine("Response: {0}", await response.Content.ReadAsStringAsync());
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType?.ToString());
+        Assert.Equal(expectedJsonResponse, await response.Content.ReadAsStringAsync());
     }
 }
