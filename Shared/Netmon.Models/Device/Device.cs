@@ -13,8 +13,8 @@ public class Device : IDevice
     public string? Location { get; set; }
     public string? Contact { get; set; }
     public IDeviceConnection? DeviceConnection { get; set; }
-    public List<IDisk> Disks { get; set; } = null!;
-    public List<ICpu> Cpus { get; set; } = null!;
-    public List<IMemory> Memory { get; set; } = null!;
-    public List<IInterface> Interfaces { get; set; } = null!;
+    public List<IDisk> Disks { get; set; } = new();
+    public List<ICpu> Cpus { get; set; } = new();
+    public List<IMemory> Memory { get; set; } = new();
+    public List<IInterface> Interfaces { get; set; } = new();
 }

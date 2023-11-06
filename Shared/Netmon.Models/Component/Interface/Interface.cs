@@ -11,6 +11,6 @@ public class Interface : IInterface
     public string Name { get; set; }
     public InterfaceType Type { get; set; }
     [JsonConverter(typeof(PhysicalAddressConverter))]
-    public PhysicalAddress PhysAddress { get; set; }
-    public List<IInterfaceMetric> Metrics { get; set; }
+    public PhysicalAddress PhysAddress { get; set; } = null!;
+    public List<IInterfaceMetric> Metrics { get; set; } = new();
 }
