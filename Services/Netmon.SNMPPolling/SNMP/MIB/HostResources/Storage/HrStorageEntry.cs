@@ -8,12 +8,12 @@ public class HrStorageEntry
 {
     public static readonly string OID = "1.3.6.1.2.1.25.2.3.1";
     
-    public Integer32 HrStorageIndex { get; set; }
+    public Integer32 HrStorageIndex { get; set; } = null!;
     public StorageType HrStorageType { get; set; }
-    public OctetString HrStorageDescr { get; set; }
-    public Integer32 HrStorageAllocationUnits { get; set; }
-    public Integer32 HrStorageSize { get; set; }
-    public Integer32 HrStorageUsed { get; set; }
+    public OctetString HrStorageDescr { get; set; } = null!;
+    public Integer32 HrStorageAllocationUnits { get; set; } = null!;
+    public Integer32 HrStorageSize { get; set; } = null!;
+    public Integer32 HrStorageUsed { get; set; } = null!;
     public Integer32? HrStorageAllocationFailures { get; set; }
     
     public static ISNMPDeserializer<HrStorageEntry> Deserializer { get; } = new HrProcessorEntryDeserializer();

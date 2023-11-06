@@ -8,7 +8,7 @@ public class LaLoadEntry
 {
     public static readonly string OID = "1.3.6.1.4.1.2021.10.1";
 
-    public Integer32 LaLoadInt { get; set; }
+    public Integer32 LaLoadInt { get; set; } = null!;
     
     public static ISNMPDeserializer<LaLoadEntry> Deserializer { get; } = new LaLoadEntryDeserializer();
     

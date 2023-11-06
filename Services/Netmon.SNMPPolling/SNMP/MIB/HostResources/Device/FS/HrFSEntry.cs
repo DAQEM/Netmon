@@ -8,15 +8,15 @@ public class HrFSEntry
 {
     public static readonly string OID = "1.3.6.1.2.1.25.3.8.1";
 
-    public Integer32 HrFSIndex { get; set; }
-    public OctetString HrFSMountPoint { get; set; }
-    public OctetString HrFSRemoteMountPoint { get; set; }
-    public ObjectIdentifier HrFSType { get; set; }
-    public Integer32 HrFSAccess { get; set; }
-    public Integer32 HrFSBootable { get; set; }
-    public Integer32 HrFSStorageIndex { get; set; }
-    public OctetString HrFSLastFullBackupDate { get; set; }
-    public OctetString HrFSLastPartialBackupDate { get; set; }
+    public Integer32 HrFSIndex { get; set; } = null!;
+    public OctetString HrFSMountPoint { get; set; } = null!;
+    public OctetString HrFSRemoteMountPoint { get; set; } = null!;
+    public ObjectIdentifier HrFSType { get; set; } = null!;
+    public Integer32 HrFSAccess { get; set; } = null!;
+    public Integer32 HrFSBootable { get; set; } = null!;
+    public Integer32 HrFSStorageIndex { get; set; } = null!;
+    public OctetString HrFSLastFullBackupDate { get; set; } = null!;
+    public OctetString HrFSLastPartialBackupDate { get; set; } = null!;
     
     public static ISNMPDeserializer<HrFSEntry> Deserializer { get; } = new HrFSEntryDeserializer();
     

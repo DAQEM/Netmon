@@ -8,7 +8,7 @@ public class HrStorage
 {
     public static readonly string OID = "1.3.6.1.2.1.25.2";
 
-    public Integer32 HrMemorySize { get; set; }
+    public Integer32 HrMemorySize { get; set; }  = null!;
     public HrStorageTable HrStorageTable { get; set; } = new();
 
     public static ISNMPDeserializer<HrStorage> Deserializer { get; } = new HrStorageDeserializer();

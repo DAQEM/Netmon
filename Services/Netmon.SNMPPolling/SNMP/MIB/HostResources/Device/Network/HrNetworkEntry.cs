@@ -8,7 +8,7 @@ public class HrNetworkEntry
 {
     public static readonly string OID = "1.3.6.1.2.1.25.3.4.1";
 
-    public Integer32 HrNetworkIfIndex { get; set; }
+    public Integer32 HrNetworkIfIndex { get; set; } = null!;
     
     public static ISNMPDeserializer<HrNetworkEntry> Deserializer { get; } = new HrNetworkEntryDeserializer();
     

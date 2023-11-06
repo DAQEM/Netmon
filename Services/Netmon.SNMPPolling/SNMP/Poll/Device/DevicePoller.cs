@@ -52,7 +52,7 @@ public class DevicePoller : IDevicePoller
 
     public async Task<IDevice?> PollDetails(SNMPConnectionInfo connectionInfo)
     {
-        SystemMIB mib = await _mibsPoller.PollSystemMIB(connectionInfo);
+        SystemMIB? mib = await _mibsPoller.PollSystemMIB(connectionInfo);
         
         if (mib == null) return null;
         

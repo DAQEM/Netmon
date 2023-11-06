@@ -9,14 +9,14 @@ public class IfXEntry
     public static readonly string OID = "1.3.6.1.2.1.31.1.1.1";
 
     public int IfIndex { get; set; }
-    public Counter64 IfHCInOctets { get; set; }
-    public Counter64 IfHCInUcastPkts { get; set; }
-    public Counter64 IfHCInMulticastPkts { get; set; }
-    public Counter64 IfHCInBroadcastPkts { get; set; }
-    public Counter64 IfHCOutOctets { get; set; }
-    public Counter64 IfHCOutUcastPkts { get; set; }
-    public Counter64 IfHCOutMulticastPkts { get; set; }
-    public Counter64 IfHCOutBroadcastPkts { get; set; }
+    public Counter64 IfHCInOctets { get; set; } = null!;
+    public Counter64 IfHCInUcastPkts { get; set; } = null!;
+    public Counter64 IfHCInMulticastPkts { get; set; } = null!;
+    public Counter64 IfHCInBroadcastPkts { get; set; } = null!;
+    public Counter64 IfHCOutOctets { get; set; } = null!;
+    public Counter64 IfHCOutUcastPkts { get; set; } = null!;
+    public Counter64 IfHCOutMulticastPkts { get; set; } = null!;
+    public Counter64 IfHCOutBroadcastPkts { get; set; } = null!;
     
     
     public static ISNMPDeserializer<IfXEntry> Deserializer { get; } = new IfXEntryDeserializer();

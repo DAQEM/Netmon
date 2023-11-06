@@ -8,10 +8,10 @@ public class HrDeviceEntry
 {
     public static readonly string OID = "1.3.6.1.2.1.25.3.2.1";
     
-    public Integer32 HrDeviceIndex { get; set; }
-    public ObjectIdentifier HrDeviceType { get; set; }
-    public OctetString HrDeviceDescr { get; set; }
-    public ObjectIdentifier HrDeviceID { get; set; }
+    public Integer32 HrDeviceIndex { get; set; } = null!;
+    public ObjectIdentifier HrDeviceType { get; set; } = null!;
+    public OctetString HrDeviceDescr { get; set; } = null!;
+    public ObjectIdentifier HrDeviceID { get; set; } = null!;
     public Integer32? HrDeviceStatus { get; set; }
     public Counter32? HrDeviceErrors { get; set; }
 

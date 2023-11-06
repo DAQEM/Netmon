@@ -9,18 +9,18 @@ public class IfEntry
 {
     public static readonly string OID = "1.3.6.1.2.1.2.2.1";
     
-    public Integer32 IfIndex { get; set; }
-    public OctetString IfDescr { get; set; }
+    public Integer32 IfIndex { get; set; } = null!;
+    public OctetString IfDescr { get; set; } = null!;
     public InterfaceType IfType { get; set; }
     public InterfaceStatus IfAdminStatus { get; set; }
     public InterfaceStatus IfOperationalStatus { get; set; }
-    public Integer32 IfMtu { get; set; }
-    public Gauge32 IfSpeed { get; set; }
-    public OctetString IfPhysAddress { get; set; }
-    public Counter32 IfInErrors { get; set; }
-    public Counter32 IfOutErrors { get; set; }
-    public Counter32 IfInDiscards { get; set; }
-    public Counter32 IfOutDiscards { get; set; }
+    public Integer32 IfMtu { get; set; } = null!;
+    public Gauge32 IfSpeed { get; set; } = null!;
+    public OctetString IfPhysAddress { get; set; } = null!;
+    public Counter32 IfInErrors { get; set; } = null!;
+    public Counter32 IfOutErrors { get; set; } = null!;
+    public Counter32 IfInDiscards { get; set; } = null!;
+    public Counter32 IfOutDiscards { get; set; } = null!;
     
     public static ISNMPDeserializer<IfEntry> Deserializer { get; } = new IfEntryDeserializer();
     

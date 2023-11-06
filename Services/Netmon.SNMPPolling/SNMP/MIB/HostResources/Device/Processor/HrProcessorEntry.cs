@@ -8,9 +8,9 @@ public class HrProcessorEntry
 {
     public static readonly string OID = "1.3.6.1.2.1.25.3.3.1";
 
-    public Integer32 HrProcessorIndex { get; set; } 
-    public ObjectIdentifier HrProcessorFrwID { get; set; }
-    public Integer32 HrProcessorLoad { get; set; }
+    public Integer32 HrProcessorIndex { get; set; }  = null!;
+    public ObjectIdentifier HrProcessorFrwID { get; set; } = null!;
+    public Integer32 HrProcessorLoad { get; set; } = null!;
     
     public static ISNMPDeserializer<HrProcessorEntry> Deserializer { get; } = new HrProcessorEntryDeserializer();
     
