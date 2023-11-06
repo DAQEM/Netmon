@@ -78,14 +78,11 @@ services:
       network1:
         ipv4_address: 192.168.178.6
 
-  netmon-snmp-polling-service-snmpd-test:
-    build: Tests/SNMPPollingService.smpd.Tests
-    container_name: netmon-snmp-polling-service-snmpd-test
-    hostname: snmpd-test
+  netmon-snmp-test-agent:
+    build: Tests/SNMPTestAgent
+    container_name: netmon-snmp-test-agent
     ports:
       - "161:161/udp"
-    depends_on:
-      - netmon-snmp-polling-service
     networks:
       network1:
         ipv4_address: 192.168.178.7
