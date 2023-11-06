@@ -2,8 +2,8 @@
 
 public class UserDetailsModel
 {
-    public string Username { get; set; }
-    public string Email { get; set; }
-    public List<string> Roles { get; set; }
-    public SessionDetailsModel Session { get; set; }
+    public string Username { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public List<string> Roles { get; set; } = null!;
+    public SessionDetailsModel Session { get; set; } = null!;
 }

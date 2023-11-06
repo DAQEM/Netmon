@@ -2,5 +2,5 @@
 
 public class VerifyModel
 {
-    public string SessionId { get; set; }
+    public string SessionId { get; set; } = null!;
 }

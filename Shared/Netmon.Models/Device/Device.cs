@@ -8,13 +8,13 @@ namespace Netmon.Models.Device;
 
 public class Device : IDevice
 {
-    public string IpAddress { get; set; }
+    public string IpAddress { get; set; } = null!;
     public string? Name { get; set; }
     public string? Location { get; set; }
     public string? Contact { get; set; }
     public IDeviceConnection? DeviceConnection { get; set; }
-    public List<IDisk> Disks { get; set; }
-    public List<ICpu> Cpus { get; set; }
-    public List<IMemory> Memory { get; set; }
-    public List<IInterface> Interfaces { get; set; }
+    public List<IDisk> Disks { get; set; } = null!;
+    public List<ICpu> Cpus { get; set; } = null!;
+    public List<IMemory> Memory { get; set; } = null!;
+    public List<IInterface> Interfaces { get; set; } = null!;
 }

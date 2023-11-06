@@ -2,6 +2,6 @@
 
 public class SessionDetailsModel
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
     public DateTime Expires { get; set; }
 }
