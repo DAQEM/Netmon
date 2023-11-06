@@ -8,7 +8,7 @@ namespace Netmon.Models.Component.Interface;
 public class Interface : IInterface
 {
     public int Index { get; set; }
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
     public InterfaceType Type { get; set; }
     [JsonConverter(typeof(PhysicalAddressConverter))]
     public PhysicalAddress PhysAddress { get; set; } = null!;

@@ -24,7 +24,7 @@ public class Session
     [Required]
     public DateTime ExpirationDate { get; set; }
     
-    public User User { get; set; }
+    public User? User { get; set; }
     
     private static readonly Random Random = new();
     private const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
