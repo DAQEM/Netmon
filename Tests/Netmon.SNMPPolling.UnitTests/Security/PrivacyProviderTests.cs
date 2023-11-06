@@ -4,7 +4,7 @@ using Netmon.SNMPPolling.Exception.SNMP;
 using Netmon.SNMPPolling.SNMP.Security;
 using NUnit.Framework;
 
-namespace Netmon.SNMPPolling.Tests;
+namespace Netmon.SNMPPolling.Tests.Security;
 
 [TestFixture]
 public class PrivacyProviderTests

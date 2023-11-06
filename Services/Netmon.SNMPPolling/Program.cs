@@ -90,4 +90,7 @@ if (!app.Environment.IsDevelopment())
 app.Run();
 
 
-public partial class SNMPPollingProgram { }
+namespace Netmon.SNMPPolling
+{
+    public partial class SNMPPollingProgram { }
+}

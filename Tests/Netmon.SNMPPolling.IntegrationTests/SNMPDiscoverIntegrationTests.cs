@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
-namespace Netmon.SNMPPolling.Tests.Integration;
+namespace Netmon.SNMPPolling.IntegrationTests;
 
 public class SNMPDiscoverIntegrationTests : IClassFixture<WebApplicationFactory<SNMPPollingProgram>>
 {
@@ -24,7 +24,7 @@ public class SNMPDiscoverIntegrationTests : IClassFixture<WebApplicationFactory<
         HttpResponseMessage response = await client.PostAsJsonAsync(url, new
         {
             version = "V2",
-            ipAddress = "192.168.178.7",
+            ipAddress = "127.0.0.1",
             port = 161,
             community = "public"
         });
