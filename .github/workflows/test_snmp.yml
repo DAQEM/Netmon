@@ -22,4 +22,4 @@ jobs:
           netmon-snmp-polling-service-snmpd-test
 
     - name: Test SNMP Details
-      run: dotnet test Tests/Netmon.SNMPPolling.IntegrationTests
+      run: dotnet test Tests/Netmon.SNMPPolling.IntegrationTests --logger "console;verbosity=detailed"
