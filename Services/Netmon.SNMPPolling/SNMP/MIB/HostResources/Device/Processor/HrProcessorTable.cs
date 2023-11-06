@@ -8,7 +8,7 @@ public class HrProcessorTable
 {
     public static readonly string OID = "1.3.6.1.2.1.25.3.3";
 
-    public List<HrProcessorEntry> HrProcessorEntries { get; set; }
+    public List<HrProcessorEntry> HrProcessorEntries { get; set; }  = null!;
     
     public static ISNMPDeserializer<HrProcessorTable> Deserializer { get; } = new HrProcessorTableDeserializer();
     
