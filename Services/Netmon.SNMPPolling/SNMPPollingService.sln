@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Data.EntityFramework
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Models", "..\..\Shared\Netmon.Models\Netmon.Models.csproj", "{C1237481-F117-4226-AED0-32FBFDF4914A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.SNMPPolling.Tests", "..\..\Tests\Netmon.SNMPPolling.Tests\Netmon.SNMPPolling.Tests.csproj", "{317C80CA-4F82-41F9-81BD-E6F259698644}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.SNMPPolling.UnitTests", "..\..\Tests\Netmon.SNMPPolling.Tests\Netmon.SNMPPolling.UnitTests.csproj", "{317C80CA-4F82-41F9-81BD-E6F259698644}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
