@@ -1,16 +1,20 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Netmon.SNMPPolling.IntegrationTests;
 
 public class SNMPDiscoverIntegrationTests : IClassFixture<WebApplicationFactory<SNMPPollingProgram>>
 {
     private readonly WebApplicationFactory<SNMPPollingProgram> _factory;
+    private readonly ITestOutputHelper _testOutputHelper;
 
-    public SNMPDiscoverIntegrationTests(WebApplicationFactory<SNMPPollingProgram> factory)
+    public SNMPDiscoverIntegrationTests(WebApplicationFactory<SNMPPollingProgram> factory, ITestOutputHelper testOutputHelper)
     {
         _factory = factory;
+        _testOutputHelper = testOutputHelper;
     }
     
     [Theory]
@@ -30,7 +34,9 @@ public class SNMPDiscoverIntegrationTests : IClassFixture<WebApplicationFactory<
         });
 
         // Assert
-        response.EnsureSuccessStatusCode();
+        _testOutputHelper.WriteLine("Status code: {0}", response.StatusCode);
+        _testOutputHelper.WriteLine("Response: {0}", await response.Content.ReadAsStringAsync());
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType?.ToString());
     }
 }
