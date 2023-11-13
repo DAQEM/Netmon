@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import type { Device } from '$lib/types';
 	import {
 		Sidebar,
@@ -9,18 +8,36 @@
 		SidebarItem,
 		SidebarWrapper
 	} from 'flowbite-svelte';
-	import {
-		ChartPieSolid,
-		FileEditSolid,
-		GridSolid,
-		MailBoxSolid,
-		TrashBinSolid
-	} from 'flowbite-svelte-icons';
+	import { ChartPieSolid, GridSolid, MailBoxSolid } from 'flowbite-svelte-icons';
 
 	export let device: Device;
+	export let activeUrl: string;
 
 	let spanClass = 'flex-1 ml-3 whitespace-nowrap';
-	$: activeUrl = $page.url.pathname;
+
+	type DropDownItem = {
+		label: string;
+		href: string;
+	};
+
+	let dropdownItems: DropDownItem[] = [
+		{
+			label: 'CPUs',
+			href: '/device/' + device.id + '/cpu'
+		},
+		{
+			label: 'Disks',
+			href: '/device/' + device.id + '/disk'
+		},
+		{
+			label: 'Interfaces',
+			href: '/device/' + device.id + '/interface'
+		},
+		{
+			label: 'Memory',
+			href: '/device/' + device.id + '/memory'
+		}
+	];
 </script>
 
 <Sidebar {activeUrl}>
@@ -36,10 +53,9 @@
 				<svelte:fragment slot="icon">
 					<GridSolid class="w-5 h-5" />
 				</svelte:fragment>
-				<SidebarDropdownItem label="CPUs" />
-				<SidebarDropdownItem label="Disks" />
-				<SidebarDropdownItem label="Interfaces" />
-				<SidebarDropdownItem label="Memory" />
+				{#each dropdownItems as { label, href }}
+					<SidebarDropdownItem {label} {href} active={activeUrl === href} />
+				{/each}
 			</SidebarDropdownWrapper>
 			<SidebarItem label="Alerts" {spanClass} href={'/device/' + device.id + '/alerts'}>
 				<svelte:fragment slot="icon">

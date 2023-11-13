@@ -5,7 +5,7 @@
 	import { PlusSolid, SearchOutline } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
 	import { Input } from 'flowbite-svelte';
-	import Heading1 from '$lib/components/Heading1.svelte';
+	import Heading1 from '$lib/components/heading/Heading1.svelte';
 
 	export let data: PageData;
 

@@ -1,10 +1,10 @@
-import DeviceAPI from '$lib/api/device_api';
 import type { Device } from '$lib/types';
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, PageServerParentData } from './$types';
 
-export const load = (async ({ fetch, params }) => {
-    const device: Device = await new DeviceAPI(fetch).getDeviceById(params.id);
-    return {
-        device
-    };
+export const load = (async ({ parent }) => {
+	const data: PageServerParentData = await parent();
+	const device: Device = data.device;
+	return {
+		device
+	};
 }) satisfies PageServerLoad;
