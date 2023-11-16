@@ -1,14 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import type { InterfaceMetrics, InterfaceStatistics } from '$lib/types';
+	import type { DiskStatistics } from '$lib/types';
 	import colors from '$lib/util/colors';
 	import type { ApexOptions } from 'apexcharts';
 	import { Button, Card, Chart, Dropdown, DropdownItem, Input, Label } from 'flowbite-svelte';
 	import { ChevronDownSolid } from 'flowbite-svelte-icons';
 
-	export let statistics: InterfaceStatistics | null;
-
-	let options: ApexOptions = {};
+	export let statistics: DiskStatistics | null;
 
 	const from =
 		$page.url.searchParams.get('from')?.replaceAll('%3A', ':') ??
@@ -16,216 +14,203 @@
 	const to = $page.url.searchParams.get('to')?.replaceAll('%3A', ':') ?? new Date().toISOString();
 	const fromDate = new Date(from);
 	const toDate = new Date(to);
-	let total: string = '0';
-	let average: string = '0';
 
-	if (statistics && statistics.metrics.length > 0) {
-		let metrics: InterfaceMetrics[] = statistics.metrics;
-
-		//Round to 5 minutes and deduct previous value
-		let lastInOctets = metrics[0].inOctets;
-		let inStats = metrics.map((metric: InterfaceMetrics) => {
+	let totalSpace: { x: number; y: number }[] =
+		statistics?.metrics.map((metric) => {
 			const result = {
-				x: new Date(Math.round(metric.timestamp.getTime() / 300000) * 300000).getTime(),
-				y: metric.inOctets - lastInOctets
+				x: metric.timestamp.getTime(),
+				y: metric.totalSpace * metric.allocationUnits
 			};
-			lastInOctets = metric.inOctets;
 			return result;
-		});
-		let lastOutOctets = metrics[0].outOctets;
-		let outStats = metrics.map((metric: InterfaceMetrics) => {
+		}) ?? [];
+	let usedSpace: { x: number; y: number }[] =
+		statistics?.metrics.map((metric) => {
 			const result = {
-				x: new Date(Math.round(metric.timestamp.getTime() / 300000) * 300000).getTime(),
-				y: metric.outOctets - lastOutOctets
+				x: metric.timestamp.getTime(),
+				y: metric.usedSpace * metric.allocationUnits
 			};
-			lastOutOctets = metric.outOctets;
 			return result;
-		});
+		}) ?? [];
 
-		//Convert to Bytes/s
-		inStats = inStats.map((stat) => {
-			return {
-				x: stat.x,
-				y: stat.y / 300
-			};
-		});
-		outStats = outStats.map((stat) => {
-			return {
-				x: stat.x,
-				y: stat.y / 300
-			};
-		});
+	usedSpace.sort((a, b) => a.x - b.x);
 
-		//Remove duplicates
-		inStats = inStats.filter((stat, index, self) => {
-			return index === self.findIndex((s) => s.x === stat.x);
-		});
-		outStats = outStats.filter((stat, index, self) => {
-			return index === self.findIndex((s) => s.x === stat.x);
-		});
-
-		//Add missing values
-		if (from && to) {
-			const fromTimestamp = Math.round(fromDate.getTime() / 300000) * 300000;
-			const toTimestamp = Math.round(toDate.getTime() / 300000) * 300000 - 3600000;
-			if (inStats.length > 0 && inStats[0].x > fromTimestamp) {
-				inStats.unshift({
-					x: fromTimestamp,
+	if (from && to) {
+		const fromTimestamp = Math.round(fromDate.getTime() / 300000) * 300000;
+		const toTimestamp = Math.round(toDate.getTime() / 300000) * 300000 - 3600000;
+		if (totalSpace.length > 0 && totalSpace[0].x > fromTimestamp) {
+			totalSpace.unshift({
+				x: fromTimestamp,
+				y: 0
+			});
+		}
+		if (totalSpace.length > 0 && totalSpace[totalSpace.length - 1].x < toTimestamp) {
+			totalSpace.push({
+				x: toTimestamp,
+				y: 0
+			});
+		}
+		if (usedSpace.length > 0 && usedSpace[0].x > fromTimestamp) {
+			usedSpace.unshift({
+				x: fromTimestamp,
+				y: 0
+			});
+		}
+		if (usedSpace.length > 0 && usedSpace[usedSpace.length - 1].x < toTimestamp) {
+			usedSpace.push({
+				x: toTimestamp,
+				y: 0
+			});
+		}
+		//if the gap between 2 timestamps is bigger than 20 minutes, add a new timestamp with 0 value
+		for (let i = 0; i < totalSpace.length - 1; i++) {
+			if (totalSpace[i + 1].x - totalSpace[i].x > 1200000) {
+				totalSpace.splice(i + 1, 0, {
+					x: totalSpace[i].x + 1200000,
 					y: 0
 				});
 			}
-			if (inStats.length > 0 && inStats[inStats.length - 1].x < toTimestamp) {
-				inStats.push({
-					x: toTimestamp,
-					y: 0
-				});
-			}
-			if (outStats.length > 0 && outStats[0].x > fromTimestamp) {
-				outStats.unshift({
-					x: fromTimestamp,
-					y: 0
-				});
-			}
-			if (outStats.length > 0 && outStats[outStats.length - 1].x < toTimestamp) {
-				outStats.push({
-					x: toTimestamp,
+		}
+		for (let i = 0; i < usedSpace.length - 1; i++) {
+			if (usedSpace[i + 1].x - usedSpace[i].x > 1200000) {
+				usedSpace.splice(i + 1, 0, {
+					x: usedSpace[i].x + 1200000,
 					y: 0
 				});
 			}
 		}
 
-		options = {
-			series: [
-				{
-					name: 'In',
-
-					color: colors.primary['500'],
-					data: inStats
-				},
-				{
-					name: 'Out',
-					color: colors.primary['600'],
-					data: outStats
+		if (totalSpace.length > 3) {
+			for (let i = 1; i < totalSpace.length - 1; i++) {
+				if (totalSpace[i - 1].y === 0 && totalSpace[i + 1].y === 0) {
+					totalSpace.splice(i, 1);
+					i--;
 				}
-			],
-			chart: {
-				type: 'bar',
-				height: '320px',
-				fontFamily: 'Inter, sans-serif',
-				stacked: true,
-				toolbar: {
-					show: true
-				}
-			},
-			plotOptions: {
-				bar: {
-					horizontal: false,
-					columnWidth: '110%',
-					borderRadiusApplication: 'around',
-					borderRadius: -1
-				}
-			},
-			tooltip: {
-				shared: true,
-				intersect: false,
-				style: {
-					fontFamily: 'Inter, sans-serif'
-				},
-				onDatasetHover: {
-					highlightDataSeries: false
-				}
-			},
-			states: {
-				hover: {
-					filter: {
-						type: 'darken',
-						value: 1
-					}
-				}
-			},
-			stroke: {
-				show: false,
-				width: 0,
-				colors: ['transparent']
-			},
-			grid: {
-				show: false
-			},
-			dataLabels: {
-				enabled: false
-			},
-			legend: {
-				show: true,
-				fontSize: '22px',
-				fontWeight: 600
-			},
-			xaxis: {
-				floating: false,
-				labels: {
-					show: true,
-					style: {
-						cssClass: 'text-xs font-normal fill-neutral-800 dark:fill-neutral-200'
-					},
-					formatter: function (value: string) {
-						return new Date(value).toLocaleString('nl-nl', {
-							hour: '2-digit',
-							minute: '2-digit',
-							day: '2-digit',
-							month: '2-digit',
-							year: 'numeric'
-						});
-					}
-				},
-				axisBorder: {
-					show: false
-				},
-				axisTicks: {
-					show: false
-				}
-			},
-			yaxis: {
-				show: true,
-				min: (() => {
-					let inMin = inStats.length > 0 ? Math.min(...inStats.map((stat) => stat.y)) : 0;
-					let inMax = inStats.length > 0 ? Math.max(...inStats.map((stat) => stat.y)) : 0;
-					let difference = inMax - inMin;
-					return Math.max(inMin - difference * 0.2, 0);
-				})(),
-				labels: {
-					show: true,
-					style: {
-						cssClass: 'text-xs font-normal fill-neutral-800 dark:fill-neutral-200'
-					},
-					formatter: function (value: number) {
-						return bytesToBitsString(value, true);
-					}
-				}
-			},
-			fill: {
-				opacity: 1
 			}
-		};
-
-		total = bytesToBitsString(
-			inStats.reduce((a, b) => a + b.y, 0) + outStats.reduce((a, b) => a + b.y, 0)
-		);
-		average = bytesToBitsString(Number.parseInt(total) / (inStats.length + outStats.length));
-
-		console.log(inStats.reduce((a, b) => a + b.y, 0) + outStats.reduce((a, b) => a + b.y, 0));
+		}
+		if (usedSpace.length > 3) {
+			for (let i = 1; i < usedSpace.length - 1; i++) {
+				if (usedSpace[i - 1].y === 0 && usedSpace[i + 1].y === 0) {
+					usedSpace.splice(i, 1);
+					i--;
+				}
+			}
+		}
 	}
 
-	function bytesToBitsString(value: number, addPerSecond: boolean = false): string {
-		value = value * 8;
+	let options: ApexOptions = {
+		chart: {
+			height: '400px',
+			type: 'area',
+			fontFamily: 'Inter, sans-serif',
+			dropShadow: {
+				enabled: false
+			},
+			toolbar: {
+				show: true
+			}
+		},
+		tooltip: {
+			enabled: true,
+			cssClass: 'text-black',
+			x: {
+				show: false
+			}
+		},
+		fill: {
+			type: 'gradient',
+			gradient: {
+				opacityFrom: 0.55,
+				opacityTo: 0,
+				shade: colors.primary['500'],
+				gradientToColors: [colors.primary['500']]
+			}
+		},
+		dataLabels: {
+			enabled: false
+		},
+		stroke: {
+			width: 6
+		},
+		grid: {
+			show: false,
+			strokeDashArray: 4,
+			padding: {
+				left: 2,
+				right: 2,
+				top: 0
+			}
+		},
+		series: [
+			{
+				name: 'Used Space',
+				data: usedSpace,
+				color: colors.primary['500']
+			},
+			{
+				name: 'Total Space',
+				data: totalSpace,
+				color: colors.primary['600']
+			}
+		],
+		xaxis: {
+			floating: false,
+			// categories: timestamps,
+			labels: {
+				show: true,
+				style: {
+					cssClass: 'text-xs font-normal fill-neutral-800 dark:fill-neutral-200'
+				},
+				formatter: function (value: string) {
+					return new Date(value).toLocaleString('nl-nl', {
+						hour: '2-digit',
+						minute: '2-digit',
+						day: '2-digit',
+						month: '2-digit',
+						year: 'numeric'
+					});
+				}
+			},
+			axisBorder: {
+				show: false
+			},
+			axisTicks: {
+				show: false
+			}
+		},
+		yaxis: {
+			show: true,
+			min: (() => {
+				const filteredUsedSpace = usedSpace.filter((stat) => stat.y != 0);
+				let min =
+					filteredUsedSpace.length > 0 ? Math.min(...filteredUsedSpace.map((stat) => stat.y)) : 0;
+				let max =
+					filteredUsedSpace.length > 0 ? Math.max(...filteredUsedSpace.map((stat) => stat.y)) : 0;
+				let difference = max - min;
+				return Math.max(max - difference - difference * 0.2, 0);
+			})(),
+			labels: {
+				show: true,
+				style: {
+					cssClass: 'text-xs font-normal fill-neutral-800 dark:fill-neutral-200'
+				},
+				formatter: function (value: number) {
+					return bytesToString(value, true);
+				}
+			}
+		}
+	};
+
+	function bytesToString(value: number, addPerSecond: boolean = false): string {
 		if (value < 1000) {
-			return value.toFixed(2) + ' b' + (addPerSecond ? '/s' : 'it');
+			return value.toFixed(2) + ' B';
 		} else if (value < 1000000) {
-			return (value / 1000).toFixed(2) + ' Kb' + (addPerSecond ? '/s' : 'it');
+			return (value / 1000).toFixed(2) + ' KB';
 		} else if (value < 1000000000) {
-			return (value / 1000000).toFixed(2) + ' Mb' + (addPerSecond ? '/s' : 'it');
+			return (value / 1000000).toFixed(2) + ' MB';
 		} else if (value < 1000000000000) {
-			return (value / 1000000000).toFixed(2) + ' Gb' + (addPerSecond ? '/s' : 'it');
+			return (value / 1000000000).toFixed(2) + ' GB';
 		} else {
-			return (value / 1000000000000).toFixed(2) + ' Tb' + (addPerSecond ? '/s' : 'it');
+			return (value / 1000000000000).toFixed(2) + ' TB';
 		}
 	}
 
@@ -348,18 +333,22 @@
 	{#if statistics}
 		<div class="flex justify-center text-xl font-bold !text-white">
 			<p class="bg-primary-500 rounded-xl px-4 py-2 w-max">
-				{statistics.name}
+				{statistics.mountingPoint}
 			</p>
 		</div>
 	{/if}
 	<div class="grid grid-cols-2">
 		<dl class="flex items-center">
 			<dt class="text-gray-500 dark:text-gray-400 text-sm font-normal mr-1">Total:</dt>
-			<dd class="text-gray-900 text-sm dark:text-white font-semibold">{total}</dd>
+			<dd class="text-gray-900 text-sm dark:text-white font-semibold">
+				{bytesToString(totalSpace.at(-1)?.y ?? 0)}
+			</dd>
 		</dl>
 		<dl class="flex items-center justify-end">
-			<dt class="text-gray-500 dark:text-gray-400 text-sm font-normal mr-1">Average:</dt>
-			<dd class="text-gray-900 text-sm dark:text-white font-semibold">{average}</dd>
+			<dt class="text-gray-500 dark:text-gray-400 text-sm font-normal mr-1">Used:</dt>
+			<dd class="text-gray-900 text-sm dark:text-white font-semibold">
+				{(((usedSpace.at(-1)?.y ?? 0) / (totalSpace.at(-1)?.y ?? 0)) * 100).toFixed(2)}%
+			</dd>
 		</dl>
 	</div>
 	<Chart {options} />

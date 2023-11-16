@@ -2,7 +2,7 @@
 
 namespace Netmon.Data.Repositories.Read.Component.Cpu.Core;
 
-public interface ICpuCoreReadRepository : IComponentMetricReadRepository<CpuCoreMetricsDBO>
+public interface ICpuCoreReadRepository : IReadRepository<CpuCoreMetricsDBO>
 {
     
 }

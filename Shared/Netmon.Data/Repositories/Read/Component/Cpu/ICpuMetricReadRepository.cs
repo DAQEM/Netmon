@@ -4,5 +4,4 @@ namespace Netmon.Data.Repositories.Read.Component.Cpu;
 
 public interface ICpuMetricReadRepository : IComponentMetricReadRepository<CpuMetricsDBO>
 {
-    
 }

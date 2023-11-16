@@ -22,30 +22,4 @@
 			/>
 		</div>
 	</Heading1>
-	<div class="accordion-wrapper">
-		<Accordion>
-			<AccordionItem open>
-				<span slot="header" class="text-white">CPU Statistics</span>
-				<CpuStatistics title="" />
-			</AccordionItem>
-		</Accordion>
-		<Accordion>
-			<AccordionItem open>
-				<span slot="header" class="text-white">Disk Statistics</span>
-				<DiskStatistics title="" />
-			</AccordionItem>
-		</Accordion>
-		<Accordion>
-			<AccordionItem open>
-				<span slot="header" class="text-white">Interface Statistics</span>
-				<InterfaceStatistics title="" />
-			</AccordionItem>
-		</Accordion>
-		<Accordion>
-			<AccordionItem open>
-				<span slot="header" class="text-white">Memory Statistics</span>
-				<MemoryStatistics title="" />
-			</AccordionItem>
-		</Accordion>
-	</div>
 </div>

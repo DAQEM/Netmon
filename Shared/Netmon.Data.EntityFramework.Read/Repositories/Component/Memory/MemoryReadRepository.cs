@@ -27,4 +27,23 @@ public class MemoryReadRepository : IMemoryReadRepository
     {
         return await _database.Memory.FirstOrDefaultAsync(device => device.Id == id);
     }
+    
+    public async Task<List<MemoryDBO>> GetByDeviceId(Guid deviceId)
+    {
+        return await _database.Memory.Where(memory => memory.DeviceId == deviceId).ToListAsync();
+    }
+
+    public async Task<List<MemoryDBO>> GetByDeviceIdWithMetrics(Guid deviceId)
+    {
+        return await _database.Memory.Include(memory => memory.MemoryMetrics).Where(memory => memory.DeviceId == deviceId).ToListAsync();
+    }
+    
+    public async Task<List<MemoryDBO>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
+    {
+        return await _database.Memory
+            .Include(memory => memory.MemoryMetrics)
+            .Where(memory => memory.DeviceId == deviceId)
+            .Where(memory => memory.MemoryMetrics.Any(metric => metric.Timestamp >= from && metric.Timestamp <= to))
+            .ToListAsync();
+    }
 }

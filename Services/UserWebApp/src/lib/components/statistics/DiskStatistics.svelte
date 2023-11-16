@@ -1,9 +1,17 @@
 <script lang="ts">
 	import Heading2 from '$lib/components/heading/Heading2.svelte';
-	import ChartInterfaceUsage from '../chart/ChartInterfaceUsage.svelte';
+	import type { DiskStatisticsList } from '$lib/types';
+	import ChartDiskUsage from '../chart/ChartDiskUsage.svelte';
 
 	export let title: string = 'Disk Statistics';
+	export let statistics: DiskStatisticsList | null;
 </script>
 
 <Heading2>{title}</Heading2>
-<ChartInterfaceUsage />
+{#if statistics}
+	{#each statistics.disks as statistic}
+		<ChartDiskUsage statistics={statistic} />
+	{:else}
+		<p>No data available.</p>
+	{/each}
+{/if}

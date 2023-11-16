@@ -24,4 +24,14 @@ public class InterfaceMetricsReadRepository : IInterfaceMetricReadRepository
     {
         return await _database.InterfaceMetrics.FirstOrDefaultAsync(device => device.Id == id);
     }
+    
+    public async Task<List<InterfaceMetricsDBO>> GetByComponentId(Guid componentId)
+    {
+        return await _database.InterfaceMetrics.Where(@interface => @interface.InterfaceId == componentId).ToListAsync();
+    }
+
+    public async Task<List<InterfaceMetricsDBO>> GetByComponentIds(List<Guid> componentIds)
+    {
+        return await _database.InterfaceMetrics.Where(@interface => componentIds.Contains(@interface.InterfaceId)).ToListAsync();
+    }
 }

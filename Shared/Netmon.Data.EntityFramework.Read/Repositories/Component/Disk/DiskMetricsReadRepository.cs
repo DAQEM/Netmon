@@ -24,4 +24,14 @@ public class DiskMetricsReadRepository : IDiskMetricReadRepository
     {
         return await _database.DiskMetrics.FirstOrDefaultAsync(device => device.Id == id);
     }
+    
+    public async Task<List<DiskMetricsDBO>> GetByComponentId(Guid componentId)
+    {
+        return await _database.DiskMetrics.Where(disk => disk.DiskId == componentId).ToListAsync();
+    }
+
+    public async Task<List<DiskMetricsDBO>> GetByComponentIds(List<Guid> componentIds)
+    {
+        return await _database.DiskMetrics.Where(disk => componentIds.Contains(disk.DiskId)).ToListAsync();
+    }
 }

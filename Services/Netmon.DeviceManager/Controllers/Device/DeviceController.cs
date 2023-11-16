@@ -3,9 +3,8 @@ using Netmon.Data.DBO.Device;
 using Netmon.Data.Repositories.Read.Device;
 using Netmon.Data.Repositories.Write.Device;
 using Netmon.DeviceManager.DTO.Device;
-using Netmon.Models.Device;
 
-namespace Netmon.DeviceManager.Controllers;
+namespace Netmon.DeviceManager.Controllers.Device;
 
 [ApiController]
 [Route("Device")]

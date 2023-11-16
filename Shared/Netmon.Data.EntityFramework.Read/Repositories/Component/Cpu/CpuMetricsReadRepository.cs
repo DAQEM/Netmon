@@ -24,4 +24,14 @@ public class CpuMetricsReadRepository : ICpuMetricReadRepository
     {
         return await _database.CpuMetrics.FirstOrDefaultAsync(device => device.Id == id);
     }
+
+    public async Task<List<CpuMetricsDBO>> GetByComponentId(Guid componentId)
+    {
+        return await _database.CpuMetrics.Where(cpu => cpu.CpuId == componentId).ToListAsync();
+    }
+
+    public async Task<List<CpuMetricsDBO>> GetByComponentIds(List<Guid> componentIds)
+    {
+        return await _database.CpuMetrics.Where(cpu => componentIds.Contains(cpu.CpuId)).ToListAsync();
+    }
 }

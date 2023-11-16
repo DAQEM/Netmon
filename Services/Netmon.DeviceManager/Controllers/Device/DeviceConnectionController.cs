@@ -2,7 +2,7 @@
 using Netmon.Data.Repositories.Read.Device;
 using Netmon.Data.Repositories.Write.Device;
 
-namespace Netmon.DeviceManager.Controllers;
+namespace Netmon.DeviceManager.Controllers.Device;
 
 [ApiController]
 [Route("Device/Connection")]

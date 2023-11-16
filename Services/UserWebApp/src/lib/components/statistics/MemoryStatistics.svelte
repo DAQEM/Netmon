@@ -6,4 +6,4 @@
 </script>
 
 <Heading2>{title}</Heading2>
-<ChartInterfaceUsage />
+<!-- <ChartInterfaceUsage /> -->

@@ -42,18 +42,6 @@ img.full-width {
 	object-fit: cover;
 }
 
-.accordion-wrapper > div > h2 > button {
-	border-radius: 0% !important;
-}
-
-.accordion-wrapper > div:first-child > h2 > button {
-	border-radius: 0.5rem 0.5rem 0 0 !important;
-}
-
-.accordion-wrapper > div:last-child > h2 > button[aria-expanded='false'] {
-	border-radius: 0 0 0.5rem 0.5rem !important;
-}
-
-.accordion-wrapper > div:last-child > div:last-child > div {
-	border-radius: 0 0 0.5rem 0.5rem !important;
+.apexcharts-legend-text {
+	@apply dark:!text-neutral-200 !text-neutral-800;
 }

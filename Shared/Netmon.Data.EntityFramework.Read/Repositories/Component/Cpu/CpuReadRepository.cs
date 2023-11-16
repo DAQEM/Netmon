@@ -31,4 +31,23 @@ public class CpuReadRepository : ICpuReadRepository
     {
         return await _database.Cpus.FirstOrDefaultAsync(device => device.Id == id);
     }
+
+    public async Task<List<CpuDBO>> GetByDeviceId(Guid deviceId)
+    {
+        return await _database.Cpus.Where(cpu => cpu.DeviceId == deviceId).ToListAsync();
+    }
+
+    public async Task<List<CpuDBO>> GetByDeviceIdWithMetrics(Guid deviceId)
+    {
+        return await _database.Cpus.Include(cpu => cpu.CpuMetrics).Where(cpu => cpu.DeviceId == deviceId).ToListAsync();
+    }
+
+    public async Task<List<CpuDBO>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
+    {
+        return await _database.Cpus
+            .Include(cpu => cpu.CpuMetrics)
+            .Where(cpu => cpu.DeviceId == deviceId)
+            .Where(cpu => cpu.CpuMetrics.Any(metric => metric.Timestamp >= from && metric.Timestamp <= to))
+            .ToListAsync();
+    }
 }

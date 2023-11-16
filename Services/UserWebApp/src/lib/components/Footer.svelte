@@ -1,20 +1,22 @@
 <script>
+	import logo_wide from '$lib/images/logo_wide.png';
+	import logo_wide_white from '$lib/images/logo_wide_white.png';
 	import {
 		Footer,
-		FooterCopyright,
-		FooterLinkGroup,
-		FooterLink,
 		FooterBrand,
-		FooterIcon
+		FooterCopyright,
+		FooterIcon,
+		FooterLink,
+		FooterLinkGroup
 	} from 'flowbite-svelte';
-	import { FacebookSolid, GithubSolid, DiscordSolid, TwitterSolid } from 'flowbite-svelte-icons';
-	import logo_wide from '$lib/images/logo_wide.png';
+	import { DiscordSolid, FacebookSolid, GithubSolid, TwitterSolid } from 'flowbite-svelte-icons';
 </script>
 
 <Footer footerType="socialmedia">
 	<div class="md:flex md:justify-between">
 		<div class="mb-6 md:mb-0">
-			<FooterBrand href="/" src={logo_wide} alt="Netmon Logo" />
+			<FooterBrand href="/" src={logo_wide} alt="Netmon Logo" aClass="dark:hidden block" />
+			<FooterBrand href="/" src={logo_wide_white} alt="Netmon Logo" aClass="hidden dark:block" />
 		</div>
 		<div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
 			<div>

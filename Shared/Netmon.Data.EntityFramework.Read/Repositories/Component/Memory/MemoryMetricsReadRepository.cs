@@ -24,4 +24,14 @@ public class MemoryMetricsReadRepository : IMemoryMetricReadRepository
     {
         return await _database.MemoryMetrics.FirstOrDefaultAsync(device => device.Id == id);
     }
+    
+    public async Task<List<MemoryMetricsDBO>> GetByComponentId(Guid componentId)
+    {
+        return await _database.MemoryMetrics.Where(memory => memory.MemoryId == componentId).ToListAsync();
+    }
+
+    public async Task<List<MemoryMetricsDBO>> GetByComponentIds(List<Guid> componentIds)
+    {
+        return await _database.MemoryMetrics.Where(memory => componentIds.Contains(memory.MemoryId)).ToListAsync();
+    }
 }
