@@ -146,7 +146,8 @@
 			stroke: {
 				show: false,
 				width: 0,
-				colors: ['transparent']
+				colors: ['transparent'],
+				curve: 'straight'
 			},
 			grid: {
 				show: false

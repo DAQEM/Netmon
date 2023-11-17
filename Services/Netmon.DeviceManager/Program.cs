@@ -39,11 +39,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-MongoUrlBuilder mongoUrlBuilder = new("mongodb://root:mongopwd@192.168.178.8:27017/hangfire?authSource=admin");
-if (builder.Environment.IsDevelopment())
-{
-    mongoUrlBuilder = new MongoUrlBuilder("mongodb://root:mongopwd@localhost:27017/hangfire?authSource=admin");
-}
+MongoUrlBuilder mongoUrlBuilder = new(builder.Configuration["MongoDB:ConnectionString"]);
 MongoClient mongoClient = new(mongoUrlBuilder.ToMongoUrl());
 
 builder.Services.AddHangfire(configuration => configuration
@@ -66,10 +62,11 @@ builder.Services.AddHangfire(configuration => configuration
 
 builder.Services.AddHangfireServer(serverOptions =>
 {
-    serverOptions.ServerName = "Hangfire.Mongo server 1";
+    serverOptions.ServerName = builder.Configuration["Hangfire:ServerName"];
 });
 
-string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+string? connectionString = builder.Configuration["MySQL:ConnectionString"];
+Console.WriteLine($"The connection string is: {connectionString}");
 builder.Services.AddDbContext<DevicesDatabase>(options =>
 {
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), o => o.MigrationsAssembly("Netmon.DeviceManager"));
@@ -110,7 +107,7 @@ app.UsePathBase(new PathString("/api"));
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHangfireDashboard("/hangfire", new DashboardOptions
+app.UseHangfireDashboard(builder.Configuration["Hangfire:Endpoint"], new DashboardOptions
 {
     Authorization = new[]{ new HangfireAuthorizationFilter() }
 });
@@ -121,7 +118,7 @@ using (IServiceScope scope = app.Services.CreateScope())
 {
     IPollDeviceJob pollDeviceJob = scope.ServiceProvider.GetRequiredService<IPollDeviceJob>();
 
-    RecurringJob.AddOrUpdate("poll", () => pollDeviceJob.Execute(), "*/5 * * * *");
+    RecurringJob.AddOrUpdate(builder.Configuration["Hangfire:PollingTask:Name"], () => pollDeviceJob.Execute(), builder.Configuration["Hangfire:PollingTask:Cron"]);
 }
 
 app.Run();

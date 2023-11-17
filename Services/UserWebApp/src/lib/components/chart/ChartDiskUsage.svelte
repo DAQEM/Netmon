@@ -129,7 +129,8 @@
 			enabled: false
 		},
 		stroke: {
-			width: 6
+			width: 6,
+			curve: 'straight',
 		},
 		grid: {
 			show: false,

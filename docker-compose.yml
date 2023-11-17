@@ -117,6 +117,21 @@ services:
       network1:
         ipv4_address: 192.168.178.9
 
+  netmon-mysql:
+    image: mysql
+    container_name: netmon-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3110:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: devices
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    networks:
+      network1:
+        ipv4_address: 192.168.178.10
+
 networks:
   network1:
     driver: bridge
