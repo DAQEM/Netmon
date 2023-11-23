@@ -24,6 +24,30 @@ using Netmon.Data.Repositories.Write.Component.Disk;
 using Netmon.Data.Repositories.Write.Component.Interface;
 using Netmon.Data.Repositories.Write.Component.Memory;
 using Netmon.Data.Repositories.Write.Device;
+using Netmon.Data.Services.Read.Component.Cpu;
+using Netmon.Data.Services.Read.Component.Cpu.Core;
+using Netmon.Data.Services.Read.Component.Disk;
+using Netmon.Data.Services.Read.Component.Interface;
+using Netmon.Data.Services.Read.Component.Memory;
+using Netmon.Data.Services.Read.Device;
+using Netmon.Data.Services.Read.Services.Component.Cpu;
+using Netmon.Data.Services.Read.Services.Component.Cpu.Core;
+using Netmon.Data.Services.Read.Services.Component.Disk;
+using Netmon.Data.Services.Read.Services.Component.Interface;
+using Netmon.Data.Services.Read.Services.Component.Memory;
+using Netmon.Data.Services.Read.Services.Device;
+using Netmon.Data.Services.Write.Component.Cpu;
+using Netmon.Data.Services.Write.Component.Cpu.Core;
+using Netmon.Data.Services.Write.Component.Disk;
+using Netmon.Data.Services.Write.Component.Interface;
+using Netmon.Data.Services.Write.Component.Memory;
+using Netmon.Data.Services.Write.Device;
+using Netmon.Data.Services.Write.Services.Component.Cpu;
+using Netmon.Data.Services.Write.Services.Component.Cpu.Core;
+using Netmon.Data.Services.Write.Services.Component.Disk;
+using Netmon.Data.Services.Write.Services.Component.Interface;
+using Netmon.Data.Services.Write.Services.Component.Memory;
+using Netmon.Data.Services.Write.Services.Device;
 using Netmon.Data.Write.Repositories.Component.Cpu;
 using Netmon.Data.Write.Repositories.Component.Cpu.Core;
 using Netmon.Data.Write.Repositories.Component.Disk;
@@ -98,7 +122,43 @@ builder.Services.AddScoped<ICpuMetricReadRepository, CpuMetricsReadRepository>()
 builder.Services.AddScoped<ICpuCoreReadRepository, CpuCoreReadRepository>();
 builder.Services.AddScoped<ICpuCoreMetricReadRepository, CpuCoreMetricsReadRepository>();
 
+builder.Services.AddScoped<IDeviceWriteService, DeviceWriteService>();
+builder.Services.AddScoped<IDeviceConnectionWriteService, DeviceConnectionWriteService>();
+builder.Services.AddScoped<IDiskWriteService, DiskWriteService>();
+builder.Services.AddScoped<IDiskMetricsWriteService, DiskMetricsWriteService>();
+builder.Services.AddScoped<IInterfaceWriteService, InterfaceWriteService>();
+builder.Services.AddScoped<IInterfaceMetricsWriteService, InterfaceMetricsWriteService>();
+builder.Services.AddScoped<IMemoryWriteService, MemoryWriteService>();
+builder.Services.AddScoped<IMemoryMetricsWriteService, MemoryMetricsWriteService>();
+builder.Services.AddScoped<ICpuWriteService, CpuWriteService>();
+builder.Services.AddScoped<ICpuMetricsWriteService, CpuMetricsWriteService>();
+builder.Services.AddScoped<ICpuCoreWriteService, CpuCoreWriteService>();
+builder.Services.AddScoped<ICpuCoreMetricsWriteService, CpuCoreMetricsWriteService>();
+
+builder.Services.AddScoped<IDeviceReadService, DeviceReadService>();
+builder.Services.AddScoped<IDeviceConnectionReadService, DeviceConnectionReadService>();
+builder.Services.AddScoped<IDiskReadService, DiskReadService>();
+builder.Services.AddScoped<IDiskMetricReadService, DiskMetricsReadService>();
+builder.Services.AddScoped<IInterfaceReadService, InterfaceReadService>();
+builder.Services.AddScoped<IInterfaceMetricReadService, InterfaceMetricsReadService>();
+builder.Services.AddScoped<IMemoryReadService, MemoryReadService>();
+builder.Services.AddScoped<IMemoryMetricReadService, MemoryMetricsReadService>();
+builder.Services.AddScoped<ICpuReadService, CpuReadService>();
+builder.Services.AddScoped<ICpuMetricReadService, CpuMetricsReadService>();
+builder.Services.AddScoped<ICpuCoreReadService, CpuCoreReadService>();
+builder.Services.AddScoped<ICpuCoreMetricReadService, CpuCoreMetricsReadService>();
+
 builder.Services.AddScoped<IPollDeviceJob, PollDeviceJob>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Cors", builder =>
+    {
+        builder.WithOrigins("http://localhost:80", "http://localhost:81")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 WebApplication app = builder.Build();
 
@@ -106,6 +166,8 @@ app.UsePathBase(new PathString("/api"));
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseCors("Cors");
 
 app.UseHangfireDashboard(builder.Configuration["Hangfire:Endpoint"], new DashboardOptions
 {

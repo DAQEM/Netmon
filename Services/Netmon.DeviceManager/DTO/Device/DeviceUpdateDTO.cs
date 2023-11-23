@@ -35,4 +35,23 @@ public class DeviceUpdateDTO
             }
         };
     }
+
+    public Models.Device.Device ToDevice()
+    {
+        return new Models.Device.Device
+        {
+            IpAddress = IpAddress,
+            DeviceConnection = new Models.Device.Connection.DeviceConnection
+            {
+                Port = Connection.Port,
+                Community = Connection.Community,
+                SNMPVersion = Connection.Version,
+                AuthPassword = Connection.AuthPassword ?? string.Empty,
+                PrivacyPassword = Connection.PrivacyPassword ?? string.Empty,
+                AuthProtocol = Connection.AuthProtocol ?? AuthProtocol.SHA256,
+                PrivacyProtocol = Connection.PrivacyProtocol ?? PrivacyProtocol.AES,
+                ContextName = Connection.ContextName ?? string.Empty
+            }
+        };
+    }
 }

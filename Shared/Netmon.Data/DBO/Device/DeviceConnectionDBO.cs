@@ -51,11 +51,7 @@ public class DeviceConnectionDBO : IComponentDBO
 
     public static DeviceConnectionDBO FromDeviceConnection(IDeviceConnection? deviceConnection)
     {
-        if (deviceConnection == null)
-        {
-            return new DeviceConnectionDBO();
-        }
-        
+        if (deviceConnection == null) return new DeviceConnectionDBO();
         return new DeviceConnectionDBO
         {
             Id = Guid.NewGuid(),
@@ -70,7 +66,7 @@ public class DeviceConnectionDBO : IComponentDBO
         };
     }
 
-    public IDeviceConnection ToDeviceConnection()
+    public DeviceConnection ToDeviceConnection()
     {
         return new DeviceConnection
         {

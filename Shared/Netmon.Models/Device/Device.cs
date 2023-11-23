@@ -8,6 +8,7 @@ namespace Netmon.Models.Device;
 
 public class Device : IDevice
 {
+    public Guid Id { get; set; }
     public string IpAddress { get; set; } = null!;
     public string? Name { get; set; }
     public string? Location { get; set; }

@@ -6,13 +6,19 @@ const deviceApi = {
 		return urlHandler.getDeviceManagerUrl('/device' + url);
 	},
 	async getAllDevices(): Promise<Device[]> {
-		return await fetch(this.getUrl('/')).then((res) => res.json()).catch(() => ([] as Device[]));
+		return await fetch(this.getUrl('/'))
+			.then((res) => res.json())
+			.catch(() => [] as Device[]);
 	},
 	async getDevice(id: string): Promise<Device> {
-		return await fetch(this.getUrl('/' + id)).then((res) => res.json()).catch(() => ({} as Device));
+		return await fetch(this.getUrl('/' + id))
+			.then((res) => res.json())
+			.catch(() => ({} as Device));
 	},
 	async getDeviceWithConnection(id: string): Promise<Device> {
-		return await fetch(this.getUrl('/' + id + '?includeConnection=true')).then((res) => res.json()).catch(() => ({} as Device));
+		return await fetch(this.getUrl('/' + id + '?includeConnection=true'))
+			.then((res) => res.json())
+			.catch(() => ({} as Device));
 	},
 	async addDevice(data: Device): Promise<Device | Error> {
 		return await fetch(this.getUrl('/'), {
@@ -21,9 +27,14 @@ const deviceApi = {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(data)
-		}).then((res) => {
-			return res.ok ? res.json() : Error.fromResponse(res);
-		}).catch(() => Error.unknown());
+		})
+			.then((res) => {
+				return res.ok ? res.json() : Error.fromResponse(res);
+			})
+			.catch((res) => {
+				console.log('An error occurred while adding a device: ', res);
+				return Error.unknown();
+			});
 	},
 	async editDevice(id: string, data: Device): Promise<Device | Error> {
 		return await fetch(this.getUrl('/' + id), {
@@ -32,9 +43,11 @@ const deviceApi = {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(data)
-		}).then((res) => {
-			return res.ok ? res.json() : Error.fromResponse(res);
-		}).catch(() => Error.unknown());
+		})
+			.then((res) => {
+				return res.ok ? res.json() : Error.fromResponse(res);
+			})
+			.catch(() => Error.unknown());
 	},
 	async deleteDevice(id: string): Promise<void> {
 		await fetch(this.getUrl('/' + id), {

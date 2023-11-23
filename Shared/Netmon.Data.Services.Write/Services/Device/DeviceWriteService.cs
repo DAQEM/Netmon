@@ -1,9 +1,22 @@
-﻿using Netmon.Data.Services.Write.Device;
+﻿using Netmon.Data.DBO.Device;
+using Netmon.Data.Repositories.Write.Device;
+using Netmon.Data.Services.Read.Device;
+using Netmon.Data.Services.Write.Device;
+using Netmon.Data.Services.Write.Exceptions;
 
 namespace Netmon.Data.Services.Write.Services.Device;
 
 public class DeviceWriteService : IDeviceWriteService
 {
+    private readonly IDeviceWriteRepository _deviceWriteRepository;
+    private readonly IDeviceReadService _deviceReadService;
+
+    public DeviceWriteService(IDeviceWriteRepository deviceWriteRepository, IDeviceReadService deviceReadService)
+    {
+        _deviceWriteRepository = deviceWriteRepository;
+        _deviceReadService = deviceReadService;
+    }
+
     public Task SaveChanges()
     {
         throw new NotImplementedException();
@@ -19,18 +32,28 @@ public class DeviceWriteService : IDeviceWriteService
         throw new NotImplementedException();
     }
 
-    public Task<Models.Device.Device> AddDeviceWithConnection(Models.Device.Device toDevice)
+    public async Task<Models.Device.Device> AddDeviceWithConnection(Models.Device.Device device)
     {
-        throw new NotImplementedException();
+        Models.Device.Device? existingDevice = await _deviceReadService.GetByIpAddress(device.IpAddress);
+        if (existingDevice != null) throw new DeviceWithIpAddressAlreadyExistsException(device.IpAddress);
+        
+        DeviceDBO deviceDBO = DeviceDBO.FromDevice(device);
+        deviceDBO = await _deviceWriteRepository.AddDeviceWithConnection(deviceDBO);
+        await _deviceWriteRepository.SaveChanges();
+        
+        return deviceDBO.ToDevice();
     }
 
-    public Task UpdateWithConnection(Models.Device.Device deviceDBO)
+    public async Task UpdateWithConnection(Models.Device.Device device)
     {
-        throw new NotImplementedException();
+        DeviceDBO deviceDBO = DeviceDBO.FromDevice(device);
+        await _deviceWriteRepository.UpdateWithConnection(deviceDBO);
+        await _deviceWriteRepository.SaveChanges();
     }
 
-    public Task Delete(Models.Device.Device deviceDBO)
+    public async Task Delete(Guid id)
     {
-        throw new NotImplementedException();
+        await _deviceWriteRepository.Delete(id);
+        await _deviceWriteRepository.SaveChanges();
     }
 }

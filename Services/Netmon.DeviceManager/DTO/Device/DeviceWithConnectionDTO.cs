@@ -44,4 +44,17 @@ public class DeviceWithConnectionDTO
             Connection = DeviceConnectionDTO.FromDeviceConnectionDBO(deviceDBO.DeviceConnection)
         };
     }
+    
+    public static DeviceWithConnectionDTO FromDeviceWithConnection(Models.Device.Device device)
+    {
+        return new DeviceWithConnectionDTO
+        {
+            Id = device.Id,
+            Name = device.Name,
+            IpAddress = device.IpAddress,
+            Location = device.Location,
+            Contact = device.Contact,
+            Connection = DeviceConnectionDTO.FromDeviceConnection(device.DeviceConnection)
+        };
+    }
 }

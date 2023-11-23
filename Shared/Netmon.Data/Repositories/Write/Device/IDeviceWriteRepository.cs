@@ -8,5 +8,5 @@ public interface IDeviceWriteRepository : IWriteRepository
     Task AddOrUpdateDevice(DeviceDBO device);
     Task<DeviceDBO> AddDeviceWithConnection(DeviceDBO toDevice);
     Task UpdateWithConnection(DeviceDBO deviceDBO);
-    Task Delete(DeviceDBO deviceDBO);
+    Task Delete(Guid id);
 }

@@ -31,10 +31,12 @@ export const actions = {
 		}
 
 		if (Object.keys(errors).length === 0) {
+			console.log('no errors, adding device');
 			const version = Number.parseInt(data.get('version') as string);
 			const community =
 				version === 2 ? (data.get('community') as string) : (data.get('username') as string);
 
+			console.log('sending request');
 			const result = await deviceApi.addDevice({
 				ip_address: data.get('ip_address') as string,
 				connection: {
@@ -49,11 +51,11 @@ export const actions = {
 				}
 			});
 
-			console.log(result);
+			console.log('result', result);
 			return {
 				success: true,
 				device: result
-			}
+			};
 		}
 
 		return {

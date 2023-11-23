@@ -121,7 +121,7 @@ public class DeviceWriteRepository : IDeviceWriteRepository
         return device;
     }
 
-    public Task UpdateWithConnection(DeviceDBO deviceDBO)
+    public async Task UpdateWithConnection(DeviceDBO deviceDBO)
     {
         if (deviceDBO == null)
         {
@@ -133,11 +133,11 @@ public class DeviceWriteRepository : IDeviceWriteRepository
             throw new ArgumentNullException(nameof(deviceDBO.DeviceConnection));
         }
         
-        DeviceDBO existingDevice = _database.Devices.First(d => d.Id == deviceDBO.Id);
+        DeviceDBO existingDevice = await _database.Devices.FirstAsync(d => d.Id == deviceDBO.Id);
+        
+        existingDevice.IpAddress = deviceDBO.IpAddress;
 
-        existingDevice.Name = deviceDBO.IpAddress;
-
-        DeviceConnectionDBO existingDeviceConnection = _database.DeviceConnections.First(dc => dc.DeviceId == deviceDBO.Id);
+        DeviceConnectionDBO existingDeviceConnection = await _database.DeviceConnections.FirstAsync(dc => dc.DeviceId == deviceDBO.Id);
         
         existingDeviceConnection.Port = deviceDBO.DeviceConnection.Port;
         existingDeviceConnection.Community = deviceDBO.DeviceConnection.Community;
@@ -147,18 +147,11 @@ public class DeviceWriteRepository : IDeviceWriteRepository
         existingDeviceConnection.AuthProtocol = deviceDBO.DeviceConnection.AuthProtocol;
         existingDeviceConnection.PrivacyProtocol = deviceDBO.DeviceConnection.PrivacyProtocol;
         existingDeviceConnection.ContextName = deviceDBO.DeviceConnection.ContextName;
-        
-        return Task.CompletedTask;
     }
 
-    public Task Delete(DeviceDBO deviceDBO)
+    public Task Delete(Guid id)
     {
-        if (deviceDBO == null)
-        {
-            throw new ArgumentNullException(nameof(deviceDBO));
-        }
-        
-        _database.Devices.Remove(deviceDBO);
+        _database.Devices.Remove(new DeviceDBO { Id = id });
         return Task.CompletedTask;
     }
 

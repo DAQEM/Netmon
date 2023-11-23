@@ -5,9 +5,21 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();
 builder.Services.AddProxies();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 WebApplication app = builder.Build();
 
 app.UseRouting();
+
+app.UseCors("CorsPolicy");
 
 app.UseProxies(proxies =>
 {

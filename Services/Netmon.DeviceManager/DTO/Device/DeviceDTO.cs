@@ -16,7 +16,7 @@ public class DeviceDTO
     [JsonPropertyName("contact")]
     public string? Contact { get; set; }
 
-    public static DeviceDTO FromDeviceDBO(DeviceDBO device)
+    public static DeviceDTO FromDevice(Models.Device.Device device)
     {
         return new DeviceDTO
         {

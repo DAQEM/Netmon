@@ -36,7 +36,7 @@ public class DeviceDBO : IDBO
     {
         return new DeviceDBO
         {
-            Id = Guid.NewGuid(),
+            Id = device.Id,
             Name = device.Name ?? string.Empty,
             IpAddress = device.IpAddress,
             Location = device.Location,
@@ -49,19 +49,20 @@ public class DeviceDBO : IDBO
         };
     }
 
-    public IDevice ToDevice()
+    public Models.Device.Device ToDevice()
     {
         return new Models.Device.Device
         {
+            Id = Id,
             Name = Name,
             IpAddress = IpAddress,
             Location = Location,
             Contact = Contact,
-            DeviceConnection = DeviceConnection.ToDeviceConnection(),
-            Disks = Disks.Select(disk => disk.ToDisk()).ToList(),
-            Cpus = Cpus.Select(cpu => cpu.ToCpu()).ToList(),
-            Memory = Memory.Select(memory => memory.ToMemory()).ToList(),
-            Interfaces = Interfaces.Select(@interface => @interface.ToInterface()).ToList()
+            DeviceConnection = DeviceConnection?.ToDeviceConnection(),
+            Disks = Disks?.Select(disk => disk.ToDisk()).ToList(),
+            Cpus = Cpus?.Select(cpu => cpu.ToCpu()).ToList(),
+            Memory = Memory?.Select(memory => memory.ToMemory()).ToList(),
+            Interfaces = Interfaces?.Select(@interface => @interface.ToInterface()).ToList()
         };
     }
 }
