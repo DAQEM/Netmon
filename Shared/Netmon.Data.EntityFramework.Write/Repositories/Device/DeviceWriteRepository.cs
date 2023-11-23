@@ -10,7 +10,6 @@ using Netmon.Data.Repositories.Write.Component.Disk;
 using Netmon.Data.Repositories.Write.Component.Interface;
 using Netmon.Data.Repositories.Write.Component.Memory;
 using Netmon.Data.Repositories.Write.Device;
-using Netmon.Models.Device;
 
 namespace Netmon.Data.Write.Repositories.Device;
 

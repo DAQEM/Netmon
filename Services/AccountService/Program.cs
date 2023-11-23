@@ -1,5 +1,4 @@
 using AccountService.Database;
-using AccountService.Entities;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

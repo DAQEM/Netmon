@@ -1,6 +1,4 @@
-﻿using Netmon.Data.DBO.Device;
-using Netmon.Data.Repositories.Read;
-using Netmon.Models.Device.Connection;
+﻿using Netmon.Models.Device.Connection;
 
 namespace Netmon.Data.Services.Read.Device;
 

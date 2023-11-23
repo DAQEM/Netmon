@@ -1,5 +1,4 @@
-﻿using Netmon.Data.DBO.Component.Interface;
-using Netmon.Data.Services.Read.Component.Interface;
+﻿using Netmon.Data.Services.Read.Component.Interface;
 using Netmon.Models.Component.Interface.Metric;
 
 namespace Netmon.Data.Services.Read.Services.Component.Interface;

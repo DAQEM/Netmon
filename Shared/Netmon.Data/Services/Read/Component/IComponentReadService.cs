@@ -1,6 +1,4 @@
-﻿using Netmon.Data.DBO.Component;
-using Netmon.Data.Repositories.Read;
-using Netmon.Models.Component;
+﻿using Netmon.Models.Component;
 
 namespace Netmon.Data.Services.Read.Component;
 

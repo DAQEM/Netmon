@@ -1,7 +1,4 @@
-﻿using Netmon.Data.DBO.Device;
-using Netmon.Data.Repositories.Write;
-
-namespace Netmon.Data.Services.Write.Device;
+﻿namespace Netmon.Data.Services.Write.Device;
 
 public interface IDeviceWriteService : IWriteService
 {

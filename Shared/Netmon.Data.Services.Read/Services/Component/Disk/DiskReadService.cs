@@ -1,6 +1,4 @@
-﻿using Netmon.Data.DBO.Component.Disk;
-using Netmon.Data.Repositories.Read.Component.Disk;
-using Netmon.Data.Services.Read.Component.Disk;
+﻿using Netmon.Data.Services.Read.Component.Disk;
 
 namespace Netmon.Data.Services.Read.Services.Component.Disk;
 

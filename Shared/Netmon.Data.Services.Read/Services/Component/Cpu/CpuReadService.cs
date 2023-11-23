@@ -1,7 +1,4 @@
-﻿using Netmon.Data.DBO.Component.Cpu;
-using Netmon.Data.Repositories.Read.Component.Cpu;
-using Netmon.Data.Repositories.Read.Component.Cpu.Core;
-using Netmon.Data.Services.Read.Component.Cpu;
+﻿using Netmon.Data.Services.Read.Component.Cpu;
 
 namespace Netmon.Data.Services.Read.Services.Component.Cpu;
 

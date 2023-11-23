@@ -1,5 +1,4 @@
-﻿using Netmon.Data.DBO;
-using Netmon.Models;
+﻿using Netmon.Models;
 
 namespace Netmon.Data.Services.Read;
 

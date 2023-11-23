@@ -1,5 +1,4 @@
-﻿using Netmon.Data.DBO.Component.Memory;
-using Netmon.Data.Services.Read.Component.Memory;
+﻿using Netmon.Data.Services.Read.Component.Memory;
 using Netmon.Models.Component.Memory.Metric;
 
 namespace Netmon.Data.Services.Read.Services.Component.Memory;
