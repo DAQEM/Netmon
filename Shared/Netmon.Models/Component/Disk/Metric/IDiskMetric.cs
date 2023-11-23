@@ -1,6 +1,6 @@
 ﻿namespace Netmon.Models.Component.Disk.Metric;
 
-public interface IDiskMetric
+public interface IDiskMetric : IComponentMetric
 {
     public DateTime Timestamp { get; set; }
     public int AllocationUnits { get; set; }

@@ -22,6 +22,8 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Shared\Netmon.Data.EntityFramework.Read\Netmon.Data.EntityFramework.Read.csproj" />
       <ProjectReference Include="..\..\Shared\Netmon.Data.EntityFramework.Write\Netmon.Data.EntityFramework.Write.csproj" />
+      <ProjectReference Include="..\..\Shared\Netmon.Data.Services.Read\Netmon.Data.Services.Read.csproj" />
+      <ProjectReference Include="..\..\Shared\Netmon.Data.Services.Write\Netmon.Data.Services.Write.csproj" />
     </ItemGroup>
 
 </Project>

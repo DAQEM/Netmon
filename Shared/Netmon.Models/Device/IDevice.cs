@@ -6,7 +6,7 @@ using Netmon.Models.Device.Connection;
 
 namespace Netmon.Models.Device;
 
-public interface IDevice
+public interface IDevice : IModel
 {
     public string IpAddress { get; set; }
     public string? Name { get; set; }

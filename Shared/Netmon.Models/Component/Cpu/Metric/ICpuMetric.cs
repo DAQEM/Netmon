@@ -1,6 +1,6 @@
 ﻿namespace Netmon.Models.Component.Cpu.Metric;
 
-public interface ICpuMetric
+public interface ICpuMetric : IComponentMetric
 {
     public DateTime Timestamp { get; set; }
     

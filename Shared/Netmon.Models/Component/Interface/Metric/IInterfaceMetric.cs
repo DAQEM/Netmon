@@ -1,6 +1,6 @@
 ﻿namespace Netmon.Models.Component.Interface.Metric;
 
-public interface IInterfaceMetric
+public interface IInterfaceMetric : IComponentMetric
 {
     public DateTime Timestamp { get; set; }
     public InterfaceStatus AdminStatus { get; set; }

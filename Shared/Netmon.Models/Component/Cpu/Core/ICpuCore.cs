@@ -2,7 +2,7 @@
 
 namespace Netmon.Models.Component.Cpu.Core;
 
-public interface ICpuCore
+public interface ICpuCore : IComponent
 {
     public int Index { get; }
     public string Name { get; set; }

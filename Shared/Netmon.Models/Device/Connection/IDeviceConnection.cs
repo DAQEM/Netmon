@@ -1,8 +1,9 @@
-﻿using Netmon.Models.Device.Connection.Protocol;
+﻿using Netmon.Models.Component;
+using Netmon.Models.Device.Connection.Protocol;
 
 namespace Netmon.Models.Device.Connection;
 
-public interface IDeviceConnection
+public interface IDeviceConnection : IComponent
 {
     public int Port { get; set; }
     public string Community { get; set; }
