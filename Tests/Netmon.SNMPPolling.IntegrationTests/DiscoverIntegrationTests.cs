@@ -44,4 +44,30 @@ public class DiscoverIntegrationTests : IClassFixture<WebApplicationFactory<SNMP
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType?.ToString());
         Assert.Equal(expectedJsonResponse, await response.Content.ReadAsStringAsync());
     }
+    
+    [Theory]
+    [InlineData("/Discover/Details")]
+    [InlineData("/Discover/Device")]
+    [InlineData("/Discover/Disks")]
+    [InlineData("/Discover/Memory")]
+    [InlineData("/Discover/Cpus")]
+    [InlineData("/Discover/Interfaces")]
+    public async Task Post_EndpointsReturnNotFound(string url)
+    {
+        // Arrange
+        HttpClient client = _factory.CreateClient();
+
+        // Act
+        HttpResponseMessage response = await client.PostAsJsonAsync(url, new
+        {
+            version = "V2",
+            ipAddress = "1.1.1.1",
+            port = 161,
+            community = "public"
+        });
+
+        _testOutputHelper.WriteLine(await response.Content.ReadAsStringAsync());
+        // Assert
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
 }

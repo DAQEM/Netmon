@@ -22,6 +22,8 @@ public class SNMPController : Controller
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
         ISNMPResult result = await _snmpManager.BulkWalkAsync(snmpConnectionInfo, oid, timeoutMillis);
 
+        if (!result.Variables.Any()) return NotFound();
+        
         return Ok(result.Variables.Select(variable => new
         {
             oid = variable.Id.ToString(),

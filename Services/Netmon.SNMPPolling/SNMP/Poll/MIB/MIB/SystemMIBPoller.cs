@@ -16,7 +16,7 @@ public class SystemMIBPoller : IMIBPoller<SystemMIB>
     
     public async Task<SystemMIB?> PollMIB(SNMPConnectionInfo connectionInfo)
     {
-        ISNMPResult sysSystemResult = await _snmpManager.BulkWalkAsync(connectionInfo, SystemMIB.OID, 10000);
+        ISNMPResult sysSystemResult = await _snmpManager.BulkWalkAsync(connectionInfo, SystemMIB.OID, 3000);
         
         if (!sysSystemResult.Variables.Any()) return null;
         

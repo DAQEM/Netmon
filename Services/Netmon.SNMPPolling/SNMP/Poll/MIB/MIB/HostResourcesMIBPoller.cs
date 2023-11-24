@@ -18,8 +18,13 @@ public class HostResourcesMIBPoller : IMIBPoller<HostResourcesMIB>
     
     public async Task<HostResourcesMIB?> PollMIB(SNMPConnectionInfo connectionInfo)
     {
-        ISNMPResult hrStorage = await _snmpManager.BulkWalkAsync(connectionInfo, HrStorage.OID, 10000);
-        ISNMPResult hrDevice = await _snmpManager.BulkWalkAsync(connectionInfo, HrDevice.OID, 10000);
+        Task<ISNMPResult> hrStorageTask = _snmpManager.BulkWalkAsync(connectionInfo, HrStorage.OID, 3000);
+        Task<ISNMPResult> hrDeviceTask = _snmpManager.BulkWalkAsync(connectionInfo, HrDevice.OID, 3000);
+
+        await Task.WhenAll(hrStorageTask, hrDeviceTask);
+
+        ISNMPResult hrStorage = hrStorageTask.Result;
+        ISNMPResult hrDevice = hrDeviceTask.Result;
         
         if (!hrStorage.Variables.Any() && !hrDevice.Variables.Any()) return null;
         

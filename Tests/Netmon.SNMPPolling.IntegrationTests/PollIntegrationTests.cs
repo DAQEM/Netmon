@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Netmon.Data.EntityFramework.Database;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -39,5 +38,27 @@ public class PollIntegrationTests : IClassFixture<WebApplicationFactory<SNMPPoll
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType?.ToString());
         Assert.Equal(expectedJsonResponse, await response.Content.ReadAsStringAsync());
+    }
+    
+    [Theory]
+    [InlineData("/Poll/Device")]
+    public async Task Post_EndpointsReturnNotFound(string url)
+    {
+        // Arrange
+        HttpClient client = _factory.CreateClient();
+
+        // Act
+        HttpResponseMessage response = await client.PostAsJsonAsync(url, new
+        {
+            version = "V2",
+            ipAddress = "1.1.1.1",
+            port = 161,
+            community = "public"
+        });
+
+        _testOutputHelper.WriteLine(await response.Content.ReadAsStringAsync());
+        
+        // Assert
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }

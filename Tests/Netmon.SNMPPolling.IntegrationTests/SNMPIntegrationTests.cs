@@ -41,4 +41,28 @@ public class SNMPIntegrationTests : IClassFixture<WebApplicationFactory<SNMPPoll
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType?.ToString());
         Assert.Equal(expectedJsonResponse, await response.Content.ReadAsStringAsync());
     }
+    
+    [Theory]
+    [InlineData("/SNMP/GetBulkWalk", "1.3.6.1.2.1.1.4")]
+    [InlineData("/SNMP/GetBulkWalk", "1.3.6.1.2.1.1.5")]
+    [InlineData("/SNMP/GetBulkWalk", "1.3.6.1.2.1.1.6")]
+    public async Task Post_EndpointsReturnNotFound(string url, string oid)
+    {
+        // Arrange
+        HttpClient client = _factory.CreateClient();
+
+        // Act
+        HttpResponseMessage response = await client.PostAsJsonAsync($"{url}?oid={oid}&timeoutMillis=1000", new
+        {
+            version = "V2",
+            ipAddress = "1.1.1.1",
+            port = 161,
+            community = "public"
+        });
+
+        _testOutputHelper.WriteLine(await response.Content.ReadAsStringAsync());
+        
+        // Assert
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
 }

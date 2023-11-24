@@ -17,7 +17,7 @@ public class UCDavisMIBPoller : IMIBPoller<UCDavisMIB>
     
     public async Task<UCDavisMIB?> PollMIB(SNMPConnectionInfo connectionInfo)
     {
-        ISNMPResult snmpResult = await snmpManager.BulkWalkAsync(connectionInfo, LaLoadTable.OID, 10000);
+        ISNMPResult snmpResult = await snmpManager.BulkWalkAsync(connectionInfo, LaLoadTable.OID, 3000);
 
         if (!snmpResult.Variables.Any()) return null;
         

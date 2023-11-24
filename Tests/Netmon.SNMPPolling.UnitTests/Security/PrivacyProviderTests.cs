@@ -10,13 +10,20 @@ namespace Netmon.SNMPPolling.Tests.Security;
 public class PrivacyProviderTests
 {
     [Test]
-    public void GetPrivacyProvider_ShouldReturnAESPrivacyProvider_WhenAESProtocolIsSelected()
+    [TestCase(AuthProtocol.SHA256, PrivacyProtocol.AES)]
+    [TestCase(AuthProtocol.SHA384, PrivacyProtocol.AES)]
+    [TestCase(AuthProtocol.SHA512, PrivacyProtocol.AES)]
+    [TestCase(AuthProtocol.SHA256, PrivacyProtocol.AES192)]
+    [TestCase(AuthProtocol.SHA384, PrivacyProtocol.AES192)]
+    [TestCase(AuthProtocol.SHA512, PrivacyProtocol.AES192)]
+    [TestCase(AuthProtocol.SHA256, PrivacyProtocol.AES256)]
+    [TestCase(AuthProtocol.SHA384, PrivacyProtocol.AES256)]
+    [TestCase(AuthProtocol.SHA512, PrivacyProtocol.AES256)]
+    public void GetPrivacyProvider_ShouldReturnAESPrivacyProvider_WhenAESProtocolIsSelected(AuthProtocol authProtocol, PrivacyProtocol privacyProtocol)
     {
         // Arrange
         string authPassword = "test_auth_password";
         string privacyPassword = "test_privacy_password";
-        AuthProtocol authProtocol = AuthProtocol.SHA256;
-        PrivacyProtocol privacyProtocol = PrivacyProtocol.AES;
 
         // Act
         IPrivacyProvider result = PrivacyProvider.GetPrivacyProvider(authPassword, privacyPassword, authProtocol, privacyProtocol);

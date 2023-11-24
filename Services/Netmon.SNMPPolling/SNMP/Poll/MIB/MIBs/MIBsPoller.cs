@@ -30,13 +30,18 @@ public class MIBsPoller : IMIBsPoller
 
     public async Task<List<IMIB>> PollAllMIBs(SNMPConnectionInfo snmpConnectionInfo)
     {
-        TimeSpan timeout = TimeSpan.FromSeconds(10);
+        Task<SystemMIB?> systemMibTask = _systemMIBPoller.PollMIB(snmpConnectionInfo);
+        Task<HostResourcesMIB?> hostMibTask = _hostResourcesMIBPoller.PollMIB(snmpConnectionInfo);
+        Task<IfMIB?> ifMibTask = _ifMIBPoller.PollMIB(snmpConnectionInfo);
+        Task<UCDavisMIB?> ucDavisMibTask = _ucDavisMIBPoller.PollMIB(snmpConnectionInfo);
 
-        SystemMIB? systemMib = await TaskHandler.ExecuteWithTimeoutAsync(_systemMIBPoller.PollMIB(snmpConnectionInfo), timeout, null);
-        HostResourcesMIB? hostMib = await TaskHandler.ExecuteWithTimeoutAsync(_hostResourcesMIBPoller.PollMIB(snmpConnectionInfo), timeout, null);
-        IfMIB? ifMib = await TaskHandler.ExecuteWithTimeoutAsync(_ifMIBPoller.PollMIB(snmpConnectionInfo), timeout, null);
-        UCDavisMIB? ucDavisMib = await TaskHandler.ExecuteWithTimeoutAsync(_ucDavisMIBPoller.PollMIB(snmpConnectionInfo), timeout, null);
-        
+        await Task.WhenAll(systemMibTask, hostMibTask, ifMibTask, ucDavisMibTask);
+
+        SystemMIB? systemMib = systemMibTask.Result;
+        HostResourcesMIB? hostMib = hostMibTask.Result;
+        IfMIB? ifMib = ifMibTask.Result;
+        UCDavisMIB? ucDavisMib = ucDavisMibTask.Result;
+
         List<IMIB> mibs = new();
         if (systemMib != null) mibs.Add(systemMib);
         if (hostMib != null) mibs.Add(hostMib);
