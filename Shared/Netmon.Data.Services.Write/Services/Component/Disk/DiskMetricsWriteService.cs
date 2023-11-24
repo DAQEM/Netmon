@@ -5,7 +5,7 @@ namespace Netmon.Data.Services.Write.Services.Component.Disk;
 
 public class DiskMetricsWriteService : IDiskMetricsWriteService
 {
-    public Task Add(DiskMetric metric)
+    public Task Add(IDiskMetric metric)
     {
         throw new NotImplementedException();
     }

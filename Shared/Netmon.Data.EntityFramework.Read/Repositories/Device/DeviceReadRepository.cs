@@ -1,46 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
+using Netmon.Data.EntityFramework.DBO.Device;
 using Netmon.Data.Repositories.Read.Component.Cpu;
 using Netmon.Data.Repositories.Read.Component.Disk;
 using Netmon.Data.Repositories.Read.Component.Interface;
 using Netmon.Data.Repositories.Read.Component.Memory;
 using Netmon.Data.Repositories.Read.Device;
+using Netmon.Models.Device;
 
 namespace Netmon.Data.EntityFramework.Read.Repositories.Device;
 
 public class DeviceReadRepository : IDeviceReadRepository
 {
     private readonly DevicesDatabase _database;
-    
-    private readonly IDeviceConnectionReadRepository _deviceConnectionReadRepository;
-    private readonly ICpuReadRepository _cpuReadRepository;
-    private readonly IDiskReadRepository _diskReadRepository;
-    private readonly IInterfaceReadRepository _interfaceReadRepository;
-    private readonly IMemoryReadRepository _memoryReadRepository;
 
-    public DeviceReadRepository(DevicesDatabase database, IDeviceConnectionReadRepository deviceConnectionReadRepository, ICpuReadRepository cpuReadRepository, IDiskReadRepository diskReadRepository, IInterfaceReadRepository interfaceReadRepository, IMemoryReadRepository memoryReadRepository)
+    public DeviceReadRepository(DevicesDatabase database)
     {
         _database = database;
-        _deviceConnectionReadRepository = deviceConnectionReadRepository;
-        _cpuReadRepository = cpuReadRepository;
-        _diskReadRepository = diskReadRepository;
-        _interfaceReadRepository = interfaceReadRepository;
-        _memoryReadRepository = memoryReadRepository;
     }
 
-    public async Task<List<DeviceDBO>> GetAll()
+    public async Task<List<IDevice>> GetAll()
     {
-        return await _database.Devices.ToListAsync();
+        return await _database.Devices.Select(dbo => dbo.ToDevice()).ToListAsync();
     }
 
-    public async Task<DeviceDBO?> GetById(Guid id)
+    public async Task<IDevice?> GetById(Guid id)
     {
-        return await _database.Devices.FirstOrDefaultAsync(device => device.Id == id);
+        return (await _database.Devices.FirstOrDefaultAsync(device => device.Id == id))?.ToDevice();
     }
 
-    public async Task<DeviceDBO?> GetByIpAddress(string deviceDBOIpAddress)
+    public async Task<IDevice?> GetByIpAddress(string deviceDBOIpAddress)
     {
-        return await _database.Devices.FirstOrDefaultAsync(device => device.IpAddress == deviceDBOIpAddress);
+        return (await _database.Devices.FirstOrDefaultAsync(device => device.IpAddress == deviceDBOIpAddress))?.ToDevice();
     }
 }

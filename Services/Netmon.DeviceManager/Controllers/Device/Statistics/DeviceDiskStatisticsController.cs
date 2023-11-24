@@ -20,7 +20,7 @@ public class DeviceDiskStatisticsController : BaseController
     [HttpGet("")]
     public async Task<IActionResult> GetDiskStatisticsAsync(Guid id, DateTime fromDate, DateTime toDate)
     {
-        List<IDisk> disks = (await _diskReadRepository.GetByDeviceIdWithMetrics(id, fromDate, toDate)).Select(dbo => dbo.ToDisk()).ToList();
+        List<IDisk> disks = (await _diskReadRepository.GetByDeviceIdWithMetrics(id, fromDate, toDate)).ToList();
         DeviceDisksStatisticsDTO dto = DeviceDisksStatisticsDTO.FromDisks(disks);
         return Ok(dto);
     }

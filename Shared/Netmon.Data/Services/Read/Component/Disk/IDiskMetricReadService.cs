@@ -2,7 +2,7 @@
 
 namespace Netmon.Data.Services.Read.Component.Disk;
 
-public interface IDiskMetricReadService : IComponentMetricReadService<DiskMetric>
+public interface IDiskMetricReadService : IComponentMetricReadService<IDiskMetric>
 {
     
 }

@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
+using Netmon.Data.EntityFramework.DBO.Device;
 using Netmon.Data.Repositories.Write.Device;
+using Netmon.Models.Device.Connection;
 
 namespace Netmon.Data.Write.Repositories.Device;
 
@@ -14,23 +15,25 @@ public class DeviceConnectionWriteRepository : IDeviceConnectionWriteRepository
         _database = database;
     }
     
-    public async Task AddOrUpdate(DeviceConnectionDBO deviceConnection)
+    public async Task AddOrUpdate(IDeviceConnection deviceConnection)
     {
         if (deviceConnection == null)
         {
             throw new ArgumentNullException(nameof(deviceConnection));
         }
         
-        DeviceConnectionDBO? existingDeviceConnection = await _database.DeviceConnections.FirstOrDefaultAsync(d => d.DeviceId == deviceConnection.DeviceId);
+        DeviceConnectionDBO deviceConnectionDBO = DeviceConnectionDBO.FromDeviceConnection(deviceConnection);
+        
+        DeviceConnectionDBO? existingDeviceConnection = await _database.DeviceConnections.FirstOrDefaultAsync(d => d.DeviceId == deviceConnectionDBO.DeviceId);
         
         if (existingDeviceConnection != null)
         {
-            deviceConnection.Id = existingDeviceConnection.Id;
-            _database.Entry(existingDeviceConnection).CurrentValues.SetValues(deviceConnection);
+            deviceConnectionDBO.Id = existingDeviceConnection.Id;
+            _database.Entry(existingDeviceConnection).CurrentValues.SetValues(deviceConnectionDBO);
         }
         else
         {
-            await _database.DeviceConnections.AddAsync(deviceConnection);
+            await _database.DeviceConnections.AddAsync(deviceConnectionDBO);
         }
     }
     

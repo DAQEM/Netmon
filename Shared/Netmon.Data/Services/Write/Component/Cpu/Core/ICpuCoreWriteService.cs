@@ -2,6 +2,6 @@
 
 namespace Netmon.Data.Services.Write.Component.Cpu.Core;
 
-public interface ICpuCoreWriteService : IComponentWriteService<CpuCore>
+public interface ICpuCoreWriteService : IComponentWriteService<ICpuCore>
 {
 }

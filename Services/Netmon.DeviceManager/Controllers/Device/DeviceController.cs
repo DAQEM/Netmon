@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Netmon.Data.DBO.Device;
-using Netmon.Data.Repositories.Read.Device;
-using Netmon.Data.Repositories.Write.Device;
 using Netmon.Data.Services.Read.Device;
 using Netmon.Data.Services.Write.Device;
 using Netmon.DeviceManager.DTO.Device;
+using Netmon.Models.Device;
 
 namespace Netmon.DeviceManager.Controllers.Device;
 
@@ -27,20 +25,20 @@ public class DeviceController : BaseController
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        return Ok((await _deviceReadService.GetAll()).Select(DeviceDTO.FromDevice));
+        return Ok(await _deviceReadService.GetAll());
     }
     
     [HttpGet("{id}")]
     public async Task<IActionResult> GetDeviceById(Guid id, bool includeConnection = false)
     {
-        Models.Device.Device? device = await _deviceReadService.GetById(id, includeConnection);
+        IDevice? device = await _deviceReadService.GetById(id, includeConnection);
         return device == null ? NoContent() : Ok(DeviceWithConnectionDTO.FromDeviceWithConnection(device));
     }
     
     [HttpPost]
     public async Task<IActionResult> Post(DeviceCreateDTO deviceCreateDTO)
     {
-        Models.Device.Device device = deviceCreateDTO.ToDevice();
+        IDevice device = deviceCreateDTO.ToDevice();
         device = await _deviceWriteService.AddDeviceWithConnection(device);
         DeviceWithConnectionDTO deviceDTO = DeviceWithConnectionDTO.FromDeviceWithConnection(device);
         return CreatedAtAction(nameof(GetDeviceById), new { id = deviceDTO.Id }, deviceDTO);

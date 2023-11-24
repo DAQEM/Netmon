@@ -1,5 +1,7 @@
-﻿namespace Netmon.Data.Services.Write.Component.Interface;
+﻿using Netmon.Models.Component.Interface;
 
-public interface IInterfaceWriteService : IComponentWriteService<Models.Component.Interface.Interface>
+namespace Netmon.Data.Services.Write.Component.Interface;
+
+public interface IInterfaceWriteService : IComponentWriteService<IInterface>
 {
 }

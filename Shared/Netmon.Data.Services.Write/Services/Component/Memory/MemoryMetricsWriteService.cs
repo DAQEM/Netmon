@@ -5,7 +5,7 @@ namespace Netmon.Data.Services.Write.Services.Component.Memory;
 
 public class MemoryMetricsWriteService : IMemoryMetricsWriteService
 {
-    public Task Add(MemoryMetric metric)
+    public Task Add(IMemoryMetric metric)
     {
         throw new NotImplementedException();
     }

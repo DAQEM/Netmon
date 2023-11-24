@@ -2,7 +2,7 @@
 
 namespace Netmon.Data.Services.Read.Component.Cpu.Core;
 
-public interface ICpuCoreMetricReadService : IReadService<CpuCoreMetric>
+public interface ICpuCoreMetricReadService : IReadService<ICpuCoreMetric>
 {
     
 }

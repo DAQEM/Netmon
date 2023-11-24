@@ -2,6 +2,6 @@
 
 namespace Netmon.Data.Services.Write.Component.Disk;
 
-public interface IDiskMetricsWriteService : IComponentMetricWriteService<DiskMetric>
+public interface IDiskMetricsWriteService : IComponentMetricWriteService<IDiskMetric>
 {
 }

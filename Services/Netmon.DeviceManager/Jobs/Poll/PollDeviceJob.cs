@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Microsoft.EntityFrameworkCore;
-using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
+using Netmon.Data.EntityFramework.DBO.Device;
 using Netmon.DeviceManager.Util;
 
 namespace Netmon.DeviceManager.Jobs.Poll;

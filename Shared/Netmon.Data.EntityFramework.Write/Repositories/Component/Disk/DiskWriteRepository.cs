@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Netmon.Data.DBO.Component.Disk;
 using Netmon.Data.EntityFramework.Database;
+using Netmon.Data.EntityFramework.DBO.Component.Disk;
 using Netmon.Data.Repositories.Write.Component.Disk;
+using Netmon.Models.Component.Disk;
 
 namespace Netmon.Data.Write.Repositories.Component.Disk;
 
@@ -17,31 +18,33 @@ public class DiskWriteRepository : IDiskWriteRepository
         _diskMetricsWriteRepository = diskMetricsWriteRepository;
     }
 
-    public async Task AddOrUpdate(DiskDBO disk)
+    public async Task AddOrUpdate(IDisk disk)
     {
         if (disk == null)
         {
             throw new ArgumentNullException(nameof(disk));
         }
         
-        DiskDBO? existingDisk = await _database.Disks.FirstOrDefaultAsync(d => d.DeviceId == disk.DeviceId && d.Index == disk.Index);
+        DiskDBO diskDBO = DiskDBO.FromDisk(disk);
+        
+        DiskDBO? existingDisk = await _database.Disks.FirstOrDefaultAsync(d => d.DeviceId == diskDBO.DeviceId && d.Index == diskDBO.Index);
 
         if (existingDisk == null)
         {
-            disk.Id = Guid.NewGuid();
-            await _database.Disks.AddAsync(disk);
+            diskDBO.Id = Guid.NewGuid();
+            await _database.Disks.AddAsync(diskDBO);
         }
         else
         {
-            disk.Id = existingDisk.Id;
-            _database.Entry(existingDisk).CurrentValues.SetValues(disk);
+            diskDBO.Id = existingDisk.Id;
+            _database.Entry(existingDisk).CurrentValues.SetValues(diskDBO);
             
-            if (disk.DiskMetrics != null!)
+            if (diskDBO.DiskMetrics != null!)
             {
-                foreach (DiskMetricsDBO diskMetrics in disk.DiskMetrics)
+                foreach (DiskMetricsDBO diskMetrics in diskDBO.DiskMetrics)
                 {
-                    diskMetrics.DiskId = disk.Id;
-                    await _diskMetricsWriteRepository.Add(diskMetrics);
+                    diskMetrics.DiskId = diskDBO.Id;
+                    await _diskMetricsWriteRepository.Add(diskMetrics.ToDiskMetric());
                 }
             }
         }

@@ -1,8 +1,8 @@
-﻿using Netmon.Data.DBO.Component.Cpu;
-using Netmon.Data.Repositories.Write.Component;
+﻿using Netmon.Data.Repositories.Write.Component;
+using Netmon.Models.Component.Cpu.Metric;
 
 namespace Netmon.Data.Services.Write.Component.Cpu;
 
-public interface ICpuMetricsWriteService : IComponentMetricWriteRepository<CpuMetricsDBO>
+public interface ICpuMetricsWriteService : IComponentMetricWriteRepository<ICpuMetric>
 {
 }

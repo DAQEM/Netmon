@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Netmon.Data.DBO.Component.Memory;
 using Netmon.Data.EntityFramework.Database;
+using Netmon.Data.EntityFramework.DBO.Component.Memory;
 using Netmon.Data.Repositories.Write.Component.Memory;
+using Netmon.Models.Component.Memory;
 
 namespace Netmon.Data.Write.Repositories.Component.Memory;
 
@@ -17,31 +18,33 @@ public class MemoryWriteRepository : IMemoryWriteRepository
         _memoryMetricsWriteRepository = memoryMetricsWriteRepository;
     }
 
-    public async Task AddOrUpdate(MemoryDBO memory)
+    public async Task AddOrUpdate(IMemory memory)
     {
         if (memory == null)
         {
             throw new ArgumentNullException(nameof(memory));
         }
         
-        MemoryDBO? existingMemory = await _database.Memory.FirstOrDefaultAsync(m => m.DeviceId == memory.DeviceId && m.Index == memory.Index);
+        MemoryDBO memoryDBO = MemoryDBO.FromMemory(memory);
+        
+        MemoryDBO? existingMemory = await _database.Memory.FirstOrDefaultAsync(m => m.DeviceId == memoryDBO.DeviceId && m.Index == memoryDBO.Index);
 
         if (existingMemory == null)
         {
-            memory.Id = Guid.NewGuid();
-            await _database.Memory.AddAsync(memory);
+            memoryDBO.Id = Guid.NewGuid();
+            await _database.Memory.AddAsync(memoryDBO);
         }
         else
         {
-            memory.Id = existingMemory.Id;
-            _database.Entry(existingMemory).CurrentValues.SetValues(memory);
+            memoryDBO.Id = existingMemory.Id;
+            _database.Entry(existingMemory).CurrentValues.SetValues(memoryDBO);
             
-            if (memory.MemoryMetrics != null!)
+            if (memoryDBO.MemoryMetrics != null!)
             {
-                foreach (MemoryMetricsDBO memoryMetrics in memory.MemoryMetrics)
+                foreach (MemoryMetricsDBO memoryMetrics in memoryDBO.MemoryMetrics)
                 {
-                    memoryMetrics.MemoryId = memory.Id;
-                    await _memoryMetricsWriteRepository.Add(memoryMetrics);
+                    memoryMetrics.MemoryId = memoryDBO.Id;
+                    await _memoryMetricsWriteRepository.Add(memoryMetrics.ToMemoryMetric());
                 }
             }
         }

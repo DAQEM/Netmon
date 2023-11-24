@@ -1,5 +1,4 @@
-﻿using Netmon.Data.DBO.Device;
-using Netmon.Data.Repositories.Read.Device;
+﻿using Netmon.Data.Repositories.Read.Device;
 using Netmon.Data.Services.Read.Device;
 using Netmon.Models.Device.Connection;
 
@@ -14,19 +13,19 @@ public class DeviceConnectionReadService : IDeviceConnectionReadService
         _deviceConnectionReadRepository = deviceConnectionReadRepository;
     }
     
-    public async Task<List<DeviceConnection>> GetAll()
+    public async Task<List<IDeviceConnection>> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<DeviceConnection?> GetById(Guid id)
+    public async Task<IDeviceConnection?> GetById(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<DeviceConnection?> GetByDeviceId(Guid id)
+    public async Task<IDeviceConnection?> GetByDeviceId(Guid id)
     {
-        DeviceConnectionDBO? deviceConnectionDBO = await _deviceConnectionReadRepository.GetByDeviceId(id);
-        return deviceConnectionDBO?.ToDeviceConnection();
+        IDeviceConnection? deviceConnection = await _deviceConnectionReadRepository.GetByDeviceId(id);
+        return deviceConnection;
     }
 }

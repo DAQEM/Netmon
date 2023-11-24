@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Netmon.Data.DBO.Component.Interface;
 using Netmon.Data.EntityFramework.Database;
+using Netmon.Data.EntityFramework.DBO.Component.Interface;
 using Netmon.Data.Repositories.Write.Component.Interface;
+using Netmon.Models.Component.Interface;
 
 namespace Netmon.Data.Write.Repositories.Component.Interface;
 
@@ -17,31 +18,33 @@ public class InterfaceWriteRepository : IInterfaceWriteRepository
         _interfaceMetricsWriteRepository = interfaceMetricsWriteRepository;
     }
 
-    public async Task AddOrUpdate(InterfaceDBO @interface)
+    public async Task AddOrUpdate(IInterface @interface)
     {
         if (@interface == null)
         {
             throw new ArgumentNullException(nameof(@interface));
         }
         
-        InterfaceDBO? existingInterface = await _database.Interfaces.FirstOrDefaultAsync(i => i.DeviceId == @interface.DeviceId && i.Index == @interface.Index);
+        InterfaceDBO interfaceDBO = InterfaceDBO.FromInterface(@interface);
+        
+        InterfaceDBO? existingInterface = await _database.Interfaces.FirstOrDefaultAsync(i => i.DeviceId == interfaceDBO.DeviceId && i.Index == interfaceDBO.Index);
         
         if (existingInterface == null)
         {
-            @interface.Id = Guid.NewGuid();
-            await _database.Interfaces.AddAsync(@interface);
+            interfaceDBO.Id = Guid.NewGuid();
+            await _database.Interfaces.AddAsync(interfaceDBO);
         }
         else
         {
-            @interface.Id = existingInterface.Id;
-            _database.Entry(existingInterface).CurrentValues.SetValues(@interface);
+            interfaceDBO.Id = existingInterface.Id;
+            _database.Entry(existingInterface).CurrentValues.SetValues(interfaceDBO);
             
-            if (@interface.InterfaceMetrics != null!)
+            if (interfaceDBO.InterfaceMetrics != null!)
             {
-                foreach (InterfaceMetricsDBO interfaceMetrics in @interface.InterfaceMetrics)
+                foreach (InterfaceMetricsDBO interfaceMetrics in interfaceDBO.InterfaceMetrics)
                 {
-                    interfaceMetrics.InterfaceId = @interface.Id;
-                    await _interfaceMetricsWriteRepository.Add(interfaceMetrics);
+                    interfaceMetrics.InterfaceId = interfaceDBO.Id;
+                    await _interfaceMetricsWriteRepository.Add(interfaceMetrics.ToInterfaceMetric());
                 }
             }
         }

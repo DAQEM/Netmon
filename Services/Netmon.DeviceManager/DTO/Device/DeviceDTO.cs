@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Netmon.Data.DBO.Device;
 
 namespace Netmon.DeviceManager.DTO.Device;
 

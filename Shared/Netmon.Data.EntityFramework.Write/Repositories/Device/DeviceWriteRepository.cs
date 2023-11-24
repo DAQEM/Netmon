@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Netmon.Data.DBO.Component.Cpu;
-using Netmon.Data.DBO.Component.Disk;
-using Netmon.Data.DBO.Component.Interface;
-using Netmon.Data.DBO.Component.Memory;
-using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
+using Netmon.Data.EntityFramework.DBO.Component.Cpu;
+using Netmon.Data.EntityFramework.DBO.Component.Disk;
+using Netmon.Data.EntityFramework.DBO.Component.Interface;
+using Netmon.Data.EntityFramework.DBO.Component.Memory;
+using Netmon.Data.EntityFramework.DBO.Device;
 using Netmon.Data.Repositories.Write.Component.Cpu;
 using Netmon.Data.Repositories.Write.Component.Disk;
 using Netmon.Data.Repositories.Write.Component.Interface;
 using Netmon.Data.Repositories.Write.Component.Memory;
 using Netmon.Data.Repositories.Write.Device;
+using Netmon.Models.Device;
 
 namespace Netmon.Data.Write.Repositories.Device;
 
@@ -33,106 +34,115 @@ public class DeviceWriteRepository : IDeviceWriteRepository
         _memoryWriteRepository = memoryWriteRepository;
     }
 
-    public async Task AddOrUpdateFullDevice(DeviceDBO device)
+    public async Task AddOrUpdateFullDevice(IDevice device)
     {
         if (device == null) 
         {
             throw new ArgumentNullException(nameof(device));
         }
-        
+
         await AddOrUpdateDevice(device);
-        if (device.DeviceConnection != null!)
+        
+        DeviceDBO deviceDBO = DeviceDBO.FromDevice(device);
+
+        if (deviceDBO.DeviceConnection != null!)
         {
-            device.DeviceConnection.DeviceId = device.Id;
-            await _deviceConnectionWriteRepository.AddOrUpdate(device.DeviceConnection);
+            deviceDBO.DeviceConnection.DeviceId = device.Id;
+            await _deviceConnectionWriteRepository.AddOrUpdate(deviceDBO.DeviceConnection.ToDeviceConnection());
         }
 
-        if (device.Cpus != null!)
+        if (deviceDBO.Cpus != null!)
         {
-            foreach (CpuDBO cpu in device.Cpus)
+            foreach (CpuDBO cpu in deviceDBO.Cpus)
             {
                 cpu.DeviceId = device.Id;
-                await _cpuWriteRepository.AddOrUpdate(cpu);
+                await _cpuWriteRepository.AddOrUpdate(cpu.ToCpu());
             }
         }
         
-        if (device.Disks != null!)
+        if (deviceDBO.Disks != null!)
         {
-            foreach (DiskDBO disk in device.Disks)
+            foreach (DiskDBO disk in deviceDBO.Disks)
             {
-                disk.DeviceId = device.Id;
-                await _diskWriteRepository.AddOrUpdate(disk);
+                disk.DeviceId = deviceDBO.Id;
+                await _diskWriteRepository.AddOrUpdate(disk.ToDisk());
             }
         }
         
-        if (device.Interfaces != null!)
+        if (deviceDBO.Interfaces != null!)
         {
-            foreach (InterfaceDBO @interface in device.Interfaces)
+            foreach (InterfaceDBO @interface in deviceDBO.Interfaces)
             {
-                @interface.DeviceId = device.Id;
-                await _interfaceWriteRepository.AddOrUpdate(@interface);
+                @interface.DeviceId = deviceDBO.Id;
+                await _interfaceWriteRepository.AddOrUpdate(@interface.ToInterface());
             }
         }
 
-        if (device.Memory != null!)
+        if (deviceDBO.Memory != null!)
         {
-            foreach (MemoryDBO memory in device.Memory)
+            foreach (MemoryDBO memory in deviceDBO.Memory)
             {
-                memory.DeviceId = device.Id;
-                await _memoryWriteRepository.AddOrUpdate(memory);
+                memory.DeviceId = deviceDBO.Id;
+                await _memoryWriteRepository.AddOrUpdate(memory.ToMemory());
             }
         }
     }
 
-    public async Task AddOrUpdateDevice(DeviceDBO device)
+    public async Task AddOrUpdateDevice(IDevice device)
     {
         if(device == null)
         {
             throw new ArgumentNullException(nameof(device));
         }
         
-        DeviceDBO? existingDevice = await _database.Devices.FirstOrDefaultAsync(d => d.IpAddress == device.IpAddress);
+        DeviceDBO deviceDBO = DeviceDBO.FromDevice(device);
+        
+        DeviceDBO? existingDevice = await _database.Devices.FirstOrDefaultAsync(d => d.IpAddress == deviceDBO.IpAddress);
         
         if (existingDevice != null)
         {
-            device.Id = existingDevice.Id;
-            _database.Entry(existingDevice).CurrentValues.SetValues(device);
+            deviceDBO.Id = existingDevice.Id;
+            _database.Entry(existingDevice).CurrentValues.SetValues(deviceDBO);
         }
         else
         {
-            device.Id = Guid.NewGuid();
-            await _database.Devices.AddAsync(device);
+            deviceDBO.Id = Guid.NewGuid();
+            await _database.Devices.AddAsync(deviceDBO);
         }
     }
     
-    public async Task<DeviceDBO> AddDeviceWithConnection(DeviceDBO device)
+    public async Task<IDevice> AddDeviceWithConnection(IDevice device)
     {
         if (device == null)
         {
             throw new ArgumentNullException(nameof(device));
         }
         
+        DeviceDBO deviceDBO = DeviceDBO.FromDevice(device);
+        
         if (device.DeviceConnection == null)
         {
             throw new ArgumentNullException(nameof(device.DeviceConnection));
         }
         
-        await _database.Devices.AddAsync(device);
-        return device;
+        await _database.Devices.AddAsync(deviceDBO);
+        return deviceDBO.ToDevice();
     }
 
-    public async Task UpdateWithConnection(DeviceDBO deviceDBO)
+    public async Task UpdateWithConnection(IDevice device)
     {
-        if (deviceDBO == null)
+        if (device == null)
         {
-            throw new ArgumentNullException(nameof(deviceDBO));
+            throw new ArgumentNullException(nameof(device));
         }
+        
+        DeviceDBO deviceDBO = DeviceDBO.FromDevice(device);
         
         if (deviceDBO.DeviceConnection == null)
         {
             throw new ArgumentNullException(nameof(deviceDBO.DeviceConnection));
         }
-        
+
         DeviceDBO existingDevice = await _database.Devices.FirstAsync(d => d.Id == deviceDBO.Id);
         
         existingDevice.IpAddress = deviceDBO.IpAddress;

@@ -6,22 +6,22 @@ namespace Netmon.Data.Services.Read.Services.Component.Interface;
 public class InterfaceMetricsReadService : IInterfaceMetricReadService
 {
     
-    public async Task<List<InterfaceMetric>> GetAll()
+    public async Task<List<IInterfaceMetric>> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<InterfaceMetric?> GetById(Guid id)
+    public async Task<IInterfaceMetric?> GetById(Guid id)
     {
         throw new NotImplementedException();
     }
     
-    public async Task<List<InterfaceMetric>> GetByComponentId(Guid componentId)
+    public async Task<List<IInterfaceMetric>> GetByComponentId(Guid componentId)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<List<InterfaceMetric>> GetByComponentIds(List<Guid> componentIds)
+    public async Task<List<IInterfaceMetric>> GetByComponentIds(List<Guid> componentIds)
     {
         throw new NotImplementedException();
     }

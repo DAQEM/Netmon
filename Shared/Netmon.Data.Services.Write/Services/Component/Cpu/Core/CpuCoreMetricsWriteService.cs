@@ -5,7 +5,7 @@ namespace Netmon.Data.Services.Write.Services.Component.Cpu.Core;
 
 public class CpuCoreMetricsWriteService : ICpuCoreMetricsWriteService
 {
-    public Task Add(CpuCoreMetric metric)
+    public Task Add(ICpuCoreMetric metric)
     {
         throw new NotImplementedException();
     }

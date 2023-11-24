@@ -1,6 +1,8 @@
-﻿namespace Netmon.Data.Services.Read.Component.Disk;
+﻿using Netmon.Models.Component.Disk;
 
-public interface IDiskReadService : IComponentReadService<Models.Component.Disk.Disk>
+namespace Netmon.Data.Services.Read.Component.Disk;
+
+public interface IDiskReadService : IComponentReadService<IDisk>
 {
     
 }

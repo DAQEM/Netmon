@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Netmon.Models.Component.Memory.Metric;
 
-namespace Netmon.Data.DBO.Component.Memory;
+namespace Netmon.Data.EntityFramework.DBO.Component.Memory;
 
 public class MemoryMetricsDBO : IComponentMetricDBO
 {

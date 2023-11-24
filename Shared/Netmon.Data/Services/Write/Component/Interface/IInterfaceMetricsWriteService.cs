@@ -2,6 +2,6 @@
 
 namespace Netmon.Data.Services.Write.Component.Interface;
 
-public interface IInterfaceMetricsWriteService : IComponentMetricWriteService<InterfaceMetric>
+public interface IInterfaceMetricsWriteService : IComponentMetricWriteService<IInterfaceMetric>
 { 
 }

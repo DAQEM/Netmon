@@ -1,8 +1,8 @@
-﻿using Netmon.Data.DBO.Device;
+﻿using Netmon.Models.Device.Connection;
 
 namespace Netmon.Data.Repositories.Read.Device;
 
-public interface IDeviceConnectionReadRepository : IReadRepository<DeviceConnectionDBO>
+public interface IDeviceConnectionReadRepository : IReadRepository<IDeviceConnection>
 {
-    public Task<DeviceConnectionDBO?> GetByDeviceId(Guid id);
+    public Task<IDeviceConnection?> GetByDeviceId(Guid id);
 }

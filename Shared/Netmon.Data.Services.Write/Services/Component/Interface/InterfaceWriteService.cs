@@ -1,10 +1,11 @@
 ﻿using Netmon.Data.Services.Write.Component.Interface;
+using Netmon.Models.Component.Interface;
 
 namespace Netmon.Data.Services.Write.Services.Component.Interface;
 
 public class InterfaceWriteService : IInterfaceWriteService
 {
-    public Task AddOrUpdate(Models.Component.Interface.Interface component)
+    public Task AddOrUpdate(IInterface component)
     {
         throw new NotImplementedException();
     }

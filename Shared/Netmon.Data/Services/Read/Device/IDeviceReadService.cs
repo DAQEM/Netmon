@@ -1,7 +1,9 @@
-﻿namespace Netmon.Data.Services.Read.Device;
+﻿using Netmon.Models.Device;
 
-public interface IDeviceReadService : IReadService<Models.Device.Device>
+namespace Netmon.Data.Services.Read.Device;
+
+public interface IDeviceReadService : IReadService<IDevice>
 {
-    Task<Netmon.Models.Device.Device?> GetById(Guid id, bool includeConnection);
-    Task<Models.Device.Device?> GetByIpAddress(string deviceDBOIpAddress);
+    Task<IDevice?> GetById(Guid id, bool includeConnection);
+    Task<IDevice?> GetByIpAddress(string deviceDBOIpAddress);
 }

@@ -1,5 +1,7 @@
-﻿namespace Netmon.Data.Services.Write.Component.Disk;
+﻿using Netmon.Models.Component.Disk;
 
-public interface IDiskWriteService : IComponentWriteService<Models.Component.Disk.Disk>
+namespace Netmon.Data.Services.Write.Component.Disk;
+
+public interface IDiskWriteService : IComponentWriteService<IDisk>
 {
 }

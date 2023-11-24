@@ -24,7 +24,7 @@ public class SNMPDiscoverIntegrationTests : IClassFixture<WebApplicationFactory<
     [InlineData("/Discover/Memory", "[]")]
     [InlineData("/Discover/Cpus", "[]")]
     [InlineData("/Discover/Interfaces", "[]")]
-    public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url, string expectedJsonResponse)
+    public async Task Post_EndpointsReturnSuccessAndCorrectContentType(string url, string expectedJsonResponse)
     {
         // Arrange
         HttpClient client = _factory.CreateClient();

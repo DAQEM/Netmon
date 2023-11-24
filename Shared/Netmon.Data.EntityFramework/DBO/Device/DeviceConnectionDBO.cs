@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Netmon.Data.DBO.Component;
+using Netmon.Data.EntityFramework.DBO.Component;
 using Netmon.Models.Device.Connection;
 using Netmon.Models.Device.Connection.Protocol;
 
-namespace Netmon.Data.DBO.Device;
+namespace Netmon.Data.EntityFramework.DBO.Device;
 
 public class DeviceConnectionDBO : IComponentDBO
 {
@@ -66,7 +66,7 @@ public class DeviceConnectionDBO : IComponentDBO
         };
     }
 
-    public DeviceConnection ToDeviceConnection()
+    public IDeviceConnection ToDeviceConnection()
     {
         return new DeviceConnection
         {

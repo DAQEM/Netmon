@@ -2,7 +2,7 @@
 
 namespace Netmon.Data.Services.Read.Device;
 
-public interface IDeviceConnectionReadService : IReadService<DeviceConnection>
+public interface IDeviceConnectionReadService : IReadService<IDeviceConnection>
 {
-    public Task<DeviceConnection?> GetByDeviceId(Guid id);
+    public Task<IDeviceConnection?> GetByDeviceId(Guid id);
 }

@@ -1,8 +1,8 @@
-﻿using Netmon.Data.DBO.Component;
+﻿using Netmon.Models.Component;
 
 namespace Netmon.Data.Repositories.Read.Component;
 
-public interface IComponentReadRepository<T>: IReadRepository<T> where T: IComponentDBO
+public interface IComponentReadRepository<T>: IReadRepository<T> where T: IComponent
 {
     Task<List<T>> GetByDeviceId(Guid deviceId);
     

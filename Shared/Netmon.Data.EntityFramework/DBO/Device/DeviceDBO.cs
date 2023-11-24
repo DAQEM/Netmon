@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Netmon.Data.DBO.Component.Cpu;
-using Netmon.Data.DBO.Component.Disk;
-using Netmon.Data.DBO.Component.Interface;
-using Netmon.Data.DBO.Component.Memory;
+using Netmon.Data.EntityFramework.DBO.Component.Cpu;
+using Netmon.Data.EntityFramework.DBO.Component.Disk;
+using Netmon.Data.EntityFramework.DBO.Component.Interface;
+using Netmon.Data.EntityFramework.DBO.Component.Memory;
 using Netmon.Models.Device;
 
-namespace Netmon.Data.DBO.Device;
+namespace Netmon.Data.EntityFramework.DBO.Device;
 
 public class DeviceDBO : IDBO
 {
@@ -49,7 +49,7 @@ public class DeviceDBO : IDBO
         };
     }
 
-    public Models.Device.Device ToDevice()
+    public IDevice ToDevice()
     {
         return new Models.Device.Device
         {

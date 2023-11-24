@@ -1,10 +1,12 @@
-﻿namespace Netmon.Data.Services.Write.Device;
+﻿using Netmon.Models.Device;
+
+namespace Netmon.Data.Services.Write.Device;
 
 public interface IDeviceWriteService : IWriteService
 {
-    Task AddOrUpdateFullDevice(Models.Device.Device device);
-    Task AddOrUpdateDevice(Models.Device.Device device);
-    Task<Models.Device.Device> AddDeviceWithConnection(Models.Device.Device device);
-    Task UpdateWithConnection(Models.Device.Device device);
+    Task AddOrUpdateFullDevice(IDevice device);
+    Task AddOrUpdateDevice(IDevice device);
+    Task<IDevice> AddDeviceWithConnection(IDevice device);
+    Task UpdateWithConnection(IDevice device);
     Task Delete(Guid id);
 }

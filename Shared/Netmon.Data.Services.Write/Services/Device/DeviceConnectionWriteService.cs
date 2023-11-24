@@ -5,7 +5,7 @@ namespace Netmon.Data.Services.Write.Services.Device;
 
 public class DeviceConnectionWriteService : IDeviceConnectionWriteService
 {
-    public Task AddOrUpdate(DeviceConnection component)
+    public Task AddOrUpdate(IDeviceConnection component)
     {
         throw new NotImplementedException();
     }

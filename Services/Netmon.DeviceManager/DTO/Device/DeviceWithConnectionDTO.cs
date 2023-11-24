@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Attribute.Validator;
+using Netmon.Data.EntityFramework.DBO.Device;
+using Netmon.Models.Device;
 
 namespace Netmon.DeviceManager.DTO.Device;
 
@@ -45,7 +46,7 @@ public class DeviceWithConnectionDTO
         };
     }
     
-    public static DeviceWithConnectionDTO FromDeviceWithConnection(Models.Device.Device device)
+    public static DeviceWithConnectionDTO FromDeviceWithConnection(IDevice device)
     {
         return new DeviceWithConnectionDTO
         {

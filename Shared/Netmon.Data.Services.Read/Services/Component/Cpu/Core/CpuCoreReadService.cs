@@ -6,12 +6,12 @@ namespace Netmon.Data.Services.Read.Services.Component.Cpu.Core;
 public class CpuCoreReadService : ICpuCoreReadService
 {
     
-    public async Task<List<CpuCoreMetric>> GetAll()
+    public async Task<List<ICpuCoreMetric>> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<CpuCoreMetric?> GetById(Guid id)
+    public async Task<ICpuCoreMetric?> GetById(Guid id)
     {
         throw new NotImplementedException();
     }

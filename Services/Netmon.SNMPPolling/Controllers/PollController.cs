@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Netmon.Data.DBO.Device;
+using Netmon.Data.EntityFramework.DBO.Device;
 using Netmon.Data.Repositories.Write.Device;
 using Netmon.Models.Device;
 using Netmon.SNMPPolling.SNMP.Poll.Device;
@@ -27,7 +27,7 @@ public class PollController : ControllerBase
 
         if (device == null) return NotFound();
         
-        await _deviceWriteRepository.AddOrUpdateFullDevice(DeviceDBO.FromDevice(device));
+        await _deviceWriteRepository.AddOrUpdateFullDevice(device);
         await _deviceWriteRepository.SaveChanges();
         
         return Ok(device);

@@ -2,7 +2,7 @@
 
 namespace Netmon.Data.Services.Read.Component.Memory;
 
-public interface IMemoryMetricReadService : IComponentMetricReadService<MemoryMetric>
+public interface IMemoryMetricReadService : IComponentMetricReadService<IMemoryMetric>
 {
     
 }

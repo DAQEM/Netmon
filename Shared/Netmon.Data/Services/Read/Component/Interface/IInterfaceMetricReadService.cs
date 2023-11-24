@@ -2,7 +2,7 @@
 
 namespace Netmon.Data.Services.Read.Component.Interface;
 
-public interface IInterfaceMetricReadService : IComponentMetricReadService<InterfaceMetric>
+public interface IInterfaceMetricReadService : IComponentMetricReadService<IInterfaceMetric>
 {
     
     

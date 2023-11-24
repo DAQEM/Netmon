@@ -19,7 +19,7 @@ public class DeviceInterfaceStatisticsController : BaseController
     [HttpGet("inout")]
     public async Task<IActionResult> GetInterfaceStatisticsAsync(Guid id, DateTime fromDate, DateTime toDate)
     {
-        List<IInterface> interfaces = (await _interfaceReadRepository.GetByDeviceIdWithMetrics(id, fromDate, toDate)).Select(dbo => dbo.ToInterface()).ToList();
+        List<IInterface> interfaces = (await _interfaceReadRepository.GetByDeviceIdWithMetrics(id, fromDate, toDate)).ToList();
         DeviceInterfacesStatisticsDTO dto = DeviceInterfacesStatisticsDTO.FromInterfaces(interfaces);
         return Ok(dto);
     }

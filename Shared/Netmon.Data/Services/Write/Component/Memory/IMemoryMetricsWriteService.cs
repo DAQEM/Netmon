@@ -2,6 +2,6 @@
 
 namespace Netmon.Data.Services.Write.Component.Memory;
 
-public interface IMemoryMetricsWriteService : IComponentMetricWriteService<MemoryMetric>
+public interface IMemoryMetricsWriteService : IComponentMetricWriteService<IMemoryMetric>
 {
 }

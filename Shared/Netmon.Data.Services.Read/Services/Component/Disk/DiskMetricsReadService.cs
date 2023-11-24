@@ -6,22 +6,22 @@ namespace Netmon.Data.Services.Read.Services.Component.Disk;
 public class DiskMetricsReadService : IDiskMetricReadService
 {
     
-    public async Task<List<DiskMetric>> GetAll()
+    public async Task<List<IDiskMetric>> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<DiskMetric?> GetById(Guid id)
+    public async Task<IDiskMetric?> GetById(Guid id)
     {
         throw new NotImplementedException();
     }
     
-    public async Task<List<DiskMetric>> GetByComponentId(Guid componentId)
+    public async Task<List<IDiskMetric>> GetByComponentId(Guid componentId)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<List<DiskMetric>> GetByComponentIds(List<Guid> componentIds)
+    public async Task<List<IDiskMetric>> GetByComponentIds(List<Guid> componentIds)
     {
         throw new NotImplementedException();
     }

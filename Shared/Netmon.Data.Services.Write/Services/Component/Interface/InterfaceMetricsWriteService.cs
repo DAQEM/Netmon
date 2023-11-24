@@ -5,7 +5,7 @@ namespace Netmon.Data.Services.Write.Services.Component.Interface;
 
 public class InterfaceMetricsWriteService : IInterfaceMetricsWriteService
 {
-    public Task Add(InterfaceMetric metric)
+    public Task Add(IInterfaceMetric metric)
     {
         throw new NotImplementedException();
     }

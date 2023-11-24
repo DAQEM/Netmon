@@ -1,6 +1,7 @@
-﻿using Netmon.Data.DBO.Component.Interface;
-using Netmon.Data.EntityFramework.Database;
+﻿using Netmon.Data.EntityFramework.Database;
+using Netmon.Data.EntityFramework.DBO.Component.Interface;
 using Netmon.Data.Repositories.Write.Component.Interface;
+using Netmon.Models.Component.Interface.Metric;
 
 namespace Netmon.Data.Write.Repositories.Component.Interface;
 
@@ -13,14 +14,16 @@ public class InterfaceMetricsWriteRepository : IInterfaceMetricsWriteRepository
         _database = database;
     }
 
-    public async Task Add(InterfaceMetricsDBO interfaceMetrics)
+    public async Task Add(IInterfaceMetric interfaceMetrics)
     {
         if (interfaceMetrics == null)
         {
             throw new ArgumentNullException(nameof(interfaceMetrics));
         }
         
-        await _database.InterfaceMetrics.AddAsync(interfaceMetrics);
+        InterfaceMetricsDBO interfaceMetricsDBO = InterfaceMetricsDBO.FromInterfaceMetric(interfaceMetrics);
+        
+        await _database.InterfaceMetrics.AddAsync(interfaceMetricsDBO);
     }
     
     public async Task SaveChanges()

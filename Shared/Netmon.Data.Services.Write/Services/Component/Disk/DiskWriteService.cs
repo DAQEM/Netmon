@@ -1,10 +1,11 @@
 ﻿using Netmon.Data.Services.Write.Component.Disk;
+using Netmon.Models.Component.Disk;
 
 namespace Netmon.Data.Services.Write.Services.Component.Disk;
 
 public class DiskWriteService : IDiskWriteService
 {
-    public Task AddOrUpdate(Models.Component.Disk.Disk component)
+    public Task AddOrUpdate(IDisk component)
     {
         throw new NotImplementedException();
     }

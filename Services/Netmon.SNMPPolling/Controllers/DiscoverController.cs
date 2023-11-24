@@ -45,7 +45,18 @@ public class DiscoverController : Controller
         
         if (device == null) return NotFound();
         
-        return Ok(device);
+        return Ok(new
+        {
+            device.IpAddress,
+            device.Name,
+            device.Location,
+            device.Contact,
+            device.DeviceConnection,
+            device.Disks,
+            device.Cpus,
+            device.Memory,
+            device.Interfaces
+        });
     }
     
     [HttpPost("Disks")]

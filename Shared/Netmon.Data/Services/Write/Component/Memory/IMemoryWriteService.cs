@@ -1,5 +1,7 @@
-﻿namespace Netmon.Data.Services.Write.Component.Memory;
+﻿using Netmon.Models.Component.Memory;
 
-public interface IMemoryWriteService : IComponentWriteService<Models.Component.Memory.Memory>
+namespace Netmon.Data.Services.Write.Component.Memory;
+
+public interface IMemoryWriteService : IComponentWriteService<IMemory>
 {
 }

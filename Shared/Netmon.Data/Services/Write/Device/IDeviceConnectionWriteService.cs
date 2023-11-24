@@ -3,6 +3,6 @@ using Netmon.Models.Device.Connection;
 
 namespace Netmon.Data.Services.Write.Device;
 
-public interface IDeviceConnectionWriteService : IComponentWriteService<DeviceConnection>
+public interface IDeviceConnectionWriteService : IComponentWriteService<IDeviceConnection>
 {
 }

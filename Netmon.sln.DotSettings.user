@@ -1,6 +1,6 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9b8a4c9e_002D5f16_002D474d_002D9068_002D5d039104f6f6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Get_EndpointsReturnSuccessAndCorrectContentType" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::FA4A11D4-301E-4164-8E58-CE9250C879EF::net7.0::Netmon.SNMPPolling.IntegrationTests.SNMPDiscoverIntegrationTests.Get_EndpointsReturnSuccessAndCorrectContentType&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::FA4A11D4-301E-4164-8E58-CE9250C879EF::net7.0::Netmon.SNMPPolling.IntegrationTests.SNMPDiscoverIntegrationTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
