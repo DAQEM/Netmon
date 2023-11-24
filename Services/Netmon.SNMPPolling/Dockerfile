@@ -9,6 +9,8 @@ COPY ["Shared/Netmon.Data/Netmon.Data.csproj", "/Shared/Netmon.Data/"]
 COPY ["Shared/Netmon.Data.EntityFramework/Netmon.Data.EntityFramework.csproj", "/Shared/Netmon.Data.EntityFramework/"]
 COPY ["Shared/Netmon.Data.EntityFramework.Read/Netmon.Data.EntityFramework.Read.csproj", "/Shared/Netmon.Data.EntityFramework.Read/"]
 COPY ["Shared/Netmon.Data.EntityFramework.Write/Netmon.Data.EntityFramework.Write.csproj", "/Shared/Netmon.Data.EntityFramework.Write/"]
+COPY ["Shared/Netmon.Data.Services.Read/Netmon.Data.Services.Read.csproj", "/Shared/Netmon.Data.Services.Read/"]
+COPY ["Shared/Netmon.Data.Services.Write/Netmon.Data.Services.Write.csproj", "/Shared/Netmon.Data.Services.Write/"]
 COPY ["Shared/Netmon.Models/Netmon.Models.csproj", "/Shared/Netmon.Models/"]
 
 # Restore dependencies for SNMPPollingService
@@ -19,6 +21,8 @@ RUN dotnet restore "/Shared/Netmon.Data/Netmon.Data.csproj"
 RUN dotnet restore "/Shared/Netmon.Data.EntityFramework/Netmon.Data.EntityFramework.csproj"
 RUN dotnet restore "/Shared/Netmon.Data.EntityFramework.Read/Netmon.Data.EntityFramework.Read.csproj"
 RUN dotnet restore "/Shared/Netmon.Data.EntityFramework.Write/Netmon.Data.EntityFramework.Write.csproj"
+RUN dotnet restore "/Shared/Netmon.Data.Services.Read/Netmon.Data.Services.Read.csproj"
+RUN dotnet restore "/Shared/Netmon.Data.Services.Write/Netmon.Data.Services.Write.csproj"
 RUN dotnet restore "/Shared/Netmon.Models/Netmon.Models.csproj"
 
 # Copy the rest of the source code
@@ -28,6 +32,8 @@ COPY ["Shared/Netmon.Data/", "/Shared/Netmon.Data/"]
 COPY ["Shared/Netmon.Data.EntityFramework/", "/Shared/Netmon.Data.EntityFramework/"]
 COPY ["Shared/Netmon.Data.EntityFramework.Read/", "/Shared/Netmon.Data.EntityFramework.Read/"]
 COPY ["Shared/Netmon.Data.EntityFramework.Write/", "/Shared/Netmon.Data.EntityFramework.Write/"]
+COPY ["Shared/Netmon.Data.Services.Read/", "/Shared/Netmon.Data.Services.Read/"]
+COPY ["Shared/Netmon.Data.Services.Write/", "/Shared/Netmon.Data.Services.Write/"]
 COPY ["Shared/Netmon.Models/", "/Shared/Netmon.Models/"]
 
 # Build SNMPPollingService

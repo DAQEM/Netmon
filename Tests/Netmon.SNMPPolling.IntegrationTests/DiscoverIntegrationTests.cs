@@ -6,12 +6,12 @@ using Xunit.Abstractions;
 
 namespace Netmon.SNMPPolling.IntegrationTests;
 
-public class SNMPDiscoverIntegrationTests : IClassFixture<WebApplicationFactory<SNMPPollingProgram>>
+public class DiscoverIntegrationTests : IClassFixture<WebApplicationFactory<SNMPPollingProgram>>
 {
     private readonly WebApplicationFactory<SNMPPollingProgram> _factory;
     private readonly ITestOutputHelper _testOutputHelper;
 
-    public SNMPDiscoverIntegrationTests(WebApplicationFactory<SNMPPollingProgram> factory, ITestOutputHelper testOutputHelper)
+    public DiscoverIntegrationTests(WebApplicationFactory<SNMPPollingProgram> factory, ITestOutputHelper testOutputHelper)
     {
         _factory = factory;
         _testOutputHelper = testOutputHelper;
