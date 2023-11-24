@@ -78,8 +78,7 @@ string? connectionString = builder.Configuration["MySQL:ConnectionString"];
 
 builder.Services.AddDbContext<DevicesDatabase>(options =>
 {
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), 
-        mySqlDbContextOptionsBuilder => mySqlDbContextOptionsBuilder.MigrationsAssembly("Netmon.DeviceManager"));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
 builder.Services.AddScoped<ISNMPManager, SNMPManager>();
@@ -162,10 +161,16 @@ if (!app.Environment.IsDevelopment())
     app.UseMiddleware<ExceptionMiddleware>();
 }
 
+using (IServiceScope serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+{
+    DevicesDatabase? context = serviceScope.ServiceProvider.GetService<DevicesDatabase>();
+    context?.Database.Migrate();
+}
+
 app.Run();
 
 
 namespace Netmon.SNMPPolling
 {
-    public partial class SNMPPollingProgram { }
+    public class SNMPPollingProgram { }
 }

@@ -3,6 +3,7 @@ using Netmon.Data.Services.Read.Device;
 using Netmon.Data.Services.Write.Device;
 using Netmon.Data.Services.Write.Exceptions;
 using Netmon.Models.Device;
+using Netmon.Models.Device.Connection;
 
 namespace Netmon.Data.Services.Write.Services.Device;
 
@@ -10,11 +11,13 @@ public class DeviceWriteService : IDeviceWriteService
 {
     private readonly IDeviceWriteRepository _deviceWriteRepository;
     private readonly IDeviceReadService _deviceReadService;
+    private readonly IDeviceConnectionReadService _deviceConnectionReadService;
 
-    public DeviceWriteService(IDeviceWriteRepository deviceWriteRepository, IDeviceReadService deviceReadService)
+    public DeviceWriteService(IDeviceWriteRepository deviceWriteRepository, IDeviceReadService deviceReadService, IDeviceConnectionReadService deviceConnectionReadService)
     {
         _deviceWriteRepository = deviceWriteRepository;
         _deviceReadService = deviceReadService;
+        _deviceConnectionReadService = deviceConnectionReadService;
     }
 
     public Task SaveChanges()
@@ -24,6 +27,10 @@ public class DeviceWriteService : IDeviceWriteService
 
     public async Task AddOrUpdateFullDevice(IDevice device)
     {
+        IDeviceConnection? existingConnection = await _deviceConnectionReadService.GetByDeviceId(device.Id);
+
+        if (existingConnection == null) return;
+        
         await _deviceWriteRepository.AddOrUpdateFullDevice(device);
         await _deviceWriteRepository.SaveChanges();
     }

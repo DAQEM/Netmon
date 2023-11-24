@@ -12,12 +12,10 @@ public class PollIntegrationTests : IClassFixture<WebApplicationFactory<SNMPPoll
     private readonly WebApplicationFactory<SNMPPollingProgram> _factory;
     private readonly ITestOutputHelper _testOutputHelper;
 
-    public PollIntegrationTests(WebApplicationFactory<SNMPPollingProgram> factory, ITestOutputHelper testOutputHelper, DevicesDatabase devicesDatabase)
+    public PollIntegrationTests(WebApplicationFactory<SNMPPollingProgram> factory, ITestOutputHelper testOutputHelper)
     {
         _factory = factory;
         _testOutputHelper = testOutputHelper;
-
-        devicesDatabase.Database.EnsureCreated();
     }
 
     [Theory]
