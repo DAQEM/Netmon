@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Netmon.Data.EntityFramework.Database;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,12 +12,14 @@ public class PollIntegrationTests : IClassFixture<WebApplicationFactory<SNMPPoll
     private readonly WebApplicationFactory<SNMPPollingProgram> _factory;
     private readonly ITestOutputHelper _testOutputHelper;
 
-    public PollIntegrationTests(WebApplicationFactory<SNMPPollingProgram> factory, ITestOutputHelper testOutputHelper)
+    public PollIntegrationTests(WebApplicationFactory<SNMPPollingProgram> factory, ITestOutputHelper testOutputHelper, DevicesDatabase devicesDatabase)
     {
         _factory = factory;
         _testOutputHelper = testOutputHelper;
+
+        devicesDatabase.Database.EnsureCreated();
     }
-    
+
     [Theory]
     [InlineData("/Poll/Device", "{\"ipAddress\":\"127.0.0.1\",\"name\":\"snmpd-test\",\"location\":\"SNMPD Test\",\"contact\":\"Root <root@snmpd.test>\",\"deviceConnection\":{\"port\":161,\"community\":\"public\",\"authPassword\":\"\",\"privacyPassword\":\"\",\"authProtocol\":\"SHA256\",\"privacyProtocol\":\"AES\",\"contextName\":\"\",\"snmpVersion\":1},\"disks\":[],\"cpus\":[],\"memory\":[],\"interfaces\":[]}")]
     public async Task Post_EndpointsReturnSuccessAndCorrectContentType(string url, string expectedJsonResponse)
