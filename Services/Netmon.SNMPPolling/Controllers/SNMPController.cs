@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Netmon.SNMPPolling.DTO;
 using Netmon.SNMPPolling.SNMP.Manager;
 using Netmon.SNMPPolling.SNMP.Request;
 using Netmon.SNMPPolling.SNMP.Result;
@@ -16,8 +17,9 @@ public class SNMPController : Controller
     }
 
     [HttpPost("GetBulkWalk")]
-    public async Task<IActionResult> GetBulkWalk([FromBody] SNMPConnectionInfo snmpConnectionInfo, string oid, int timeoutMillis)
+    public async Task<IActionResult> GetBulkWalk([FromBody] SNMPConnectionDTO snmpConnectionDto, string oid, int timeoutMillis)
     {
+        SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
         ISNMPResult result = await _snmpManager.BulkWalkAsync(snmpConnectionInfo, oid, timeoutMillis);
 
         return Ok(result.Variables.Select(variable => new

@@ -22,9 +22,10 @@ public class DeviceWriteService : IDeviceWriteService
         throw new NotImplementedException();
     }
 
-    public Task AddOrUpdateFullDevice(IDevice device)
+    public async Task AddOrUpdateFullDevice(IDevice device)
     {
-        throw new NotImplementedException();
+        await _deviceWriteRepository.AddOrUpdateFullDevice(device);
+        await _deviceWriteRepository.SaveChanges();
     }
 
     public Task AddOrUpdateDevice(IDevice device)

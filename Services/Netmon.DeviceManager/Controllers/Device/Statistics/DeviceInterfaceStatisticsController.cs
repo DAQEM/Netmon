@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Netmon.Data.Repositories.Read.Component.Interface;
+using Netmon.Data.Services.Read.Component.Interface;
 using Netmon.DeviceManager.DTO.Device.Statistics;
 using Netmon.Models.Component.Interface;
 
@@ -9,17 +10,17 @@ namespace Netmon.DeviceManager.Controllers.Device.Statistics;
 [Route("device/{id}/statistics/interface")]
 public class DeviceInterfaceStatisticsController : BaseController
 {
-    private readonly IInterfaceReadRepository _interfaceReadRepository;
+    private readonly IInterfaceReadService _interfaceReadService;
     
-    public DeviceInterfaceStatisticsController(IInterfaceReadRepository interfaceReadRepository)
+    public DeviceInterfaceStatisticsController(IInterfaceReadService interfaceReadService)
     {
-        _interfaceReadRepository = interfaceReadRepository;
+        _interfaceReadService = interfaceReadService;
     }   
     
     [HttpGet("inout")]
     public async Task<IActionResult> GetInterfaceStatisticsAsync(Guid id, DateTime fromDate, DateTime toDate)
     {
-        List<IInterface> interfaces = (await _interfaceReadRepository.GetByDeviceIdWithMetrics(id, fromDate, toDate)).ToList();
+        List<IInterface> interfaces = (await _interfaceReadService.GetByDeviceIdWithMetrics(id, fromDate, toDate)).ToList();
         DeviceInterfacesStatisticsDTO dto = DeviceInterfacesStatisticsDTO.FromInterfaces(interfaces);
         return Ok(dto);
     }

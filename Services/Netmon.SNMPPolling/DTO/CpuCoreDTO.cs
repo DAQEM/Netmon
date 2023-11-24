@@ -1,15 +1,15 @@
-﻿using Netmon.Models.Component.Memory;
+﻿using Netmon.Models.Component.Cpu.Core;
 
 namespace Netmon.SNMPPolling.DTO;
 
-public class MemoryDTO
+public class CpuCoreDTO
 {
     public int Index { get; set; }
     public string Name { get; set; }
     
-    public static MemoryDTO FromMemory(IMemory arg)
+    public static CpuCoreDTO FromCpuCore(ICpuCore arg)
     {
-        return new MemoryDTO
+        return new CpuCoreDTO
         {
             Index = arg.Index,
             Name = arg.Name

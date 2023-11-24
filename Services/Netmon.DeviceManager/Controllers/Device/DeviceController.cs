@@ -12,14 +12,11 @@ public class DeviceController : BaseController
 {
     private readonly IDeviceReadService _deviceReadService;
     private readonly IDeviceWriteService _deviceWriteService;
-    private readonly IDeviceConnectionReadService _deviceConnectionReadService;
 
-    public DeviceController(IDeviceReadService deviceReadService, IDeviceWriteService deviceWriteService, 
-        IDeviceConnectionReadService deviceConnectionReadService)
+    public DeviceController(IDeviceReadService deviceReadService, IDeviceWriteService deviceWriteService)
     {
         _deviceReadService = deviceReadService;
         _deviceWriteService = deviceWriteService;
-        _deviceConnectionReadService = deviceConnectionReadService;
     }
 
     [HttpGet]
