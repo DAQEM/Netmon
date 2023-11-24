@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.EntityFramework.Read.Repositories.Component.Cpu;
 using Netmon.Data.EntityFramework.Read.Repositories.Component.Cpu.Core;
@@ -164,7 +165,13 @@ if (!app.Environment.IsDevelopment())
 using (IServiceScope serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
 {
     DevicesDatabase? context = serviceScope.ServiceProvider.GetService<DevicesDatabase>();
-    context?.Database.EnsureCreated();
+    try
+    {
+        context?.Database.EnsureCreated();
+    }
+    catch (MySqlException _)
+    {
+    }
 }
 
 app.Run();
