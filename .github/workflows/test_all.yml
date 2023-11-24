@@ -139,7 +139,9 @@ jobs:
       uses: isbang/compose-action@v1.5.1
       with:
         compose-file: "./docker-compose.yml"
-        services: netmon-snmp-test-agent
+        services: |
+          netmon-snmp-test-agent
+          netmon-mysql
 
     - name: Test SNMP Details
       run: dotnet test Tests/Netmon.SNMPPolling.IntegrationTests --logger "console;verbosity=detailed"

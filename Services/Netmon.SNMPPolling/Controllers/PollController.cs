@@ -28,9 +28,9 @@ public class PollController : ControllerBase
         SNMPConnectionInfo snmpConnectionInfo = connectionInfo.ToSNMPConnectionInfo();
         IDevice? device = await _devicePoller.PollFull(snmpConnectionInfo);
 
-        //if (device == null) return NotFound();
+        if (device == null) return NotFound();
         
-        //await _deviceWriteService.AddOrUpdateFullDevice(device);
+        await _deviceWriteService.AddOrUpdateFullDevice(device);
         
         return Ok(DeviceOverviewDTO.FromDevice(device));
     }
