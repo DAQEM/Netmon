@@ -167,7 +167,7 @@ using (IServiceScope serviceScope = app.Services.GetRequiredService<IServiceScop
     DevicesDatabase? context = serviceScope.ServiceProvider.GetService<DevicesDatabase>();
     try
     {
-        context?.Database.Migrate();
+        context?.Database.EnsureCreated();
     }
     catch (MySqlException _)
     {
