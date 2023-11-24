@@ -164,7 +164,7 @@ if (!app.Environment.IsDevelopment())
 using (IServiceScope serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
 {
     DevicesDatabase? context = serviceScope.ServiceProvider.GetService<DevicesDatabase>();
-    context?.Database.Migrate();
+    context?.Database.EnsureCreated();
 }
 
 app.Run();
