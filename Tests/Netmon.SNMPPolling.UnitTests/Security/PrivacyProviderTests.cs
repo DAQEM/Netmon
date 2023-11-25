@@ -29,7 +29,7 @@ public class PrivacyProviderTests
         IPrivacyProvider result = PrivacyProvider.GetPrivacyProvider(authPassword, privacyPassword, authProtocol, privacyProtocol);
 
         // Assert
-        Assert.IsInstanceOf<AESPrivacyProvider>(result);
+        Assert.IsInstanceOf<AESPrivacyProviderBase>(result);
     }
 
     [Test]
