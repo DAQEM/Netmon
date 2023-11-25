@@ -87,6 +87,8 @@ jobs:
         indicators: true
         output: both
         thresholds: '60 80'
+    - name: Print Report
+      run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
   user_web_app:
   
