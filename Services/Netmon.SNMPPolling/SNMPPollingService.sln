@@ -12,6 +12,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Models", "..\..\Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.SNMPPolling.UnitTests", "..\..\Tests\Netmon.SNMPPolling.UnitTests\Netmon.SNMPPolling.UnitTests.csproj", "{317C80CA-4F82-41F9-81BD-E6F259698644}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Data.EntityFramework.Read", "..\..\Shared\Netmon.Data.EntityFramework.Read\Netmon.Data.EntityFramework.Read.csproj", "{92CDEF47-BEE8-4E68-ACC1-BA08DD489712}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Data.Services.Read", "..\..\Shared\Netmon.Data.Services.Read\Netmon.Data.Services.Read.csproj", "{FCA2C478-1D76-4748-8E68-EB34A78563AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netmon.Data.Services.Write", "..\..\Shared\Netmon.Data.Services.Write\Netmon.Data.Services.Write.csproj", "{AB28DAD9-300A-4272-8145-74AB821F286F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +48,17 @@ Global
 		{317C80CA-4F82-41F9-81BD-E6F259698644}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{317C80CA-4F82-41F9-81BD-E6F259698644}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{317C80CA-4F82-41F9-81BD-E6F259698644}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92CDEF47-BEE8-4E68-ACC1-BA08DD489712}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92CDEF47-BEE8-4E68-ACC1-BA08DD489712}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92CDEF47-BEE8-4E68-ACC1-BA08DD489712}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92CDEF47-BEE8-4E68-ACC1-BA08DD489712}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCA2C478-1D76-4748-8E68-EB34A78563AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCA2C478-1D76-4748-8E68-EB34A78563AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCA2C478-1D76-4748-8E68-EB34A78563AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCA2C478-1D76-4748-8E68-EB34A78563AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB28DAD9-300A-4272-8145-74AB821F286F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB28DAD9-300A-4272-8145-74AB821F286F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB28DAD9-300A-4272-8145-74AB821F286F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB28DAD9-300A-4272-8145-74AB821F286F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
