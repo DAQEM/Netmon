@@ -10,6 +10,9 @@
     &lt;TestId&gt;NUnit3x::317C80CA-4F82-41F9-81BD-E6F259698644::net7.0::Netmon.SNMPPolling.Tests.SNMP.MIB.If.InterfaceTests.IfTableDeserializer_ShouldReturnIfTable_WhenValidISNMPResult&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4314576a_002D5fe3_002D45d4_002D83e9_002Ddecb05902119/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7d8d7a25_002D61ab_002D47c0_002Dbf47_002D493c75103054/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="IfTableDeserializer_ShouldReturnIfTable_WhenValidISNMPResult #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>

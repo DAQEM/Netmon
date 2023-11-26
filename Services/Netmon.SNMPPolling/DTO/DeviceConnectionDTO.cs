@@ -1,8 +1,5 @@
-﻿using System.Text.Json.Serialization;
-using Lextm.SharpSnmpLib;
-using Netmon.Models.Device.Connection;
+﻿using Netmon.Models.Device.Connection;
 using Netmon.Models.Device.Connection.Protocol;
-using Netmon.SNMPPolling.SNMP.Request;
 
 namespace Netmon.SNMPPolling.DTO;
 

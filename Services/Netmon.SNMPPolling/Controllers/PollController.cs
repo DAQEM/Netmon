@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Netmon.Data.EntityFramework.DBO.Device;
-using Netmon.Data.Repositories.Write.Device;
 using Netmon.Data.Services.Write.Device;
 using Netmon.Models.Device;
 using Netmon.SNMPPolling.DTO;

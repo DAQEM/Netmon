@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using Netmon.SNMPPolling.Exception;
+using Netmon.SNMPPolling.SNMP.Exception;
 
 namespace Netmon.SNMPPolling.Middleware;
 

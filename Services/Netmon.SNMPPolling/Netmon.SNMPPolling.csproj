@@ -23,6 +23,7 @@
       <ProjectReference Include="..\..\Shared\Netmon.Data.EntityFramework.Write\Netmon.Data.EntityFramework.Write.csproj" />
       <ProjectReference Include="..\..\Shared\Netmon.Data.Services.Read\Netmon.Data.Services.Read.csproj" />
       <ProjectReference Include="..\..\Shared\Netmon.Data.Services.Write\Netmon.Data.Services.Write.csproj" />
+      <ProjectReference Include="..\..\Shared\Netmon.SNMPPolling.SNMP\Netmon.SNMPPolling.SNMP.csproj" />
     </ItemGroup>
 
 </Project>
