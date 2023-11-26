@@ -4,7 +4,7 @@ namespace Netmon.DeviceManager.DTO.Device.Statistics;
 
 public class DeviceInterfacesStatisticsDTO
 {
-    public List<DeviceInterfaceStatisticsDTO> Interfaces { get; set; }
+    public List<DeviceInterfaceStatisticsDTO> Interfaces { get; set; } = null!;
 
     public static DeviceInterfacesStatisticsDTO FromInterfaces(List<IInterface> interfaces)
     {

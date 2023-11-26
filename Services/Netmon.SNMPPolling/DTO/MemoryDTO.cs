@@ -5,7 +5,7 @@ namespace Netmon.SNMPPolling.DTO;
 public class MemoryDTO
 {
     public int Index { get; set; }
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
     
     public static MemoryDTO FromMemory(IMemory arg)
     {

@@ -4,7 +4,7 @@ namespace Netmon.DeviceManager.DTO.Device.Statistics;
 
 public class DeviceDisksStatisticsDTO
 {
-    public List<DeviceDiskStatisticsDTO> Disks { get; set; }
+    public List<DeviceDiskStatisticsDTO> Disks { get; set; } = null!;
 
     public static DeviceDisksStatisticsDTO FromDisks(List<IDisk> disks)
     {

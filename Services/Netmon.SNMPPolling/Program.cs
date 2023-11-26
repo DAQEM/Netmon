@@ -169,7 +169,7 @@ using (IServiceScope serviceScope = app.Services.GetRequiredService<IServiceScop
     {
         context?.Database.EnsureCreated();
     }
-    catch (MySqlException _)
+    catch (MySqlException)
     {
     }
 }

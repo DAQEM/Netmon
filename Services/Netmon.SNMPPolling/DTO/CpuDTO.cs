@@ -5,7 +5,7 @@ namespace Netmon.SNMPPolling.DTO;
 public class CpuDTO
 {
     public int Index { get; set; }
-    public List<CpuCoreDTO> Cores { get; set; }
+    public List<CpuCoreDTO> Cores { get; set; }  = null!;
     
     public static CpuDTO FromCpu(ICpu arg)
     {
