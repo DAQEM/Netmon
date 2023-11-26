@@ -18,7 +18,7 @@ public class DeviceConnectionReadService : IDeviceConnectionReadService
         return await _deviceConnectionReadRepository.GetAll();
     }
 
-    public async Task<IDeviceConnection?> GetById(Guid id)
+    public Task<IDeviceConnection?> GetById(Guid id)
     {
         throw new NotImplementedException();
     }

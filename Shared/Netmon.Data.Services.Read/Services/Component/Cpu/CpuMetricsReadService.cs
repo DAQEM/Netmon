@@ -6,22 +6,22 @@ namespace Netmon.Data.Services.Read.Services.Component.Cpu;
 public class CpuMetricsReadService : ICpuMetricReadService
 {
     
-    public async Task<List<ICpuMetric>> GetAll()
+    public Task<List<ICpuMetric>> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<ICpuMetric?> GetById(Guid id)
+    public Task<ICpuMetric?> GetById(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<List<ICpuMetric>> GetByComponentId(Guid componentId)
+    public Task<List<ICpuMetric>> GetByComponentId(Guid componentId)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<List<ICpuMetric>> GetByComponentIds(List<Guid> componentIds)
+    public Task<List<ICpuMetric>> GetByComponentIds(List<Guid> componentIds)
     {
         throw new NotImplementedException();
     }

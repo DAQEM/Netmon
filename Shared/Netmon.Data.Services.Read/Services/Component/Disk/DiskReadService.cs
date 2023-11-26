@@ -13,22 +13,22 @@ public class DiskReadService : IDiskReadService
         _diskReadRepository = diskReadRepository;
     }
 
-    public async Task<List<IDisk>> GetAll()
+    public Task<List<IDisk>> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<IDisk?> GetById(Guid id)
+    public Task<IDisk?> GetById(Guid id)
     {
         throw new NotImplementedException();
     }
     
-    public async Task<List<IDisk>> GetByDeviceId(Guid deviceId)
+    public Task<List<IDisk>> GetByDeviceId(Guid deviceId)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<List<IDisk>> GetByDeviceIdWithMetrics(Guid deviceId)
+    public Task<List<IDisk>> GetByDeviceIdWithMetrics(Guid deviceId)
     {
         throw new NotImplementedException();
     }

@@ -6,27 +6,27 @@ namespace Netmon.Data.Services.Read.Services.Component.Memory;
 public class MemoryReadService : IMemoryReadService
 {
 
-    public async Task<List<IMemory>> GetAll()
+    public Task<List<IMemory>> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<IMemory?> GetById(Guid id)
+    public Task<IMemory?> GetById(Guid id)
     {
         throw new NotImplementedException();
     }
     
-    public async Task<List<IMemory>> GetByDeviceId(Guid deviceId)
+    public Task<List<IMemory>> GetByDeviceId(Guid deviceId)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<List<IMemory>> GetByDeviceIdWithMetrics(Guid deviceId)
+    public Task<List<IMemory>> GetByDeviceIdWithMetrics(Guid deviceId)
     {
         throw new NotImplementedException();
     }
     
-    public async Task<List<IMemory>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
+    public Task<List<IMemory>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
     {
         throw new NotImplementedException();
     }
