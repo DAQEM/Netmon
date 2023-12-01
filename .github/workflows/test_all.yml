@@ -84,6 +84,7 @@ jobs:
       uses: dorny/test-reporter@v1
       with:
         artifact: Services/Netmon.SNMPPolling/TestResults/
+        name: Unit Test Report
         path: '*.trx'
         reporter: dotnet-trx
 
@@ -99,7 +100,7 @@ jobs:
         indicators: true
         output: both
         thresholds: '60 80'
-        
+
     - name: Print Reports
       if: always()
       run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
