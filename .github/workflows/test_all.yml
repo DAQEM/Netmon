@@ -34,7 +34,7 @@ jobs:
       run: dotnet build --no-restore
       working-directory: ${{env.working-directory}}
     - name: Test
-      run: dotnet test --no-build --verbosity normal --collect:"Code Coverage" --results-directory ./coverage
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./TestResults
       working-directory: ${{env.working-directory}}
 
   device_manager_service:
@@ -56,7 +56,7 @@ jobs:
       run: dotnet build --no-restore DeviceManagerService.sln
       working-directory: ${{env.working-directory}}
     - name: Test
-      run: dotnet test --no-build --verbosity normal --collect:"Code Coverage" --results-directory ./coverage DeviceManagerService.sln 
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./TestResults DeviceManagerService.sln 
       working-directory: ${{env.working-directory}}
 
   snmp_polling_service:
@@ -179,12 +179,21 @@ jobs:
           netmon-mysql
 
     - name: Test SNMP Details
-      run: dotnet test Tests/Netmon.SNMPPolling.IntegrationTests --logger "console;verbosity=detailed"
+      run: dotnet test --no-build --verbosity normal Tests/Netmon.SNMPPolling.IntegrationTests --logger "trx;LogFileName=test-results.trx"
+
+    - name: Integration Test Report
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: Integration Test Report
+        path: "**/test-results.trx"
+        reporter: dotnet-trx
+        fail-on-error: true
 
   codeql:
     name: CodeQL
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
-    needs: [account_service, device_manager_service, snmp_polling_service, user_web_app, admin_web_app, snmp_test]
+    needs: [snmp_test]
     timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
     permissions:
       actions: read
