@@ -179,7 +179,7 @@ jobs:
           netmon-mysql
 
     - name: Test SNMP Details
-      run: dotnet test --no-build --verbosity normal Tests/Netmon.SNMPPolling.IntegrationTests --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test --no-build --verbosity normal Tests/Netmon.SNMPPolling.IntegrationTests --results-directory ./TestResults --logger "trx;LogFileName=test-results.trx"
 
     - name: Integration Test Report
       uses: dorny/test-reporter@v1
