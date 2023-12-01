@@ -181,6 +181,12 @@ jobs:
     - name: Test SNMP Details
       run: dotnet test --no-build --verbosity normal Tests/Netmon.SNMPPolling.IntegrationTests --results-directory ./TestResults --logger "trx;LogFileName=test-results.trx"
 
+    - name: Test
+      run: |
+        ls -al
+        ls -al TestResults
+        cat TestResults/test-results.trx | tail -n 10
+
     - name: Integration Test Report
       uses: dorny/test-reporter@v1
       if: always()
