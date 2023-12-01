@@ -10,8 +10,9 @@ on:
     branches: [ "master" ]
 
 permissions:
-  id-token: write
   contents: read
+  actions: read
+  checks: write
 
 jobs:
   account_service:
