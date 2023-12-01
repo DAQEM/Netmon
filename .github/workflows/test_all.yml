@@ -183,7 +183,7 @@ jobs:
           netmon-mysql
 
     - name: Test SNMP Details
-      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./TestResults --logger "console;verbosity=detailed" --logger "trx;LogFileName=test-results.trx" Netmon.SNMPPolling.IntegrationTests.csproj
+      run: dotnet test --logger "console;verbosity=detailed" --logger "trx;LogFileName=test-results.trx" Netmon.SNMPPolling.IntegrationTests.csproj
       working-directory: ${{env.working-directory}}
 
     - name: Test
