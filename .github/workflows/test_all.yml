@@ -164,8 +164,12 @@ jobs:
       working-directory: ${{env.working-directory}}
 
   snmp_test:
+
     runs-on: ubuntu-latest
+    env:
+      working-directory: Tests/Netmon.SNMPPolling.IntegrationTests
     needs: [account_service, device_manager_service, snmp_polling_service, user_web_app, admin_web_app]
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -179,13 +183,15 @@ jobs:
           netmon-mysql
 
     - name: Test SNMP Details
-      run: dotnet test --no-build --verbosity normal Tests/Netmon.SNMPPolling.IntegrationTests --results-directory ./TestResults --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test --no-build --verbosity normal --results-directory ./TestResults --logger "trx;LogFileName=test-results.trx" Netmon.SNMPPolling.IntegrationTests.csproj
+      working-directory: ${{env.working-directory}}
 
     - name: Test
       run: |
         ls -al
         ls -al TestResults
         cat TestResults/test-results.trx | tail -n 10
+      working-directory: ${{env.working-directory}}
 
     - name: Integration Test Report
       uses: dorny/test-reporter@v1
