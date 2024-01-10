@@ -73,7 +73,6 @@ services:
         retries: 5
     depends_on:
       - netmon-mysql
-      - netmon-device-manager-service
 
   netmon-snmp-test-agent:
     build: Tests/SNMPTestAgent
