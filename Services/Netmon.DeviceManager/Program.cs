@@ -182,12 +182,20 @@ app.MapControllers();
 
 using (IServiceScope scope = app.Services.CreateScope())
 {
-    IPollDeviceJob pollDeviceJob = scope.ServiceProvider.GetRequiredService<IPollDeviceJob>();
+    try
+    {
+        IPollDeviceJob pollDeviceJob = scope.ServiceProvider.GetRequiredService<IPollDeviceJob>();
+        RecurringJob.AddOrUpdate(
+            builder.Configuration["Hangfire:PollingTask:Name"], 
+            () => pollDeviceJob.Execute(), 
+            builder.Configuration["Hangfire:PollingTask:Cron"]);
+    }
+    catch (InvalidOperationException e)
+    {
+        Console.WriteLine("Unable to start polling job: {0}", e.Message);
+    }
 
-    RecurringJob.AddOrUpdate(
-        builder.Configuration["Hangfire:PollingTask:Name"], 
-        () => pollDeviceJob.Execute(), 
-        builder.Configuration["Hangfire:PollingTask:Cron"]);
+    
 }
 
 app.Run();
