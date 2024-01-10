@@ -60,7 +60,7 @@ jobs:
       working-directory: ${{env.working-directory}}
 
   snmp-polling-service:
-    name: SNMP Polling Serive
+    name: SNMP Polling Service
     runs-on: ubuntu-latest
     env:
       working-directory: Services/Netmon.SNMPPolling
@@ -192,9 +192,9 @@ jobs:
 
   codeql:
     name: CodeQL
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     needs: [integration-tests]
-    timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
+    timeout-minutes: 360
     permissions:
       actions: read
       contents: read
@@ -221,39 +221,27 @@ jobs:
         category: "/language:${{matrix.language}}"
 
   end-to-end-tests:
-    name: End to End Tests
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    needs: [integration-tests]
-    
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
-    - name: Install User dependencies
-      run: npm ci
-      working-directory: Services/UserWebApp
-    - name: Build User SvelteKit project
-      run: npm run build
-      working-directory: Services/UserWebApp
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-      working-directory: Services/UserWebApp
-    - name: Run Playwright tests
-      run: npx playwright test
-      working-directory: Services/UserWebApp
-    
-    - name: Install Admin dependencies
-      run: npm ci
-      working-directory: Services/AdminWebApp
-    - name: Build Admin SvelteKit project
-      run: npm run build
-      working-directory: Services/AdminWebApp
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-      working-directory: Services/AdminWebApp
-    - name: Run Playwright tests
-      run: npx playwright test
-      working-directory: Services/AdminWebApp
+  name: End to End Tests
+  timeout-minutes: 60
+  runs-on: ubuntu-latest
+  needs: [integration-tests]
+
+  strategy:
+    matrix:
+      app: ['UserWebApp', 'AdminWebApp']
+
+  steps:
+  - uses: actions/checkout@v3
+  - name: Setup Node
+    uses: actions/setup-node@v3
+    with:
+      node-version: 18
+
+  - name: Install Dependencies
+    run: |
+      npm ci
+      npm run build
+      npx playwright install --with-deps
+  - name: Run Playwright tests
+    run: npx playwright test
+    working-directory: Services/${{ matrix.app }}
