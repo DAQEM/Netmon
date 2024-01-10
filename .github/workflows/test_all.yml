@@ -252,7 +252,6 @@ jobs:
   deploy:
     name: Deploy Docker Images
     runs-on: ubuntu-latest
-    needs: [codeql, end-to-end-tests]
     timeout-minutes: 20
 
     steps:
@@ -261,6 +260,10 @@ jobs:
       with:
         username: daqem
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
     - name: Deploy Images
       run: docker-compose push
 
