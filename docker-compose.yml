@@ -48,11 +48,9 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5002:80"
-    restart: on-failure
     depends_on:
       - netmon-mongo
       - netmon-mysql
-      - netmon-snmp-polling-service
 
   netmon-snmp-polling-service:
     build:
@@ -64,11 +62,6 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5003:80"
-    healthcheck:
-        test: ["CMD", "curl", "-f", "http://localhost:80/ping"]
-        interval: 30s
-        timeout: 10s
-        retries: 5
     depends_on:
       - netmon-mysql
 
