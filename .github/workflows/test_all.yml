@@ -235,16 +235,24 @@ jobs:
       with:
         compose-file: "./docker-compose.yml"
 
-    - name: Check if all containers are running
-      run: docker container ls
-
     - name: Install Admin dependencies
       run: |
         docker exec netmon-admin-web-app npm install vitest
         docker exec netmon-admin-web-app npx playwright install --with-deps
 
+    - name: Check if all containers are running
+      run: docker container ls
+
     - name: Run Admin Tests
       run: docker exec netmon-admin-web-app npx playwright test
+
+    - name: Check if all containers are running
+      if: always()
+      run: docker container ls
+
+    - name: Test Database
+      if always()
+      run: curl "localhost:5000/api/device/device"
 
     - name: Install User dependencies
       run: |
