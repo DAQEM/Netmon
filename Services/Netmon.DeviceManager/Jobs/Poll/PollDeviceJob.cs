@@ -21,7 +21,7 @@ public class PollDeviceJob : IPollDeviceJob
     
     public async Task Execute()
     {
-        string url = URLHandler.GetSNMPPollingURL("poll/device");
+        string url = UrlHandler.GetSNMPPollingURL("poll/device");
         
         List<DeviceDBO> devices = await _database.Devices
             .Include(d => d.DeviceConnection)

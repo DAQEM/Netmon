@@ -40,4 +40,16 @@ app.UseProxies(proxies =>
 app.Run();
 return;
 
-string GetHost(int port) => app.Environment.IsDevelopment() ? $"http://localhost:{port}/api/" : $"http://host.docker.internal:{port}/api/";
+string GetHost(int port) => app.Environment.IsDevelopment() ? $"http://localhost:{port}/api/" : GetContainerHost(port);
+
+string GetContainerHost(int port)
+{
+    return port switch
+    {
+        5001 => "http://netmon-account-service:80/api/",
+        5002 => "http://netmon-device-manager-service:80/api/",
+        5003 => "http://netmon-snmp-polling-service:80/api/",
+        _ => ""
+    };
+}
+
