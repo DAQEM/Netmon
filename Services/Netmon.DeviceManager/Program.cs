@@ -100,7 +100,7 @@ string? connectionString = builder.Configuration["MySQL:ConnectionString"];
 Console.WriteLine($"The connection string is: {connectionString}");
 builder.Services.AddDbContext<DevicesDatabase>(options =>
 {
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), o => o.MigrationsAssembly("Netmon.DeviceManager"));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
 builder.Services.AddScoped<IDeviceWriteRepository, DeviceWriteRepository>();
@@ -192,7 +192,7 @@ using (IServiceScope scope = app.Services.CreateScope())
     }
     catch (InvalidOperationException e)
     {
-        Console.WriteLine("Unable to start polling job: {0}", e.Message);
+        Console.WriteLine("Unable to start polling job (probably because it cannot connect to the database): {0}", e.Message);
     }
 
     

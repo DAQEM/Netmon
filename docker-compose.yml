@@ -10,9 +10,6 @@ services:
       - ORIGIN=http://localhost:80
     ports:
       - "80:3000"
-    networks:
-      network1:
-        ipv4_address: 192.168.178.2
 
   netmon-admin-web-app:
     build: Services/AdminWebApp
@@ -22,9 +19,6 @@ services:
       - ORIGIN=http://localhost:81
     ports:
       - "81:3000"
-    networks:
-      network1:
-        ipv4_address: 192.168.178.3
 
   netmon-api-gateway:
     build: Services/APIGateway
@@ -34,9 +28,6 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5000:80"
-    networks:
-      network1:
-        ipv4_address: 192.168.178.254
 
   netmon-account-service:
     build: Services/AccountService
@@ -46,9 +37,6 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5001:80"
-    networks:
-      network1:
-        ipv4_address: 192.168.178.4
 
   netmon-device-manager-service:
     build:
@@ -63,9 +51,6 @@ services:
     depends_on:
       - netmon-mongo
       - netmon-mysql
-    networks:
-      network1:
-        ipv4_address: 192.168.178.5
 
   netmon-snmp-polling-service:
     build:
@@ -79,9 +64,6 @@ services:
       - "5003:80"
     depends_on:
       - netmon-mysql
-    networks:
-      network1:
-        ipv4_address: 192.168.178.6
 
   netmon-snmp-test-agent:
     build: Tests/SNMPTestAgent
@@ -89,9 +71,6 @@ services:
     hostname: snmpd-test
     ports:
       - "161:161/udp"
-    networks:
-      network1:
-        ipv4_address: 192.168.178.7
 
   netmon-mongo:
     image: mongo
@@ -101,9 +80,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: mongopwd
-    networks:
-      network1:
-        ipv4_address: 192.168.178.8
 
   netmon-mongo-web-viewer:
     image: mongo-express
@@ -118,9 +94,6 @@ services:
       - netmon-mongo
     depends_on:
       - netmon-mongo
-    networks:
-      network1:
-        ipv4_address: 192.168.178.9
 
   netmon-mysql:
     image: mysql
@@ -133,13 +106,3 @@ services:
       MYSQL_DATABASE: devices
       MYSQL_USER: user
       MYSQL_PASSWORD: pass
-    networks:
-      network1:
-        ipv4_address: 192.168.178.10
-
-networks:
-  network1:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.178.0/24
