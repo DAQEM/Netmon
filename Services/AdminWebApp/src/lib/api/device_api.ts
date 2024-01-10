@@ -32,7 +32,10 @@ const deviceApi = {
 			.then((res) => {
 				return res.ok ? res.json() : Error.fromResponse(res);
 			})
-			.catch(() => Error.unknown());
+			.catch((res) => {
+				throw res;
+				return Error.unknown();
+			});
 	},
 	async editDevice(id: string, data: Device): Promise<Device | Error> {
 		return await fetch(this.getUrl('/' + id), {
