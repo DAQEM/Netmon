@@ -13,7 +13,7 @@ enum PrivacyProtocol {
 interface Device {
 	id: string;
 	name: string;
-	ip_address: string;
+	ipAddress: string;
 	location: string;
 	contact: string;
 }

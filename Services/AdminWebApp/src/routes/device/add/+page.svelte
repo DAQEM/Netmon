@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DeviceConnectionTable from '$lib/components/DeviceConnectionTable.svelte';
+	import type { Device } from '$lib/types/device_types';
 	import { Button, Toast } from 'flowbite-svelte';
 	import { CheckCircleSolid, PlusSolid } from 'flowbite-svelte-icons';
 	import { slide } from 'svelte/transition';
@@ -19,7 +20,7 @@
 			contentClass="w-full text-sm flex items-center justify-between text-green-700"
 		>
 			<CheckCircleSolid slot="icon" class="w-5 h-5" />
-			<p class="">Device added successfully.</p>
+			<p id="success-message">Device added successfully.</p>
 			<Button href="/device/{form?.device?.id}" color="green" class="ml-auto">View device</Button>
 		</Toast>
 	{/if}
@@ -36,7 +37,7 @@
 					</h2>
 				</div>
 				<DeviceConnectionTable {device} errors={form?.errors} />
-				<Button type="submit" class="sm:col-span-2">
+				<Button type="submit" class="sm:col-span-2" id="submit">
 					<PlusSolid class="w-3.5 h-3.5 mr-2" /> Add
 				</Button>
 			</div>

@@ -45,16 +45,16 @@ export const actions = {
 				version === 2 ? (data.get('community') as string) : (data.get('username') as string);
 
 			const result = await deviceApi.editDevice(data.get('id') as string, {
-				ip_address: data.get('ip_address') as string,
+				ipAddress: data.get('ip_address') as string,
 				connection: {
 					port: Number.parseInt(data.get('port') as string),
 					community,
 					version,
-					auth_password: data.get('auth_password') as string,
-					privacy_password: data.get('privacy_password') as string,
-					auth_protocol: Number.parseInt(data.get('auth_protocol') as string),
-					privacy_protocol: Number.parseInt(data.get('privacy_protocol') as string),
-					context_name: data.get('context_name') as string
+					authPassword: data.get('auth_password') as string,
+					privacyPassword: data.get('privacy_password') as string,
+					authProtocol: Number.parseInt(data.get('auth_protocol') as string),
+					privacyProtocol: Number.parseInt(data.get('privacy_protocol') as string),
+					contextName: data.get('context_name') as string
 				}
 			});
 
@@ -66,7 +66,6 @@ export const actions = {
 					device: structuredClone(result)
 				};
 			}
-
 		}
 
 		return {

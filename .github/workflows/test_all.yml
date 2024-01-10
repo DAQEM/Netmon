@@ -226,24 +226,36 @@ jobs:
     runs-on: ubuntu-latest
     needs: [integration-tests]
 
-    strategy:
-      max-parallel: 1
-      matrix:
-        app: ['AdminWebApp', 'UserWebApp']
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    - name: Install Dependencies
+    - name: Docker Compose Action
+      uses: isbang/compose-action@v1.5.1
+      with:
+        compose-file: "./docker-compose.yml"
+        services: |
+          netmon-mysql
+          netmon-mongo
+          netmon-admin-web-app
+          netmon-user-web-app
+          netmon-api-gateway
+          netmon-device-manager-service
+          netmon-snmp-polling-service
+
+    - name: Install Admin dependencies
       run: |
-        npm ci
-        npm run build
-        npx playwright install --with-deps
-      working-directory: Services/${{ matrix.app }}
-    - name: Run Playwright tests
-      run: npx playwright test
-      working-directory: Services/${{ matrix.app }}
+        docker exec netmon-admin-web-app npm install vitest
+        docker exec netmon-admin-web-app npx playwright install --with-deps
+
+    - name: Run Admin Tests
+      run: docker exec netmon-admin-web-app npx playwright test
+
+    - name: Install User dependencies
+      run: |
+        docker exec netmon-user-web-app npm install vitest
+        docker exec netmon-user-web-app npx playwright install --with-deps
+
+    - name: Run User Tests
+      run: docker exec netmon-user-web-app npx playwright test
+

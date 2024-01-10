@@ -39,7 +39,7 @@
 				</TableBodyCell>
 				<TableBodyCell tdClass="p-0">
 					<a class="px-6 py-4 block" href="/device/{device.id}">
-						{device.ip_address}
+						{device.ipAddress}
 					</a>
 				</TableBodyCell>
 			</TableBodyRow>

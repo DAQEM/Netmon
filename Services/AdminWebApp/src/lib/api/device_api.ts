@@ -1,3 +1,4 @@
+import type { Device } from '$lib/types/device_types';
 import { Error } from '$lib/types/error';
 import urlHandler from './url_handler';
 
@@ -31,10 +32,7 @@ const deviceApi = {
 			.then((res) => {
 				return res.ok ? res.json() : Error.fromResponse(res);
 			})
-			.catch((res) => {
-				console.log('An error occurred while adding a device: ', res);
-				return Error.unknown();
-			});
+			.catch(() => Error.unknown());
 	},
 	async editDevice(id: string, data: Device): Promise<Device | Error> {
 		return await fetch(this.getUrl('/' + id), {

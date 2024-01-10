@@ -5,6 +5,7 @@
 	import { Button, TableBodyCell, TableBodyRow } from 'flowbite-svelte';
 	import { ArrowRightSolid } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
+	import type { Device } from '$lib/types/device_types';
 
 	export let data: PageData;
 

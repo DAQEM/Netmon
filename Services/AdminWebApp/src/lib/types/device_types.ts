@@ -1,19 +1,19 @@
-interface Device {
+export interface Device {
 	id?: string | undefined;
 	name?: string | undefined;
-	ip_address?: string | undefined;
+	ipAddress?: string | undefined;
 	location?: string | undefined;
 	contact?: string | undefined;
 	connection?: DeviceConnectionInfo | undefined;
 }
 
-interface DeviceConnectionInfo {
+export interface DeviceConnectionInfo {
 	port: number | undefined;
 	community: string | undefined;
 	version: number | undefined;
-	auth_password?: string | undefined;
-	privacy_password?: string | undefined;
-	auth_protocol?: number | undefined;
-	privacy_protocol?: number | undefined;
-	context_name?: string | undefined;
+	authPassword?: string | undefined;
+	privacyPassword?: string | undefined;
+	authProtocol?: number | undefined;
+	privacyProtocol?: number | undefined;
+	contextName?: string | undefined;
 }

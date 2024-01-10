@@ -1,4 +1,5 @@
 import deviceApi from '$lib/api/device_api';
+import type { Device } from '$lib/types/device_types';
 import type { Actions } from './$types';
 
 export const actions = {
@@ -31,49 +32,49 @@ export const actions = {
 		}
 
 		if (Object.keys(errors).length === 0) {
-			console.log('no errors, adding device');
 			const version = Number.parseInt(data.get('version') as string);
 			const community =
 				version === 2 ? (data.get('community') as string) : (data.get('username') as string);
 
-			console.log('sending request');
 			const result = await deviceApi.addDevice({
-				ip_address: data.get('ip_address') as string,
+				ipAddress: data.get('ip_address') as string,
 				connection: {
 					port: Number.parseInt(data.get('port') as string),
 					community,
 					version,
-					auth_password: data.get('auth_password') as string,
-					privacy_password: data.get('privacy_password') as string,
-					auth_protocol: Number.parseInt(data.get('auth_protocol') as string),
-					privacy_protocol: Number.parseInt(data.get('privacy_protocol') as string),
-					context_name: data.get('context_name') as string
+					authPassword: data.get('auth_password') as string,
+					privacyPassword: data.get('privacy_password') as string,
+					authProtocol: Number.parseInt(data.get('auth_protocol') as string),
+					privacyProtocol: Number.parseInt(data.get('privacy_protocol') as string),
+					contextName: data.get('context_name') as string
 				}
 			});
 
-			console.log('result', result);
-			return {
-				success: true,
-				device: result
-			};
+			if ('ipAddress' in result) {
+				return {
+					success: true,
+					device: result
+				};
+			}
 		}
+
+		const device: Device = {
+			ipAddress: data.get('ip_address') as string,
+			connection: {
+				version: Number.parseInt(data.get('version') as string),
+				port: Number.parseInt(data.get('port') as string),
+				community: (data.get('community') ?? data.get('username')) as string,
+				authPassword: data.get('auth_password') as string,
+				privacyPassword: data.get('privacy_password') as string,
+				authProtocol: Number.parseInt(data.get('auth_protocol') as string),
+				privacyProtocol: Number.parseInt(data.get('privacy_protocol') as string),
+				contextName: data.get('context_name') as string
+			}
+		};
 
 		return {
 			errors,
-			device: {
-				ip_address: data.get('ip_address') as string,
-				connection: {
-					version: Number.parseInt(data.get('version') as string),
-					port: Number.parseInt(data.get('port') as string),
-					community: data.get('community') as string,
-					username: data.get('username') as string,
-					auth_password: data.get('auth_password') as string,
-					privacy_password: data.get('privacy_password') as string,
-					auth_protocol: Number.parseInt(data.get('auth_protocol') as string),
-					privacy_protocol: Number.parseInt(data.get('privacy_protocol') as string),
-					context_name: data.get('context_name') as string
-				}
-			}
+			device
 		};
 	}
 } satisfies Actions;

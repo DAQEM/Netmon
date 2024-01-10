@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Map from '$lib/components/Map.svelte';
+	import type { Device } from '$lib/types/device_types';
 	import {
 		Button,
 		Table,
@@ -39,13 +40,11 @@
 	<TableBody tableBodyClass="divide-y">
 		{#if devices.length === 0}
 			<TableBodyRow>
-				<TableBodyCell colspan="5" class="text-center">
-					No devices found
-				</TableBodyCell>
+				<TableBodyCell colspan="5" class="text-center">No devices found</TableBodyCell>
 			</TableBodyRow>
-		{/if} 
+		{/if}
 		{#each devices as device, i}
-			<TableBodyRow on:click={() => toggleRow(i)} class="cursor-pointer">
+			<TableBodyRow on:click={() => toggleRow(i)} class="cursor-pointer" id="{device.ipAddress}">
 				<TableBodyCell>
 					<img
 						src={'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/UbuntuCoF.svg/768px-UbuntuCoF.svg.png'}
@@ -54,7 +53,7 @@
 					/>
 				</TableBodyCell>
 				<TableBodyCell>{device.name}</TableBodyCell>
-				<TableBodyCell>{device.ip_address}</TableBodyCell>
+				<TableBodyCell>{device.ipAddress}</TableBodyCell>
 				<TableBodyCell>
 					<Button color="none" class="text-primary-700" href="/device/{device.id}/edit">Edit</Button
 					>
@@ -80,7 +79,7 @@
 											</div>
 											<div>
 												<h2 class="text-xs font-bold">IP Address</h2>
-												<h3>{device.ip_address}</h3>
+												<h3>{device.ipAddress}</h3>
 											</div>
 											<div>
 												<h2 class="text-xs font-bold">Location</h2>

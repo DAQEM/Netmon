@@ -8,9 +8,7 @@ namespace Netmon.DeviceManager.DTO.Device;
 public class DeviceUpdateDTO
 {
     [ValidateIpAddress]
-    [JsonPropertyName("ip_address")]
     public string IpAddress { get; set; } = null!;
-    [JsonPropertyName("connection")]
     public DeviceConnectionDTO Connection { get; set; } = null!;
 
     public DeviceDBO ToDeviceDBO(DeviceDBO deviceDBO)

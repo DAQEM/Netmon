@@ -10,7 +10,7 @@
 
 	const statistics: DiskStatisticsList | null = data.statistics;
 
-	let newData: boolean = true;
+	let newData: boolean = false;
 	let ws: WebSocket | null = null;
 
 	onMount(() => {

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DevicesTable from '$lib/components/DevicesTable.svelte';
+	import type { Device } from '$lib/types/device_types';
 	import { Button, Input, Popover } from 'flowbite-svelte';
 	import { PlusSolid, QuestionCircleSolid, SearchOutline } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
@@ -17,7 +18,7 @@
 	$: devices = data.props.devices.filter((device: Device) => {
 		return (
 			device.name?.toLowerCase().includes(searchValue.toLowerCase()) ||
-			device.ip_address?.toLowerCase().includes(searchValue.toLowerCase()) ||
+			device.ipAddress?.toLowerCase().includes(searchValue.toLowerCase()) ||
 			device.location?.toLowerCase().includes(searchValue.toLowerCase()) ||
 			device.contact?.toLowerCase().includes(searchValue.toLowerCase())
 		);
@@ -62,6 +63,6 @@
 				</Button>
 			</div>
 		</div>
-		<DevicesTable {devices} id={""} />
+		<DevicesTable {devices} id={''} />
 	</div>
 </div>

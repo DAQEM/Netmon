@@ -21,7 +21,6 @@
 				<h1 class="text-5xl font-bold text-gray-900">{data.device.name}</h1>
 			</div>
 			<div>
-				<div>dsff</div>
 				<div class="rounded-xl overflow-hidden w-max h-[calc(512px-18px)]">
 					<Map height={512} width={512} latitude={52.0} longitude={5.0} />
 				</div>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Device } from '$lib/types/device_types';
 	import { Input, Label, Popover, Select } from 'flowbite-svelte';
 	import { QuestionCircleSolid } from 'flowbite-svelte-icons';
 	import FormErrorChecker from './FormErrorChecker.svelte';
@@ -34,7 +35,7 @@
 				Strongest security, supports encryption, authentication, access control.
 			</div></Popover
 		>
-		<Select name="version" required={true} bind:value={versionGroup}>
+		<Select name="version" required={true} bind:value={versionGroup} id="version">
 			<option value={2}>v2c</option>
 			<option value={3}>v3</option>
 		</Select>
@@ -42,7 +43,13 @@
 	<div class="mb-6">
 		<FormErrorChecker name="ip_address" {errors} />
 		<Label for="ip_address" class="mb-1 font-bold">IP Address*</Label>
-		<Input name="ip_address" placeholder="127.0.0.1" required={true} value={device?.ip_address} />
+		<Input
+			name="ip_address"
+			placeholder="127.0.0.1"
+			required={true}
+			value={device?.ipAddress}
+			id="ip_address"
+		/>
 	</div>
 	<div class="mb-6">
 		<FormErrorChecker name="port" {errors} />
@@ -53,6 +60,7 @@
 			placeholder="161"
 			required={true}
 			value={device?.connection?.port}
+			id="port"
 		/>
 	</div>
 </div>
@@ -66,6 +74,7 @@
 				placeholder="public"
 				required={true}
 				value={device?.connection?.community}
+				id="community"
 			/>
 		</div>
 	{:else if versionGroup === 3}
@@ -76,6 +85,7 @@
 				placeholder="admin"
 				required={true}
 				value={device?.connection?.community}
+				id="username"
 			/>
 		</div>
 		<div class="mb-6">
@@ -85,7 +95,8 @@
 				type="password"
 				placeholder="*****"
 				required={true}
-				value={device?.connection?.auth_password}
+				value={device?.connection?.authPassword}
+				id="auth_password"
 			/>
 		</div>
 		<div class="mb-6">
@@ -95,12 +106,18 @@
 				type="password"
 				placeholder="*****"
 				required={true}
-				value={device?.connection?.privacy_password}
+				value={device?.connection?.privacyPassword}
+				id="privacy_password"
 			/>
 		</div>
 		<div class="mb-6">
 			<Label for="auth_protocol" class="mb-1 font-bold">Auth Protocol*</Label>
-			<Select name="auth_protocol" required={true} value={device?.connection?.auth_protocol}>
+			<Select
+				name="auth_protocol"
+				required={true}
+				value={device?.connection?.authProtocol}
+				id="auth_protocol"
+			>
 				<option value={0}>SHA256</option>
 				<option value={1}>SHA384</option>
 				<option value={2}>SHA512</option>
@@ -108,7 +125,12 @@
 		</div>
 		<div class="mb-6">
 			<Label for="privacy_protocol" class="mb-1 font-bold">Privacy Protocol*</Label>
-			<Select name="privacy_protocol" required={true} value={device?.connection?.privacy_protocol}>
+			<Select
+				name="privacy_protocol"
+				required={true}
+				value={device?.connection?.privacyProtocol}
+				id="privacy_protocol"
+			>
 				<option value={0}>AES</option>
 				<option value={1}>AES192</option>
 				<option value={2}>AES256</option>
@@ -120,7 +142,8 @@
 				name="context_name"
 				placeholder="optional"
 				required={false}
-				value={device?.connection?.context_name}
+				value={device?.connection?.contextName}
+				id="context_name"
 			/>
 		</div>
 	{/if}
