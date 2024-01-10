@@ -221,27 +221,27 @@ jobs:
         category: "/language:${{matrix.language}}"
 
   end-to-end-tests:
-  name: End to End Tests
-  timeout-minutes: 60
-  runs-on: ubuntu-latest
-  needs: [integration-tests]
+    name: End to End Tests
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    needs: [integration-tests]
 
-  strategy:
-    matrix:
-      app: ['UserWebApp', 'AdminWebApp']
+    strategy:
+      matrix:
+        app: ['UserWebApp', 'AdminWebApp']
 
-  steps:
-  - uses: actions/checkout@v3
-  - name: Setup Node
-    uses: actions/setup-node@v3
-    with:
-      node-version: 18
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
 
-  - name: Install Dependencies
-    run: |
-      npm ci
-      npm run build
-      npx playwright install --with-deps
-  - name: Run Playwright tests
-    run: npx playwright test
-    working-directory: Services/${{ matrix.app }}
+    - name: Install Dependencies
+      run: |
+        npm ci
+        npm run build
+        npx playwright install --with-deps
+    - name: Run Playwright tests
+      run: npx playwright test
+      working-directory: Services/${{ matrix.app }}
