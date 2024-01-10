@@ -251,7 +251,7 @@ jobs:
       run: docker container ls
 
     - name: Test Database
-      if always()
+      if: always()
       run: curl "localhost:5000/api/device/device"
 
     - name: Install User dependencies
