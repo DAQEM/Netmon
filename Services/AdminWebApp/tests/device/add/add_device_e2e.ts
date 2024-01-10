@@ -20,7 +20,7 @@ test.describe.serial('Add Device', () => {
 	test('Device should be added to table', async ({ page }) => {
 		await page.goto('/device');
 
-		const device = await page.innerText(`#${ipAddress.replace(/\./g, '-')} > td:nth-child(3)`);
+		const device = await page.innerText(`#${ipAddress.replace(/\./g, '')} > td:nth-child(3)`);
 		expect(device).toBe(ipAddress);
 	});
 });

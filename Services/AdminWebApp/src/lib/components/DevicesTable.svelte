@@ -44,7 +44,11 @@
 			</TableBodyRow>
 		{/if}
 		{#each devices as device, i}
-			<TableBodyRow on:click={() => toggleRow(i)} class="cursor-pointer" id="{device.ipAddress?.replace(/\./g, '-')}">
+			<TableBodyRow
+				on:click={() => toggleRow(i)}
+				class="cursor-pointer"
+				id={device.ipAddress?.replace(/\./g, '')}
+			>
 				<TableBodyCell>
 					<img
 						src={'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/UbuntuCoF.svg/768px-UbuntuCoF.svg.png'}
