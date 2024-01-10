@@ -62,6 +62,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        corsPolicyBuilder => corsPolicyBuilder.WithOrigins(builder.Configuration["Cors:AllowedOrigins"]?.Split(",") ?? Array.Empty<string>())
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
 MongoUrlBuilder mongoUrlBuilder = new(builder.Configuration["MongoDB:ConnectionString"]);
 MongoClient mongoClient = new(mongoUrlBuilder.ToMongoUrl());
@@ -150,16 +157,6 @@ builder.Services.AddScoped<ICpuCoreMetricReadService, CpuCoreMetricsReadService>
 
 builder.Services.AddScoped<IPollDeviceJob, PollDeviceJob>();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("Cors", builder =>
-    {
-        builder.WithOrigins("http://localhost:80", "http://localhost:81")
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
-});
-
 WebApplication app = builder.Build();
 
 WebSocketOptions webSocketOptions = new()
@@ -174,7 +171,7 @@ app.UsePathBase(new PathString("/api"));
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseCors("Cors");
+app.UseCors("CorsPolicy");
 
 app.UseHangfireDashboard(builder.Configuration["Hangfire:Endpoint"], new DashboardOptions
 {

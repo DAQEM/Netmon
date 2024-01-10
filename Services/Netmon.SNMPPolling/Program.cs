@@ -75,6 +75,14 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        corsPolicyBuilder => corsPolicyBuilder.WithOrigins(builder.Configuration["Cors:AllowedOrigins"]?.Split(",") ?? Array.Empty<string>())
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
 string? connectionString = builder.Configuration["MySQL:ConnectionString"];
 
 builder.Services.AddDbContext<DevicesDatabase>(options =>
@@ -156,6 +164,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapControllers();
+
+app.UseCors("CorsPolicy");
 
 if (!app.Environment.IsDevelopment())
 {
