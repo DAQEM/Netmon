@@ -1,5 +1,5 @@
-﻿using Netmon.Data.EntityFramework.Database;
-using Netmon.Data.EntityFramework.DBO.Component.Disk;
+﻿using Netmon.Data.DBO.Component.Disk;
+using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Write.Component.Disk;
 using Netmon.Models.Component.Disk.Metric;
 
@@ -14,16 +14,14 @@ public class DiskMetricsWriteRepository : IDiskMetricsWriteRepository
         _database = database;
     }
 
-    public async Task Add(IDiskMetric diskMetrics)
+    public async Task Add(DiskMetricsDBO diskMetrics)
     {
         if (diskMetrics == null)
         {
             throw new ArgumentNullException(nameof(diskMetrics));
         }
         
-        DiskMetricsDBO diskMetricsDBO = DiskMetricsDBO.FromDiskMetric(diskMetrics);
-        
-        await _database.DiskMetrics.AddAsync(diskMetricsDBO);
+        await _database.DiskMetrics.AddAsync(diskMetrics);
     }
     
     public async Task SaveChanges()

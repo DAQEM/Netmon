@@ -1,14 +1,18 @@
 ﻿using System.Net;
+using System.Net.WebSockets;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
-using Netmon.Data.EntityFramework.DBO.Device;
 using Netmon.DeviceManager.Util;
+using Newtonsoft.Json;
 
 namespace Netmon.DeviceManager.Jobs.Poll;
 
 public class PollDeviceJob : IPollDeviceJob
 {
     private readonly DevicesDatabase _database;
+    private static readonly List<WebSocket> Subscribers = new();
     
     public PollDeviceJob(DevicesDatabase database)
     {
@@ -40,7 +44,7 @@ public class PollDeviceJob : IPollDeviceJob
             });
             string responseBody = await response.Content.ReadAsStringAsync();
     
-            return new { Device = deviceDBO, StatusCode = response.StatusCode, ResponseBody = responseBody };
+            return new { Device = deviceDBO, response.StatusCode, ResponseBody = responseBody };
         });
 
         var results = await Task.WhenAll(tasks);
@@ -56,5 +60,28 @@ public class PollDeviceJob : IPollDeviceJob
                 Console.WriteLine(result.ResponseBody);
             }
         }
+        
+        Console.WriteLine("Polling complete. Notifying {0} subscribers...", Subscribers.Count);
+        for (int i = Subscribers.Count - 1; i >= 0; i--)
+        {
+            WebSocket webSocket = Subscribers[i];
+            if (webSocket.State == WebSocketState.Open)
+            {
+                var json = new { success = true, message = "New Data Available" };
+                string jsonString = JsonConvert.SerializeObject(json);
+                byte[] bytes = Encoding.UTF8.GetBytes(jsonString);
+                
+                await webSocket.SendAsync(bytes, WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+            else
+            {
+                Subscribers.Remove(webSocket);
+            }
+        }
+    }
+    
+    public void Subscribe(WebSocket webSocket)
+    {
+        Subscribers.Add(webSocket);
     }
 }

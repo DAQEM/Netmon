@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
-using Netmon.Data.EntityFramework.DBO.Device;
 using Netmon.Data.Repositories.Read.Device;
 using Netmon.Models.Device.Connection;
 
@@ -15,24 +15,21 @@ public class DeviceConnectionReadRepository : IDeviceConnectionReadRepository
         _database = database;
     }
 
-    public async Task<List<IDeviceConnection>> GetAll()
+    public async Task<List<DeviceConnectionDBO>> GetAll()
     {
         return await _database.DeviceConnections
-            .Select(dbo => dbo.ToDeviceConnection())
             .ToListAsync();
     }
 
-    public async Task<IDeviceConnection?> GetById(Guid id)
+    public async Task<DeviceConnectionDBO?> GetById(Guid id)
     {
-        return (await _database.DeviceConnections
-                .FirstOrDefaultAsync(device => device.Id == id))?.
-            ToDeviceConnection();
+        return await _database.DeviceConnections
+                .FirstOrDefaultAsync(device => device.Id == id);
     }
 
-    public async Task<IDeviceConnection?> GetByDeviceId(Guid id)
+    public async Task<DeviceConnectionDBO?> GetByDeviceId(Guid id)
     {
-        return (await _database.DeviceConnections
-                .FirstOrDefaultAsync(device => device.DeviceId == id))?
-            .ToDeviceConnection();
+        return await _database.DeviceConnections
+                .FirstOrDefaultAsync(device => device.DeviceId == id);
     }
 }

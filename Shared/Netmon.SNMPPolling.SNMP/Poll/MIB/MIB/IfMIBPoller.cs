@@ -18,8 +18,8 @@ public class IfMIBPoller : IMIBPoller<IfMIB>
     
     public async Task<IfMIB?> PollMIB(SNMPConnectionInfo connectionInfo)
     {
-        Task<ISNMPResult> ifTableTask = snmpManager.BulkWalkAsync(connectionInfo, IfTable.OID, 3000);
-        Task<ISNMPResult> ifXTableTask = snmpManager.BulkWalkAsync(connectionInfo, IfXTable.OID, 3000);
+        Task<ISNMPResult> ifTableTask = snmpManager.BulkWalkAsync(connectionInfo, IfTable.OID, 10000);
+        Task<ISNMPResult> ifXTableTask = snmpManager.BulkWalkAsync(connectionInfo, IfXTable.OID, 10000);
 
         await Task.WhenAll(ifTableTask, ifXTableTask);
         

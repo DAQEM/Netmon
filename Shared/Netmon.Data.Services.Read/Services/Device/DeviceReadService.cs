@@ -1,4 +1,5 @@
-﻿using Netmon.Data.Repositories.Read.Device;
+﻿using Netmon.Data.DBO.Device;
+using Netmon.Data.Repositories.Read.Device;
 using Netmon.Data.Services.Read.Device;
 using Netmon.Models.Device;
 using Netmon.Models.Device.Connection;
@@ -18,14 +19,14 @@ public class DeviceReadService : IDeviceReadService
     
     public async Task<List<IDevice>> GetAll()
     {
-        List<IDevice> deviceDBOs = await _deviceReadRepository.GetAll();
-        return deviceDBOs;
+        List<DeviceDBO> deviceDbOs = await _deviceReadRepository.GetAll();
+        return deviceDbOs?.Select(x => x.ToDevice()).ToList() ?? new List<IDevice>();
     }
 
     public async Task<IDevice?> GetById(Guid id)
     {
-        IDevice? deviceDBO = await _deviceReadRepository.GetById(id);
-        return deviceDBO;
+        DeviceDBO? deviceDBO = await _deviceReadRepository.GetById(id);
+        return deviceDBO?.ToDevice();
     }
 
     public async Task<IDevice?> GetById(Guid id, bool includeConnection)
@@ -45,7 +46,7 @@ public class DeviceReadService : IDeviceReadService
 
     public async Task<IDevice?> GetByIpAddress(string deviceDBOIpAddress)
     {
-        IDevice? deviceDBO = await _deviceReadRepository.GetByIpAddress(deviceDBOIpAddress);
-        return deviceDBO;
+        DeviceDBO? deviceDBO = await _deviceReadRepository.GetByIpAddress(deviceDBOIpAddress);
+        return deviceDBO?.ToDevice();
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Netmon.Data.EntityFramework.DBO.Device;
+using Netmon.Data.DBO.Device;
 using Netmon.Models.Component.Disk;
 
-namespace Netmon.Data.EntityFramework.DBO.Component.Disk;
+namespace Netmon.Data.DBO.Component.Disk;
 
 public class DiskDBO : IComponentDBO
 {

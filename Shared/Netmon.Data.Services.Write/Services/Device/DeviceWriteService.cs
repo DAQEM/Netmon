@@ -1,4 +1,5 @@
-﻿using Netmon.Data.Repositories.Write.Device;
+﻿using Netmon.Data.DBO.Device;
+using Netmon.Data.Repositories.Write.Device;
 using Netmon.Data.Services.Read.Device;
 using Netmon.Data.Services.Write.Device;
 using Netmon.Data.Services.Write.Exceptions;
@@ -27,11 +28,13 @@ public class DeviceWriteService : IDeviceWriteService
 
     public async Task AddOrUpdateFullDevice(IDevice device)
     {
-        IDeviceConnection? existingConnection = await _deviceConnectionReadService.GetByDeviceId(device.Id);
+        IDevice? existingDevice = await _deviceReadService.GetByIpAddress(device.IpAddress);
 
-        if (existingConnection == null) return;
+        if (existingDevice == null) return;
         
-        await _deviceWriteRepository.AddOrUpdateFullDevice(device);
+        device.Id = existingDevice.Id;
+        
+        await _deviceWriteRepository.AddOrUpdateFullDevice(DeviceDBO.FromDevice(device));
         await _deviceWriteRepository.SaveChanges();
     }
 
@@ -45,7 +48,7 @@ public class DeviceWriteService : IDeviceWriteService
         IDevice? existingDevice = await _deviceReadService.GetByIpAddress(device.IpAddress);
         if (existingDevice != null) throw new DeviceWithIpAddressAlreadyExistsException(device.IpAddress);
         
-        device = await _deviceWriteRepository.AddDeviceWithConnection(device);
+        device = await _deviceWriteRepository.AddDeviceWithConnection(DeviceDBO.FromDevice(device));
         await _deviceWriteRepository.SaveChanges();
         
         return device;
@@ -53,7 +56,7 @@ public class DeviceWriteService : IDeviceWriteService
 
     public async Task UpdateWithConnection(IDevice device)
     {
-        await _deviceWriteRepository.UpdateWithConnection(device);
+        await _deviceWriteRepository.UpdateWithConnection(DeviceDBO.FromDevice(device));
         await _deviceWriteRepository.SaveChanges();
     }
 

@@ -1,8 +1,9 @@
-﻿using Netmon.Models.Component;
+﻿using Netmon.Data.DBO.Component;
+using Netmon.Models.Component;
 
 namespace Netmon.Data.Repositories.Read.Component;
 
-public interface IComponentMetricReadRepository<T> : IReadRepository<T> where T : IComponentMetric
+public interface IComponentMetricReadRepository<T> : IReadRepository<T> where T : IComponentMetricDBO
 {
     Task<List<T>> GetByComponentId(Guid componentId);
     Task<List<T>> GetByComponentIds(List<Guid> componentIds);

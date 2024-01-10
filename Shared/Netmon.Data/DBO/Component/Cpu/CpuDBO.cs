@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Netmon.Data.EntityFramework.DBO.Component.Cpu.Core;
-using Netmon.Data.EntityFramework.DBO.Device;
+using Netmon.Data.DBO.Component.Cpu.Core;
+using Netmon.Data.DBO.Device;
 using Netmon.Models.Component.Cpu;
 
-namespace Netmon.Data.EntityFramework.DBO.Component.Cpu;
+namespace Netmon.Data.DBO.Component.Cpu;
 
 public class CpuDBO : IComponentDBO
 {

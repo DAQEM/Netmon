@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Netmon.Data.EntityFramework.DBO.Component.Cpu;
-using Netmon.Data.EntityFramework.DBO.Component.Cpu.Core;
-using Netmon.Data.EntityFramework.DBO.Component.Disk;
-using Netmon.Data.EntityFramework.DBO.Component.Interface;
-using Netmon.Data.EntityFramework.DBO.Component.Memory;
-using Netmon.Data.EntityFramework.DBO.Device;
+using Netmon.Data.DBO.Component.Cpu;
+using Netmon.Data.DBO.Component.Cpu.Core;
+using Netmon.Data.DBO.Component.Disk;
+using Netmon.Data.DBO.Component.Interface;
+using Netmon.Data.DBO.Component.Memory;
+using Netmon.Data.DBO.Device;
 
 namespace Netmon.Data.EntityFramework.Database;
 

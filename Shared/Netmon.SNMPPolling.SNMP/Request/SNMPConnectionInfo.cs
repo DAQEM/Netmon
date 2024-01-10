@@ -1,6 +1,6 @@
 using System.ComponentModel;
 using Lextm.SharpSnmpLib;
-using Netmon.Data.EntityFramework.Attribute.Validator;
+using Netmon.Models.Attribute.Validator;
 using Netmon.Models.Device.Connection.Protocol;
 
 namespace Netmon.SNMPPolling.SNMP.Request;

@@ -9,7 +9,7 @@
 
 <Heading2>{title}</Heading2>
 {#if statistics}
-	{#each statistics.disks as statistic}
+	{#each statistics.disks.sort((a, b) => a.mountingPoint.localeCompare(b.mountingPoint)) as statistic}
 		<ChartDiskUsage statistics={statistic} />
 	{:else}
 		<p>No data available.</p>

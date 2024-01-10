@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Netmon.Models.Component.Interface;
 using Netmon.Models.Component.Interface.Metric;
 
-namespace Netmon.Data.EntityFramework.DBO.Component.Interface;
+namespace Netmon.Data.DBO.Component.Interface;
 
 public class InterfaceMetricsDBO : IComponentMetricDBO
 {

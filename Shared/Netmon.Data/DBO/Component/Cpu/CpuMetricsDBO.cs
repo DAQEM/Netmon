@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Netmon.Models.Component.Cpu.Metric;
 
-namespace Netmon.Data.EntityFramework.DBO.Component.Cpu;
+namespace Netmon.Data.DBO.Component.Cpu;
 
 public class CpuMetricsDBO : IComponentMetricDBO
 {

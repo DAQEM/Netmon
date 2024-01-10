@@ -1,7 +1,8 @@
-﻿using Netmon.Models.Component.Disk.Metric;
+﻿using Netmon.Data.DBO.Component.Disk;
+using Netmon.Models.Component.Disk.Metric;
 
 namespace Netmon.Data.Repositories.Write.Component.Disk;
 
-public interface IDiskMetricsWriteRepository : IComponentMetricWriteRepository<IDiskMetric>
+public interface IDiskMetricsWriteRepository : IComponentMetricWriteRepository<DiskMetricsDBO>
 {
 }

@@ -15,7 +15,9 @@ public class DeviceConnectionReadService : IDeviceConnectionReadService
     
     public async Task<List<IDeviceConnection>> GetAll()
     {
-        return await _deviceConnectionReadRepository.GetAll();
+        return (await _deviceConnectionReadRepository.GetAll())
+            .Select(x => x.ToDeviceConnection())
+            .ToList();
     }
 
     public Task<IDeviceConnection?> GetById(Guid id)
@@ -25,6 +27,6 @@ public class DeviceConnectionReadService : IDeviceConnectionReadService
 
     public async Task<IDeviceConnection?> GetByDeviceId(Guid id)
     {
-        return await _deviceConnectionReadRepository.GetByDeviceId(id);
+        return (await _deviceConnectionReadRepository.GetByDeviceId(id))?.ToDeviceConnection();
     }
 }

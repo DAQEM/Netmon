@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Netmon.Data.DBO.Component.Disk;
 using Netmon.Data.EntityFramework.Database;
-using Netmon.Data.EntityFramework.DBO.Component.Disk;
 using Netmon.Data.Repositories.Read.Component.Disk;
 using Netmon.Models.Component.Disk.Metric;
 
@@ -15,33 +15,29 @@ public class DiskMetricsReadRepository : IDiskMetricReadRepository
         _database = database;
     }
 
-    public async Task<List<IDiskMetric>> GetAll()
+    public async Task<List<DiskMetricsDBO>> GetAll()
     {
         return await _database.DiskMetrics
-            .Select(dbo => dbo.ToDiskMetric())
             .ToListAsync();
     }
 
-    public async Task<IDiskMetric?> GetById(Guid id)
+    public async Task<DiskMetricsDBO?> GetById(Guid id)
     {
-        return (await _database.DiskMetrics
-            .FirstOrDefaultAsync(device => device.Id == id))?
-            .ToDiskMetric();
+        return await _database.DiskMetrics
+            .FirstOrDefaultAsync(device => device.Id == id);
     }
     
-    public async Task<List<IDiskMetric>> GetByComponentId(Guid componentId)
+    public async Task<List<DiskMetricsDBO>> GetByComponentId(Guid componentId)
     {
         return await _database.DiskMetrics
             .Where(disk => disk.DiskId == componentId)
-            .Select(dbo => dbo.ToDiskMetric())
             .ToListAsync();
     }
 
-    public async Task<List<IDiskMetric>> GetByComponentIds(List<Guid> componentIds)
+    public async Task<List<DiskMetricsDBO>> GetByComponentIds(List<Guid> componentIds)
     {
         return await _database.DiskMetrics
             .Where(disk => componentIds.Contains(disk.DiskId))
-            .Select(dbo => dbo.ToDiskMetric())
             .ToListAsync();
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using Netmon.Data.EntityFramework.DBO.Device;
+using Netmon.Data.DBO.Device;
 using Netmon.Models.Device.Connection;
 using Netmon.Models.Device.Connection.Protocol;
 

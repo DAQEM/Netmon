@@ -35,6 +35,8 @@ public class InterfaceReadService : IInterfaceReadService
     
     public async Task<List<IInterface>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
     {
-        return await _interfaceReadRepository.GetByDeviceIdWithMetrics(deviceId, from, to);
+        return (await _interfaceReadRepository.GetByDeviceIdWithMetrics(deviceId, from, to))
+            .Select(x => x.ToInterface())
+            .ToList();
     }
 }

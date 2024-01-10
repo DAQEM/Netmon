@@ -1,8 +1,9 @@
-﻿using Netmon.Models.Component.Disk;
+﻿using Netmon.Data.DBO.Component.Disk;
+using Netmon.Models.Component.Disk;
 
 namespace Netmon.Data.Repositories.Read.Component.Disk;
 
-public interface IDiskReadRepository : IComponentReadRepository<IDisk>
+public interface IDiskReadRepository : IComponentReadRepository<DiskDBO>
 {
     
 }

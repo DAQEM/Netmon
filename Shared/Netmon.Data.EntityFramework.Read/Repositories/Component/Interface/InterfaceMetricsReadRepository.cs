@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Netmon.Data.DBO.Component.Interface;
 using Netmon.Data.EntityFramework.Database;
-using Netmon.Data.EntityFramework.DBO.Component.Interface;
 using Netmon.Data.Repositories.Read.Component.Interface;
 using Netmon.Models.Component.Interface.Metric;
 
@@ -15,23 +15,23 @@ public class InterfaceMetricsReadRepository : IInterfaceMetricReadRepository
         _database = database;
     }
 
-    public async Task<List<IInterfaceMetric>> GetAll()
+    public async Task<List<InterfaceMetricsDBO>> GetAll()
     {
-        return await _database.InterfaceMetrics.Select(dbo => dbo.ToInterfaceMetric()).ToListAsync();
+        return await _database.InterfaceMetrics.ToListAsync();
     }
 
-    public async Task<IInterfaceMetric?> GetById(Guid id)
+    public async Task<InterfaceMetricsDBO?> GetById(Guid id)
     {
-        return (await _database.InterfaceMetrics.FirstOrDefaultAsync(device => device.Id == id))?.ToInterfaceMetric();
+        return await _database.InterfaceMetrics.FirstOrDefaultAsync(device => device.Id == id);
     }
     
-    public async Task<List<IInterfaceMetric>> GetByComponentId(Guid componentId)
+    public async Task<List<InterfaceMetricsDBO>> GetByComponentId(Guid componentId)
     {
-        return await _database.InterfaceMetrics.Where(@interface => @interface.InterfaceId == componentId).Select(dbo => dbo.ToInterfaceMetric()).ToListAsync();
+        return await _database.InterfaceMetrics.Where(@interface => @interface.InterfaceId == componentId).ToListAsync();
     }
 
-    public async Task<List<IInterfaceMetric>> GetByComponentIds(List<Guid> componentIds)
+    public async Task<List<InterfaceMetricsDBO>> GetByComponentIds(List<Guid> componentIds)
     {
-        return await _database.InterfaceMetrics.Where(@interface => componentIds.Contains(@interface.InterfaceId)).Select(dbo => dbo.ToInterfaceMetric()).ToListAsync();
+        return await _database.InterfaceMetrics.Where(@interface => componentIds.Contains(@interface.InterfaceId)).ToListAsync();
     }
 }

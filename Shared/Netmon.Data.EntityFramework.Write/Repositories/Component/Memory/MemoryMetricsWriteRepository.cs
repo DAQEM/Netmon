@@ -1,5 +1,5 @@
-﻿using Netmon.Data.EntityFramework.Database;
-using Netmon.Data.EntityFramework.DBO.Component.Memory;
+﻿using Netmon.Data.DBO.Component.Memory;
+using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Write.Component.Memory;
 using Netmon.Models.Component.Memory.Metric;
 
@@ -14,16 +14,14 @@ public class MemoryMetricsWriteRepository : IMemoryMetricsWriteRepository
         _database = database;
     }
 
-    public async Task Add(IMemoryMetric memoryMetrics)
+    public async Task Add(MemoryMetricsDBO memoryMetrics)
     {
         if (memoryMetrics == null)
         {
             throw new ArgumentNullException(nameof(memoryMetrics));
         }
         
-        MemoryMetricsDBO memoryMetricsDBO = MemoryMetricsDBO.FromMemoryMetric(memoryMetrics);
-        
-        await _database.MemoryMetrics.AddAsync(memoryMetricsDBO);
+        await _database.MemoryMetrics.AddAsync(memoryMetrics);
     }
     
     public async Task SaveChanges()

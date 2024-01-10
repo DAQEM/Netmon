@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Netmon.Data.DBO.Component.Cpu.Core;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Read.Component.Cpu.Core;
 using Netmon.Models.Component.Cpu.Core.Metric;
@@ -17,13 +18,13 @@ public class CpuCoreReadRepository : ICpuCoreReadRepository
         _cpuCoreMetricsReadRepository = cpuCoreMetricsReadRepository;
     }
 
-    public async Task<List<ICpuCoreMetric>> GetAll()
+    public async Task<List<CpuCoreMetricsDBO>> GetAll()
     {
-        return await _database.CpuCoreMetrics.Select(dbo => dbo.ToCpuCoreMetric()).ToListAsync();
+        return await _database.CpuCoreMetrics.ToListAsync();
     }
 
-    public async Task<ICpuCoreMetric?> GetById(Guid id)
+    public async Task<CpuCoreMetricsDBO?> GetById(Guid id)
     {
-        return (await _database.CpuCoreMetrics.FirstOrDefaultAsync(device => device.Id == id))?.ToCpuCoreMetric();
+        return await _database.CpuCoreMetrics.FirstOrDefaultAsync(device => device.Id == id);
     }
 }

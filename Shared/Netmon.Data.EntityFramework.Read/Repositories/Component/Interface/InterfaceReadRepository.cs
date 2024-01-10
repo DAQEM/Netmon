@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Netmon.Data.DBO.Component.Interface;
 using Netmon.Data.EntityFramework.Database;
-using Netmon.Data.EntityFramework.DBO.Component.Interface;
 using Netmon.Data.Repositories.Read.Component.Interface;
 using Netmon.Models.Component.Interface;
 
@@ -18,22 +18,22 @@ public class InterfaceReadRepository : IInterfaceReadRepository
         _interfaceMetricsReadRepository = interfaceMetricsReadRepository;
     }
 
-    public async Task<List<IInterface>> GetAll()
+    public async Task<List<InterfaceDBO>> GetAll()
     {
-        return await _database.Interfaces.Select(dbo => dbo.ToInterface()).ToListAsync();
+        return await _database.Interfaces.ToListAsync();
     }
 
-    public async Task<IInterface?> GetById(Guid id)
+    public async Task<InterfaceDBO?> GetById(Guid id)
     {
-        return (await _database.Interfaces.FirstOrDefaultAsync(device => device.Id == id))?.ToInterface();
+        return await _database.Interfaces.FirstOrDefaultAsync(device => device.Id == id);
     }
     
-    public async Task<List<IInterface>> GetByDeviceId(Guid deviceId)
+    public async Task<List<InterfaceDBO>> GetByDeviceId(Guid deviceId)
     {
-        return await _database.Interfaces.Where(@interface => @interface.DeviceId == deviceId).Select(dbo => dbo.ToInterface()).ToListAsync();
+        return await _database.Interfaces.Where(@interface => @interface.DeviceId == deviceId).ToListAsync();
     }
 
-    public async Task<List<IInterface>> GetByDeviceIdWithMetrics(Guid deviceId)
+    public async Task<List<InterfaceDBO>> GetByDeviceIdWithMetrics(Guid deviceId)
     {
         return await _database.Interfaces
             .Include(@interface => @interface.InterfaceMetrics)
@@ -51,11 +51,10 @@ public class InterfaceReadRepository : IInterfaceReadRepository
                     OutOctets = metric.OutOctets
                 }).ToList()
             })
-            .Select(dbo => dbo.ToInterface())
             .ToListAsync();
     }
     
-    public async Task<List<IInterface>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
+    public async Task<List<InterfaceDBO>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
     {
         return await _database.Interfaces
             .Include(@interface => @interface.InterfaceMetrics)
@@ -77,7 +76,6 @@ public class InterfaceReadRepository : IInterfaceReadRepository
                     .OrderBy(metric => metric.Timestamp)
                     .ToList()
             })
-            .Select(dbo => dbo.ToInterface())
             .ToListAsync();
     }
 }

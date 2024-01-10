@@ -12,6 +12,7 @@ COPY ["Shared/Netmon.Data.EntityFramework.Write/Netmon.Data.EntityFramework.Writ
 COPY ["Shared/Netmon.Data.Services.Read/Netmon.Data.Services.Read.csproj", "/Shared/Netmon.Data.Services.Read/"]
 COPY ["Shared/Netmon.Data.Services.Write/Netmon.Data.Services.Write.csproj", "/Shared/Netmon.Data.Services.Write/"]
 COPY ["Shared/Netmon.Models/Netmon.Models.csproj", "/Shared/Netmon.Models/"]
+COPY ["Shared/Netmon.SNMPPolling.SNMP/Netmon.SNMPPolling.SNMP.csproj", "/Shared/Netmon.SNMPPolling.SNMP/"]
 
 # Restore dependencies for SNMPPollingService
 RUN dotnet restore "Netmon.SNMPPolling.csproj"
@@ -24,6 +25,7 @@ RUN dotnet restore "/Shared/Netmon.Data.EntityFramework.Write/Netmon.Data.Entity
 RUN dotnet restore "/Shared/Netmon.Data.Services.Read/Netmon.Data.Services.Read.csproj"
 RUN dotnet restore "/Shared/Netmon.Data.Services.Write/Netmon.Data.Services.Write.csproj"
 RUN dotnet restore "/Shared/Netmon.Models/Netmon.Models.csproj"
+RUN dotnet restore "/Shared/Netmon.SNMPPolling.SNMP/Netmon.SNMPPolling.SNMP.csproj"
 
 # Copy the rest of the source code
 COPY ["Services/Netmon.SNMPPolling/", "./"]
@@ -35,6 +37,7 @@ COPY ["Shared/Netmon.Data.EntityFramework.Write/", "/Shared/Netmon.Data.EntityFr
 COPY ["Shared/Netmon.Data.Services.Read/", "/Shared/Netmon.Data.Services.Read/"]
 COPY ["Shared/Netmon.Data.Services.Write/", "/Shared/Netmon.Data.Services.Write/"]
 COPY ["Shared/Netmon.Models/", "/Shared/Netmon.Models/"]
+COPY ["Shared/Netmon.SNMPPolling.SNMP/", "/Shared/Netmon.SNMPPolling.SNMP/"]
 
 # Build SNMPPollingService
 WORKDIR "/src/"

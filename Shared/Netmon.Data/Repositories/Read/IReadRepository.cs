@@ -1,8 +1,9 @@
-﻿using Netmon.Models;
+﻿using Netmon.Data.DBO;
+using Netmon.Models;
 
 namespace Netmon.Data.Repositories.Read;
 
-public interface IReadRepository<T> where T : IModel
+public interface IReadRepository<T> where T : IDBO
 {
     Task<List<T>> GetAll();
     

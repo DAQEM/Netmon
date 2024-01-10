@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
 
-namespace Netmon.Data.EntityFramework.Attribute.Validator;
+namespace Netmon.Models.Attribute.Validator;
 
 public class ValidateIpAddressAttribute : ValidationAttribute
 {

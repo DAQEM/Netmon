@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Netmon.Models.Component.Disk.Metric;
 
-namespace Netmon.Data.EntityFramework.DBO.Component.Disk;
+namespace Netmon.Data.DBO.Component.Disk;
 
 public class DiskMetricsDBO : IComponentMetricDBO
 {

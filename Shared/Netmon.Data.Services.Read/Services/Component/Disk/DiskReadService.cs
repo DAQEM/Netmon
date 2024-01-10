@@ -35,6 +35,8 @@ public class DiskReadService : IDiskReadService
     
     public async Task<List<IDisk>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
     {
-        return await _diskReadRepository.GetByDeviceIdWithMetrics(deviceId, from, to);
+        return (await _diskReadRepository.GetByDeviceIdWithMetrics(deviceId, from, to))
+            .Select(x => x.ToDisk())
+            .ToList();
     }
 }

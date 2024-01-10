@@ -1,8 +1,9 @@
-﻿using Netmon.Models.Component.Memory.Metric;
+﻿using Netmon.Data.DBO.Component.Memory;
+using Netmon.Models.Component.Memory.Metric;
 
 namespace Netmon.Data.Repositories.Read.Component.Memory;
 
-public interface IMemoryMetricReadRepository : IComponentMetricReadRepository<IMemoryMetric>
+public interface IMemoryMetricReadRepository : IComponentMetricReadRepository<MemoryMetricsDBO>
 {
     
 }

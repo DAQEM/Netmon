@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
-using Netmon.Data.EntityFramework.DBO.Device;
 using Netmon.Data.Repositories.Read.Component.Cpu;
 using Netmon.Data.Repositories.Read.Component.Disk;
 using Netmon.Data.Repositories.Read.Component.Interface;
@@ -19,18 +19,18 @@ public class DeviceReadRepository : IDeviceReadRepository
         _database = database;
     }
 
-    public async Task<List<IDevice>> GetAll()
+    public async Task<List<DeviceDBO>> GetAll()
     {
-        return await _database.Devices.Select(dbo => dbo.ToDevice()).ToListAsync();
+        return await _database.Devices.ToListAsync();
     }
 
-    public async Task<IDevice?> GetById(Guid id)
+    public async Task<DeviceDBO?> GetById(Guid id)
     {
-        return (await _database.Devices.FirstOrDefaultAsync(device => device.Id == id))?.ToDevice();
+        return await _database.Devices.FirstOrDefaultAsync(device => device.Id == id);
     }
 
-    public async Task<IDevice?> GetByIpAddress(string deviceDBOIpAddress)
+    public async Task<DeviceDBO?> GetByIpAddress(string deviceDBOIpAddress)
     {
-        return (await _database.Devices.FirstOrDefaultAsync(device => device.IpAddress == deviceDBOIpAddress))?.ToDevice();
+        return await _database.Devices.FirstOrDefaultAsync(device => device.IpAddress == deviceDBOIpAddress);
     }
 }

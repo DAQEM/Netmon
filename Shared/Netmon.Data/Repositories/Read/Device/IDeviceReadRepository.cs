@@ -1,8 +1,9 @@
-﻿using Netmon.Models.Device;
+﻿using Netmon.Data.DBO.Device;
+using Netmon.Models.Device;
 
 namespace Netmon.Data.Repositories.Read.Device;
 
-public interface IDeviceReadRepository : IReadRepository<IDevice>
+public interface IDeviceReadRepository : IReadRepository<DeviceDBO>
 {
-    Task<IDevice?> GetByIpAddress(string deviceDBOIpAddress);
+    Task<DeviceDBO?> GetByIpAddress(string deviceDBOIpAddress);
 }

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net.NetworkInformation;
-using Netmon.Data.EntityFramework.DBO.Device;
+using Netmon.Data.DBO.Device;
 using Netmon.Models.Component.Interface;
 
-namespace Netmon.Data.EntityFramework.DBO.Component.Interface;
+namespace Netmon.Data.DBO.Component.Interface;
 
 public class InterfaceDBO : IComponentDBO
 {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Netmon.Models.Component.Cpu.Core;
 
-namespace Netmon.Data.EntityFramework.DBO.Component.Cpu.Core;
+namespace Netmon.Data.DBO.Component.Cpu.Core;
 
 public class CpuCoreDBO : IComponentDBO
 {

@@ -162,6 +162,13 @@ builder.Services.AddCors(options =>
 
 WebApplication app = builder.Build();
 
+WebSocketOptions webSocketOptions = new()
+{
+    KeepAliveInterval = TimeSpan.FromSeconds(30)
+};
+
+app.UseWebSockets(webSocketOptions);
+
 app.UsePathBase(new PathString("/api"));
 
 app.UseSwagger();
@@ -180,7 +187,10 @@ using (IServiceScope scope = app.Services.CreateScope())
 {
     IPollDeviceJob pollDeviceJob = scope.ServiceProvider.GetRequiredService<IPollDeviceJob>();
 
-    RecurringJob.AddOrUpdate(builder.Configuration["Hangfire:PollingTask:Name"], () => pollDeviceJob.Execute(), builder.Configuration["Hangfire:PollingTask:Cron"]);
+    RecurringJob.AddOrUpdate(
+        builder.Configuration["Hangfire:PollingTask:Name"], 
+        () => pollDeviceJob.Execute(), 
+        builder.Configuration["Hangfire:PollingTask:Cron"]);
 }
 
 app.Run();

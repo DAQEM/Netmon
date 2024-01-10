@@ -1,5 +1,5 @@
-﻿using Netmon.Data.EntityFramework.Database;
-using Netmon.Data.EntityFramework.DBO.Component.Cpu.Core;
+﻿using Netmon.Data.DBO.Component.Cpu.Core;
+using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Write.Component.Cpu.Core;
 using Netmon.Models.Component.Cpu.Core.Metric;
 
@@ -14,16 +14,14 @@ public class CpuCoreMetricsWriteRepository : ICpuCoreMetricsWriteRepository
         _database = database;
     }
 
-    public async Task Add(ICpuCoreMetric cpuCoreMetrics)
+    public async Task Add(CpuCoreMetricsDBO cpuCoreMetrics)
     {
         if (cpuCoreMetrics == null)
         {
             throw new ArgumentNullException(nameof(cpuCoreMetrics));
         }
         
-        CpuCoreMetricsDBO cpuCoreMetricsDBO = CpuCoreMetricsDBO.FromCpuCoreMetric(cpuCoreMetrics);
-        
-        await _database.CpuCoreMetrics.AddAsync(cpuCoreMetricsDBO);
+        await _database.CpuCoreMetrics.AddAsync(cpuCoreMetrics);
     }
 
     public async Task SaveChanges()

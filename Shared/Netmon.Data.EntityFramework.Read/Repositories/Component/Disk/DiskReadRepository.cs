@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Netmon.Data.DBO.Component.Disk;
 using Netmon.Data.EntityFramework.Database;
-using Netmon.Data.EntityFramework.DBO.Component.Disk;
 using Netmon.Data.Repositories.Read.Component.Disk;
 using Netmon.Models.Component.Disk;
 
@@ -18,27 +18,27 @@ public class DiskReadRepository : IDiskReadRepository
         _diskMetricsReadRepository = diskMetricsReadRepository;
     }
 
-    public async Task<List<IDisk>> GetAll()
+    public async Task<List<DiskDBO>> GetAll()
     {
-        return await _database.Disks.Select(dbo => dbo.ToDisk()).ToListAsync();
+        return await _database.Disks.ToListAsync();
     }
 
-    public async Task<IDisk?> GetById(Guid id)
+    public async Task<DiskDBO?> GetById(Guid id)
     {
-        return (await _database.Disks.FirstOrDefaultAsync(device => device.Id == id))?.ToDisk();
+        return await _database.Disks.FirstOrDefaultAsync(device => device.Id == id);
     }
     
-    public async Task<List<IDisk>> GetByDeviceId(Guid deviceId)
+    public async Task<List<DiskDBO>> GetByDeviceId(Guid deviceId)
     {
-        return await _database.Disks.Where(disk => disk.DeviceId == deviceId).Select(dbo => dbo.ToDisk()).ToListAsync();
+        return await _database.Disks.Where(disk => disk.DeviceId == deviceId).ToListAsync();
     }
 
-    public async Task<List<IDisk>> GetByDeviceIdWithMetrics(Guid deviceId)
+    public async Task<List<DiskDBO>> GetByDeviceIdWithMetrics(Guid deviceId)
     {
-        return await _database.Disks.Include(disk => disk.DiskMetrics).Where(disk => disk.DeviceId == deviceId).Select(dbo => dbo.ToDisk()).ToListAsync();
+        return await _database.Disks.Include(disk => disk.DiskMetrics).Where(disk => disk.DeviceId == deviceId).ToListAsync();
     }
     
-    public async Task<List<IDisk>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
+    public async Task<List<DiskDBO>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
     {
         return await _database.Disks
             .Include(disk => disk.DiskMetrics)
@@ -59,7 +59,6 @@ public class DiskReadRepository : IDiskReadRepository
                     .OrderBy(metric => metric.Timestamp)
                     .ToList()
             })
-            .Select(dbo => dbo.ToDisk())
             .ToListAsync();
     }
 }
