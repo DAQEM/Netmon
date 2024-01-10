@@ -251,6 +251,7 @@ jobs:
       run: |
         docker container ls
         docker container inspect netmon-device-manager-service
+        docker logs netmon-device-manager-service
 
     - name: Test Database
       if: always()
