@@ -51,7 +51,6 @@ services:
     depends_on:
       - netmon-mongo
       - netmon-mysql
-      - netmon-snmp-polling-service
 
   netmon-snmp-polling-service:
     build:
@@ -65,6 +64,7 @@ services:
       - "5003:80"
     depends_on:
       - netmon-mysql
+      - netmon-device-manager-service
 
   netmon-snmp-test-agent:
     build: Tests/SNMPTestAgent
