@@ -229,6 +229,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Docker Compose MySQL
+      run: docker-compose up -d --build netmon-mysql
+
     - name: Docker Compose
       run: docker-compose up -d --build
 
@@ -237,7 +240,7 @@ jobs:
         docker exec netmon-admin-web-app npm install vitest
         docker exec netmon-admin-web-app npx playwright install --with-deps
 
-    - name: Check if all containers are running
+    - name: 
       run: |
         docker container ls
         docker container inspect netmon-snmp-polling-service
