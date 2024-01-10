@@ -230,10 +230,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Docker Compose Action
-      uses: isbang/compose-action@v1.5.1
-      with:
-        compose-file: "./docker-compose.yml"
+    - name: Docker Compose
+      run: docker-compose up -d --build
 
     - name: Install Admin dependencies
       run: |
@@ -241,14 +239,18 @@ jobs:
         docker exec netmon-admin-web-app npx playwright install --with-deps
 
     - name: Check if all containers are running
-      run: docker container ls
+      run: |
+        docker container ls
+        docker container inspect netmon-device-manager-service
 
     - name: Run Admin Tests
       run: docker exec netmon-admin-web-app npx playwright test
 
     - name: Check if all containers are running
       if: always()
-      run: docker container ls
+      run: |
+        docker container ls
+        docker container inspect netmon-device-manager-service
 
     - name: Test Database
       if: always()
