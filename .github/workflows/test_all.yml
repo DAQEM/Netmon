@@ -227,8 +227,9 @@ jobs:
     needs: [integration-tests]
 
     strategy:
+      max-parallel: 1
       matrix:
-        app: ['UserWebApp', 'AdminWebApp']
+        app: ['AdminWebApp', 'UserWebApp']
 
     steps:
     - uses: actions/checkout@v3
