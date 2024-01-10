@@ -48,13 +48,11 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5002:80"
+    restart: on-failure
     depends_on:
-      netmon-mongo:
-        condition: service_started
-      netmon-mysql:
-        condition: service_started
-      netmon-snmp-polling-service:
-        condition: service_healthy
+      - netmon-mongo
+      - netmon-mysql
+      - netmon-snmp-polling-service
 
   netmon-snmp-polling-service:
     build:
