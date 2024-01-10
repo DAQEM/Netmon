@@ -47,7 +47,7 @@
 			<TableBodyRow
 				on:click={() => toggleRow(i)}
 				class="cursor-pointer"
-				id={device.ipAddress?.replace(/\./g, '')}
+				id={`device-${device.ipAddress?.replace(/\./g, '-')}`}
 			>
 				<TableBodyCell>
 					<img
