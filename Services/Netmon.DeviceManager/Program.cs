@@ -58,6 +58,13 @@ using Netmon.DeviceManager.Jobs.Poll;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+string? connectionString = builder.Configuration["MySQL:ConnectionString"];
+Console.WriteLine($"The connection string is: {connectionString}");
+builder.Services.AddDbContext<DevicesDatabase>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -94,13 +101,6 @@ builder.Services.AddHangfire(configuration => configuration
 builder.Services.AddHangfireServer(serverOptions =>
 {
     serverOptions.ServerName = builder.Configuration["Hangfire:ServerName"];
-});
-
-string? connectionString = builder.Configuration["MySQL:ConnectionString"];
-Console.WriteLine($"The connection string is: {connectionString}");
-builder.Services.AddDbContext<DevicesDatabase>(options =>
-{
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
 builder.Services.AddScoped<IDeviceWriteRepository, DeviceWriteRepository>();
