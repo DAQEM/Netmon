@@ -59,7 +59,7 @@ using Netmon.DeviceManager.Jobs.Poll;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 string? connectionString = builder.Configuration["MySQL:ConnectionString"];
-Console.WriteLine($"The connection string is: {connectionString}");
+
 builder.Services.AddDbContext<DevicesDatabase>(options =>
 {
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
