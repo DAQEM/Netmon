@@ -54,9 +54,5 @@ WORKDIR /app
 # Copy the published files from the previous stage
 COPY --from=publish /app/publish .
 
-# Install prerequisites
-RUN apt-get update && apt-get install -y \
-curl
-
 # Set the entry point
 ENTRYPOINT ["dotnet", "Netmon.SNMPPolling.dll"]
