@@ -12,6 +12,7 @@ services:
       - "80:3000"
     networks:
       - netmon-network
+    image: daqem/netmon-user-web-app
 
   netmon-admin-web-app:
     build: Services/AdminWebApp
@@ -23,6 +24,7 @@ services:
       - "81:3000"
     networks:
       - netmon-network
+    image: daqem/netmon-admin-web-app
 
   netmon-api-gateway:
     build: Services/APIGateway
@@ -34,6 +36,7 @@ services:
       - "5000:80"
     networks:
       - netmon-network
+    image: daqem/netmon-api-gateway
 
   netmon-account-service:
     build: Services/AccountService
@@ -45,6 +48,7 @@ services:
       - "5001:80"
     networks:
       - netmon-network
+    image: daqem/netmon-account-service
 
   netmon-device-manager-service:
     build:
@@ -61,6 +65,7 @@ services:
       - netmon-mysql
     networks:
       - netmon-network
+    image: daqem/netmon-device-manager-service
 
   netmon-snmp-polling-service:
     build:
@@ -76,6 +81,7 @@ services:
       - netmon-mysql
     networks:
       - netmon-network
+    image: daqem/netmon-snmp-polling-service
 
   netmon-snmp-test-agent:
     build: Tests/SNMPTestAgent
@@ -85,6 +91,7 @@ services:
       - "161:161/udp"
     networks:
       - netmon-network
+    image: daqem/netmon-snmp-test-agent
 
   netmon-mongo:
     image: mongo

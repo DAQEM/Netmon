@@ -264,6 +264,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Build Images
+      run: docker-compose build
+
     - name: Deploy Images
       run: docker-compose push
 
