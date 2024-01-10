@@ -10,7 +10,7 @@ export default class InterfaceStatisticsAPI {
 	getUrl(url: string, deviceId: string): string {
 		return process.env.NODE_ENV === 'development'
 			? `http://localhost:5000/api/device/device/${deviceId}/statistics/interface${url}`
-			: `http://192.168.178.254:80/api/device/device/${deviceId}/statistics/interface${url}`;
+			: `http://netmon-api-gateway:80/api/device/device/${deviceId}/statistics/interface${url}`;
 	}
 
 	async getInOut(deviceId: string, from: Date, to: Date): Promise<InterfaceStatisticsList> {

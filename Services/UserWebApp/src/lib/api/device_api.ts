@@ -10,7 +10,7 @@ export default class DeviceAPI {
 	getUrl(url: string): string {
 		return process.env.NODE_ENV === 'development'
 			? `http://localhost:5000/api/device/device/${url}`
-			: `http://192.168.178.254:80/api/device/device/${url}`;
+			: `http://netmon-api-gateway:80/api/device/device/${url}`;
 	}
 
 	async getDevices(): Promise<Device[]> {
