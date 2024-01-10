@@ -234,14 +234,9 @@ jobs:
       uses: isbang/compose-action@v1.5.1
       with:
         compose-file: "./docker-compose.yml"
-        services: |
-          netmon-mysql
-          netmon-mongo
-          netmon-admin-web-app
-          netmon-user-web-app
-          netmon-api-gateway
-          netmon-device-manager-service
-          netmon-snmp-polling-service
+
+    - name: Check if all containers are running
+      run: docker container ls
 
     - name: Install Admin dependencies
       run: |
