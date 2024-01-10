@@ -249,3 +249,18 @@ jobs:
     - name: Run Tests
       run: docker exec ${{matrix.service}} npx playwright test
 
+  deploy:
+    name: Deploy Docker Images
+    runs-on: ubuntu-latest
+    needs: [codeql, end-to-end-tests]
+    timeout-minutes: 20
+
+    steps:
+    - name: Log into Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: DAQEM
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+    - name: Deploy Images
+      run: docker-compose push
+
