@@ -254,7 +254,12 @@ jobs:
       run: |
         docker container ls
         docker container inspect netmon-device-manager-service
+        echo "netmon-device-manager-service"
         docker logs netmon-device-manager-service
+        echo "netmon-snmp-polling-service"
+        docker logs netmon-snmp-polling-service
+        echo "netmon-api-gateway"
+        docker logs netmon-api-gateway
 
     - name: Test Database
       if: always()
