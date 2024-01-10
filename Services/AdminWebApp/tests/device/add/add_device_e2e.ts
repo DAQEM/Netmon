@@ -1,6 +1,6 @@
 import test, { expect } from '@playwright/test';
 
-test.describe.parallel('Add Device', () => {
+test.describe.serial('Add Device', () => {
 	const ipAddress = '1.1.1.1';
 
 	test('Add device to database', async ({ page }) => {
