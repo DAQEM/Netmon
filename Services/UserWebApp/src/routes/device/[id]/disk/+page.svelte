@@ -16,13 +16,8 @@
 	onMount(() => {
 		ws = new WebSocket('ws://localhost:5002/api/ws');
 
-		ws.onopen = function () {
-			console.log('WebSocket Client Connected');
-		};
-
-		ws.addEventListener('message', function (event) {
+		ws.addEventListener('message', function () {
 			newData = true;
-			console.log('Message from server ', event.data);
 		});
 	});
 

@@ -242,6 +242,7 @@ jobs:
         npm ci
         npm run build
         npx playwright install --with-deps
+      working-directory: Services/${{ matrix.app }}
     - name: Run Playwright tests
       run: npx playwright test
       working-directory: Services/${{ matrix.app }}

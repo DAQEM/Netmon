@@ -211,8 +211,6 @@
 			inStats.reduce((a, b) => a + b.y, 0) + outStats.reduce((a, b) => a + b.y, 0)
 		);
 		average = bytesToBitsString(Number.parseInt(total) / (inStats.length + outStats.length));
-
-		console.log(inStats.reduce((a, b) => a + b.y, 0) + outStats.reduce((a, b) => a + b.y, 0));
 	}
 
 	function bytesToBitsString(value: number, addPerSecond: boolean = false): string {
@@ -233,7 +231,6 @@
 	function applyRange(fromDays: number, toDays: number) {
 		const fromDate = new Date(new Date().setDate(new Date().getDate() - fromDays));
 		const toDate = new Date(new Date().setDate(new Date().getDate() - toDays));
-		console.log(fromDate, toDate);
 		replaceStateWithQuery({
 			from: fromDate.toISOString(),
 			to: toDate.toISOString()

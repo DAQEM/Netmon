@@ -218,7 +218,6 @@
 	function applyRange(fromDays: number, toDays: number) {
 		const fromDate = new Date(new Date().setDate(new Date().getDate() - fromDays));
 		const toDate = new Date(new Date().setDate(new Date().getDate() - toDays));
-		console.log(fromDate, toDate);
 		replaceStateWithQuery({
 			from: fromDate.toISOString(),
 			to: toDate.toISOString()

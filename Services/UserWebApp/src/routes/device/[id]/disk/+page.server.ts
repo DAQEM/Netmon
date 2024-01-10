@@ -6,8 +6,6 @@ export const load = (async ({ params: { id }, url: { searchParams } }) => {
 	const from: string | null = searchParams.get('from')?.replaceAll('%3A', ':') ?? null;
 	const to: string | null = searchParams.get('to')?.replaceAll('%3A', ':') ?? null;
 
-	console.log(from, to);
-
 	const fromDate = from ? new Date(from) : new Date(new Date().setDate(new Date().getDate() - 1));
 	const toDate = to ? new Date(to) : new Date();
 
