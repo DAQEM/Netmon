@@ -62,6 +62,7 @@ services:
       - "5002:80"
     depends_on:
       - netmon-mongo
+      - netmon-mysql
     networks:
       network1:
         ipv4_address: 192.168.178.5
@@ -76,6 +77,8 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5003:80"
+    depends_on:
+      - netmon-mysql
     networks:
       network1:
         ipv4_address: 192.168.178.6
