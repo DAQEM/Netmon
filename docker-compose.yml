@@ -51,6 +51,7 @@ services:
     depends_on:
       - netmon-mongo
       - netmon-mysql
+      - netmon-snmp-polling-service
 
   netmon-snmp-polling-service:
     build:
