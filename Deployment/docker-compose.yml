@@ -1,0 +1,126 @@
+version: '3.9'
+
+services:
+
+  netmon-user-web-app:
+    image: daqem/netmon:user-web-app
+    container_name: netmon-user-web-app
+    environment:
+      - ENV=production
+      - ORIGIN=http://localhost:80
+    ports:
+      - "80:3000"
+    networks:
+      - netmon-network
+
+  netmon-admin-web-app:
+    image: daqem/netmon:admin-web-app
+    container_name: netmon-admin-web-app
+    environment:
+      - ENV=production
+      - ORIGIN=http://localhost:81
+    ports:
+      - "81:3000"
+    networks:
+      - netmon-network
+
+  netmon-api-gateway:
+    image: daqem/netmon:api-gateway
+    container_name: netmon-api-gateway
+    environment:
+      - ENV=production
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5000:80"
+    networks:
+      - netmon-network
+
+  netmon-account-service:
+    image: daqem/netmon:account-service
+    container_name: netmon-account-service
+    environment:
+      - ENV=production
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5001:80"
+    networks:
+      - netmon-network
+
+  netmon-device-manager-service:
+    image: daqem/netmon:device-manager-service
+    container_name: netmon-device-manager-service
+    environment:
+      - ENV=production
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5002:80"
+    depends_on:
+      - netmon-mongo
+      - netmon-mysql
+    networks:
+      - netmon-network
+
+  netmon-snmp-polling-service:
+    image: daqem/netmon:snmp-polling-service
+    container_name: netmon-snmp-polling-service
+    environment:
+      - ENV=production
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5003:80"
+    depends_on:
+      - netmon-mysql
+    networks:
+      - netmon-network
+
+  netmon-snmp-test-agent:
+    image: daqem/netmon:snmp-test-agent
+    container_name: netmon-snmp-test-agent
+    hostname: snmpd-test
+    ports:
+      - "161:161/udp"
+    networks:
+      - netmon-network
+
+  netmon-mongo:
+    image: mongo
+    container_name: netmon-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongopwd
+    networks:
+      - netmon-network
+
+  netmon-mongo-web-viewer:
+    image: mongo-express
+    container_name: netmon-mongo-web-viewer
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongopwd
+      ME_CONFIG_MONGODB_URL: mongodb://root:mongopwd@netmon-mongo:27017/
+    depends_on:
+      - netmon-mongo
+    networks:
+      - netmon-network
+
+  netmon-mysql:
+    image: mysql
+    container_name: netmon-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3110:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: devices
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    networks:
+      - netmon-network
+
+networks:
+  netmon-network:
+    driver: bridge
