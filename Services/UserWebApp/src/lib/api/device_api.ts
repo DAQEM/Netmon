@@ -1,4 +1,5 @@
 import type { Device } from '$lib/types';
+import UrlHandler from './url_handler';
 
 export default class DeviceAPI {
 	fetch: typeof fetch;
@@ -8,9 +9,7 @@ export default class DeviceAPI {
 	}
 
 	getUrl(url: string): string {
-		return process.env.NODE_ENV === 'development'
-			? `http://localhost:5000/api/device/device/${url}`
-			: `http://netmon-api-gateway:80/api/device/device/${url}`;
+		return UrlHandler.getUrl(`/device/device/${url}`);
 	}
 
 	async getDevices(): Promise<Device[]> {
