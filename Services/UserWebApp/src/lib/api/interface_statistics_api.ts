@@ -1,4 +1,5 @@
 import type { InterfaceStatisticsList } from '$lib/types';
+import UrlHandler from './url_handler';
 
 export default class InterfaceStatisticsAPI {
 	fetch: typeof fetch;
@@ -8,9 +9,7 @@ export default class InterfaceStatisticsAPI {
 	}
 
 	getUrl(url: string, deviceId: string): string {
-		return process.env.NODE_ENV === 'development'
-			? `http://localhost:5000/api/device/device/${deviceId}/statistics/interface${url}`
-			: `http://netmon-api-gateway:80/api/device/device/${deviceId}/statistics/interface${url}`;
+		return UrlHandler.getUrl(`/device/device/${deviceId}/statistics/interface${url}`);
 	}
 
 	async getInOut(deviceId: string, from: Date, to: Date): Promise<InterfaceStatisticsList> {

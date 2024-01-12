@@ -8,6 +8,7 @@ services:
     environment:
       - ENV=production
       - ORIGIN=http://localhost:80
+      - BASE_URL=http://netmon-api-gateway:80/api
     ports:
       - "80:3000"
     networks:
@@ -20,6 +21,7 @@ services:
     environment:
       - ENV=production
       - ORIGIN=http://localhost:81
+      - BASE_URL=http://netmon-api-gateway:80/api
     ports:
       - "81:3000"
     networks:

@@ -1,4 +1,5 @@
 import type { DiskStatisticsList } from "$lib/types";
+import UrlHandler from "./url_handler";
 
 export default class DiskStatisticsAPI {
 	fetch: typeof fetch;
@@ -8,9 +9,7 @@ export default class DiskStatisticsAPI {
 	}
 
 	getUrl(url: string, deviceId: string): string {
-		return process.env.NODE_ENV === 'development'
-			? `http://localhost:5000/api/device/device/${deviceId}/statistics/disk${url}`
-			: `http://netmon-api-gateway:80/api/device/device/${deviceId}/statistics/disk${url}`;
+		return UrlHandler.getUrl(`/device/device/${deviceId}/statistics/disk${url}`);
 	}
 
 	async getStatistics(deviceId: string, from: Date, to: Date): Promise<DiskStatisticsList> {
