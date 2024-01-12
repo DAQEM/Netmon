@@ -205,7 +205,6 @@ using (IServiceScope scope = app.Services.CreateScope())
         }
         else
         {
-            logger.LogInformation("Environment Variables: {EnvironmentVariables}", string.Join(", ", Environment.GetEnvironmentVariables().Keys.Cast<string>()));
             logger.LogInformation("Allowed Origins: {AllowedOrigins}", string.Join(", ", allowedOrigins));
         }
     }
