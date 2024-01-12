@@ -172,15 +172,33 @@ if (!app.Environment.IsDevelopment())
     app.UseMiddleware<ExceptionMiddleware>();
 }
 
-using (IServiceScope serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+using (IServiceScope scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
 {
-    DevicesDatabase? context = serviceScope.ServiceProvider.GetService<DevicesDatabase>();
+    DevicesDatabase? context = scope.ServiceProvider.GetService<DevicesDatabase>();
     try
     {
         context?.Database.EnsureCreated();
     }
     catch (MySqlException)
     {
+    }
+    
+    try
+    {
+        ILogger<Program> logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        string[]? allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+        if (allowedOrigins is null)
+        {
+            logger.LogWarning("No allowed origins specified, CORS will not be enabled");
+        }
+        else
+        {
+            logger.LogInformation("Allowed Origins: {AllowedOrigins}", string.Join(", ", allowedOrigins));
+        }
+    }
+    catch (InvalidOperationException e)
+    {
+        Console.WriteLine("Unable to get logger: {0}", e.Message);
     }
 }
 

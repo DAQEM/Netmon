@@ -195,7 +195,25 @@ using (IServiceScope scope = app.Services.CreateScope())
         Console.WriteLine("Unable to start polling job (probably because it cannot connect to the database): {0}", e.Message);
     }
 
-    
+    try
+    {
+        ILogger<Program> logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        string[]? allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+        if (allowedOrigins is null)
+        {
+            logger.LogWarning("No allowed origins specified, CORS will not be enabled");
+        }
+        else
+        {
+            logger.LogInformation("Environment Variables: {EnvironmentVariables}", string.Join(", ", Environment.GetEnvironmentVariables().Keys.Cast<string>()));
+            logger.LogInformation("Allowed Origins: {AllowedOrigins}", string.Join(", ", allowedOrigins));
+        }
+    }
+    catch (InvalidOperationException e)
+    {
+        Console.WriteLine("Unable to get logger: {0}", e.Message);
+    }
+
 }
 
 app.Run();
