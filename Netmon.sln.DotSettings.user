@@ -1,7 +1,15 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\basvd\AppData\Local\JetBrains\Rider2023.3\resharper-host\temp\Rider\vAny\CoverageData\_Netmon.1481318327\Snapshot\snapshot.utdcvr</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e0a1c0c7_002Df1b5_002D473d_002D9b32_002Db8cc2963f373/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetPrivacyProvider_ShouldReturnAES192PrivacyProvider_WhenAES192ProtocolIsSelected" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::7F1D3097-C146-466F-8738-9C5AD15BC72A::net8.0::Netmon.SNMPPolling.SNMP.UnitTests.Security.PrivacyProviderTests.GetPrivacyProvider_ShouldReturnAES192PrivacyProvider_WhenAES192ProtocolIsSelected&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;Project Location="G:\School Projects\Netmon\Tests\Netmon.SNMPPolling.IntegrationTests" Presentation="&amp;lt;Netmon.SNMPPolling.IntegrationTests&amp;gt;" /&gt;&#xD;
+    &lt;Project Location="G:\School Projects\Netmon\Tests\Netmon.SNMPPolling.SNMP.UnitTests" Presentation="&amp;lt;Netmon.SNMPPolling.SNMP.UnitTests&amp;gt;" /&gt;&#xD;
+  &lt;/Or&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	
 	
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9b8a4c9e_002D5f16_002D474d_002D9068_002D5d039104f6f6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Get_EndpointsReturnSuccessAndCorrectContentType" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="D:\School\Software\Semester 3\Netmon\Tests\Netmon.SNMPPolling.UnitTests" Presentation="&amp;lt;Netmon.SNMPPolling.UnitTests&amp;gt;" /&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+	</wpf:ResourceDictionary>

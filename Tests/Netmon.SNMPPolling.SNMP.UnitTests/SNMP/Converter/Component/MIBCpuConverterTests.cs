@@ -29,7 +29,7 @@ public class MIBCpuConverterTests
         List<ICpu> result = converter.ConvertMIBsToComponent(mibs);
 
         // Assert
-        Assert.IsEmpty(result);
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -73,12 +73,12 @@ public class MIBCpuConverterTests
         List<ICpu> result = converter.ConvertMIBsToComponent(mibs);
 
         // Assert
-        Assert.IsNotEmpty(result);
+        Assert.That(result, Is.Not.Empty);
         Assert.That(result, Has.Count.EqualTo(1));
 
         ICpu cpu = result.First();
         Assert.That(cpu.Index, Is.EqualTo(1));
-        Assert.IsNotEmpty(cpu.Cores);
+        Assert.That(cpu.Cores, Is.Not.Empty);
         Assert.That(cpu.Cores, Has.Count.EqualTo(1));
 
         ICpuCore core = cpu.Cores.First();
@@ -117,15 +117,15 @@ public class MIBCpuConverterTests
         List<ICpu> result = converter.ConvertMIBsToComponent(mibs);
 
         // Assert
-        Assert.IsNotEmpty(result);
+        Assert.That(result, Is.Not.Empty);
         Assert.That(result, Has.Count.EqualTo(1));
 
         ICpu cpu = result.First();
         Assert.That(cpu.Index, Is.EqualTo(1));
-        Assert.IsEmpty(cpu.Cores);
+        Assert.That(cpu.Metrics, Is.Not.Empty);
 
         ICpuMetric metric = cpu.Metrics.First();
-        Assert.IsInstanceOf<CpuMetric>(metric);
+        Assert.That(metric, Is.InstanceOf<CpuMetric>());
         Assert.That(((CpuMetric)metric).OneMinuteLoad, Is.EqualTo(1));
         Assert.That(((CpuMetric)metric).FiveMinuteLoad, Is.EqualTo(2));
         Assert.That(((CpuMetric)metric).FifteenMinuteLoad, Is.EqualTo(3));

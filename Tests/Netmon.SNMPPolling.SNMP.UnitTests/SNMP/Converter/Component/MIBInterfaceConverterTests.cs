@@ -26,7 +26,7 @@ public class MIBInterfaceConverterTests
         List<IInterface> result = converter.ConvertMIBsToComponent(mibs);
 
         // Assert
-        Assert.IsEmpty(result);
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -84,7 +84,7 @@ public class MIBInterfaceConverterTests
         List<IInterface> result = converter.ConvertMIBsToComponent(mibs);
 
         // Assert
-        Assert.IsNotEmpty(result);
+        Assert.That(result, Is.Not.Empty);
         Assert.That(result, Has.Count.EqualTo(1));
 
         IInterface iface = result.First();

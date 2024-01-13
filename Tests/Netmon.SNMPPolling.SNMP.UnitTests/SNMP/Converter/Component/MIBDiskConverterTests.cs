@@ -24,7 +24,7 @@ public class MIBDiskConverterTests
         List<IDisk> result = converter.ConvertMIBsToComponent(mibs);
 
         // Assert
-        Assert.IsEmpty(result);
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -120,6 +120,6 @@ public class MIBDiskConverterTests
         List<IDisk> result = converter.ConvertMIBsToComponent(mibs);
 
         // Assert
-        Assert.IsEmpty(result);
+        Assert.That(result, Is.Empty);
     }
 }

@@ -46,12 +46,12 @@ public class MIBDeviceConverterTests
         IDevice result = converter.ConvertMIBsToDevice(connectionInfo, mibs);
 
         // Assert
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<Models.Device.Device>(result);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.InstanceOf<Models.Device.Device>());
         Assert.That(result.IpAddress, Is.EqualTo("192.168.1.1"));
 
         IDeviceConnection? deviceConnection = result.DeviceConnection;
-        Assert.IsNotNull(deviceConnection);
+        Assert.That(deviceConnection, Is.Not.Null);
         Assert.That(deviceConnection?.Port, Is.EqualTo(161));
         Assert.That(deviceConnection?.Community, Is.EqualTo("public"));
         Assert.That(deviceConnection?.AuthPassword, Is.EqualTo("authPass"));
@@ -83,12 +83,12 @@ public class MIBDeviceConverterTests
         IDevice result = converter.ConvertMIBsToDevice(connectionInfo, mibs);
 
         // Assert
-        Assert.IsNotNull(result);
-        Assert.IsInstanceOf<Models.Device.Device>(result);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.InstanceOf<Models.Device.Device>());
         Assert.That(result.IpAddress, Is.EqualTo("192.168.1.1"));
 
         IDeviceConnection? deviceConnection = result.DeviceConnection;
-        Assert.IsNotNull(deviceConnection);
+        Assert.That(deviceConnection, Is.Not.Null);
         Assert.That(deviceConnection?.Port, Is.EqualTo(161)); // Default SNMP port
         Assert.That(deviceConnection?.Community, Is.EqualTo("public")); // Default SNMP community
         Assert.That(deviceConnection?.AuthPassword, Is.EqualTo(string.Empty));
