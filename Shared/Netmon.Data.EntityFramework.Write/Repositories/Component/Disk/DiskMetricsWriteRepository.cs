@@ -8,7 +8,7 @@ public class DiskMetricsWriteRepository(DevicesDatabase database) : IDiskMetrics
 {
     public async Task Add(DiskMetricsDBO diskMetrics)
     {
-        if (diskMetrics == null)
+        if (diskMetrics is null)
         {
             throw new ArgumentNullException(nameof(diskMetrics));
         }

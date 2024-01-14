@@ -24,7 +24,7 @@ public class CpuDBO : IComponentDBO
     
     public static CpuDBO FromCpu(ICpu? cpu)
     {
-        if (cpu == null) return new CpuDBO();
+        if (cpu is null) return new CpuDBO();
         return new CpuDBO
         {
             Id = Guid.NewGuid(),

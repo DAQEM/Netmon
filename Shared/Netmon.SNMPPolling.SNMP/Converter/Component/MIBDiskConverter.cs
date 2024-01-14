@@ -11,7 +11,7 @@ public class MIBDiskConverter : IMIBComponentConverter<IDisk>
     public List<IDisk> ConvertMIBsToComponent(List<IMIB> mibs)
     {
         HostResourcesMIB? hostResourcesMIB = mibs.OfType<HostResourcesMIB>().FirstOrDefault();
-        if (hostResourcesMIB == null)
+        if (hostResourcesMIB is null)
         {
             return new List<IDisk>();
         }

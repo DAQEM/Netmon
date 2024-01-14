@@ -34,10 +34,10 @@ public class MIBsPoller(
         UCDavisMIB? ucDavisMib = ucDavisMibTask.Result;
 
         List<IMIB> mibs = new();
-        if (systemMib != null) mibs.Add(systemMib);
-        if (hostMib != null) mibs.Add(hostMib);
-        if (ifMib != null) mibs.Add(ifMib);
-        if (ucDavisMib != null) mibs.Add(ucDavisMib);
+        if (systemMib is not null) mibs.Add(systemMib);
+        if (hostMib is not null) mibs.Add(hostMib);
+        if (ifMib is not null) mibs.Add(ifMib);
+        if (ucDavisMib is not null) mibs.Add(ucDavisMib);
         
         return mibs;
     }

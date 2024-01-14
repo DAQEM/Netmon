@@ -8,7 +8,7 @@ public class CpuCoreMetricsWriteRepository(DevicesDatabase database) : ICpuCoreM
 {
     public async Task Add(CpuCoreMetricsDBO cpuCoreMetrics)
     {
-        if (cpuCoreMetrics == null)
+        if (cpuCoreMetrics is null)
         {
             throw new ArgumentNullException(nameof(cpuCoreMetrics));
         }

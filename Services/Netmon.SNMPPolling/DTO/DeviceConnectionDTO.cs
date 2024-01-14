@@ -16,7 +16,7 @@ public class DeviceConnectionDTO
 
     public static DeviceConnectionDTO FromDeviceConnection(IDeviceConnection? deviceDeviceConnection)
     {
-        if (deviceDeviceConnection == null) return new DeviceConnectionDTO();
+        if (deviceDeviceConnection is null) return new DeviceConnectionDTO();
         return new DeviceConnectionDTO
         {
             SNMPVersion = deviceDeviceConnection.SNMPVersion,

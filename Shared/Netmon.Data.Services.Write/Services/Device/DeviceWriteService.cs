@@ -24,7 +24,7 @@ public class DeviceWriteService(
     {
         IDevice? existingDevice = await deviceReadService.GetByIpAddress(device.IpAddress);
 
-        if (existingDevice == null) return;
+        if (existingDevice is null) return;
         
         device.Id = existingDevice.Id;
         
@@ -40,7 +40,7 @@ public class DeviceWriteService(
     public async Task<IDevice> AddDeviceWithConnection(IDevice device)
     {
         IDevice? existingDevice = await deviceReadService.GetByIpAddress(device.IpAddress);
-        if (existingDevice != null) throw new DeviceWithIpAddressAlreadyExistsException(device.IpAddress);
+        if (existingDevice is not null) throw new DeviceWithIpAddressAlreadyExistsException(device.IpAddress);
         
         device = await deviceWriteRepository.AddDeviceWithConnection(DeviceDBO.FromDevice(device));
         await deviceWriteRepository.SaveChanges();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Netmon.Data.Services.Read.Device;
 using Netmon.Data.Services.Write.Device;
 using Netmon.DeviceManager.DTO.Device;
@@ -7,6 +8,7 @@ using Netmon.Models.Device;
 namespace Netmon.DeviceManager.Controllers.Device;
 
 [ApiController]
+[Authorize]
 [Route("Device")]
 public class DeviceController(IDeviceReadService deviceReadService, IDeviceWriteService deviceWriteService)
     : BaseController
@@ -21,12 +23,18 @@ public class DeviceController(IDeviceReadService deviceReadService, IDeviceWrite
     public async Task<IActionResult> GetDeviceById(Guid id, bool includeConnection = false)
     {
         IDevice? device = await deviceReadService.GetById(id, includeConnection);
-        return device == null ? NoContent() : Ok(DeviceWithConnectionDTO.FromDeviceWithConnection(device));
+        return device is null ? NoContent() : Ok(DeviceWithConnectionDTO.FromDeviceWithConnection(device));
     }
     
     [HttpPost]
     public async Task<IActionResult> Post(DeviceCreateDTO deviceCreateDTO)
     {
+        IDevice? existingDevice = await deviceReadService.GetByIpAddress(deviceCreateDTO.IpAddress);
+        if (existingDevice is not null)
+        {
+            return Conflict();
+        }
+        
         IDevice device = deviceCreateDTO.ToDevice();
         device = await deviceWriteService.AddDeviceWithConnection(device);
         DeviceWithConnectionDTO deviceDTO = DeviceWithConnectionDTO.FromDeviceWithConnection(device);

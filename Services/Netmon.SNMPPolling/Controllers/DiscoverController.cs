@@ -20,7 +20,7 @@ public class DiscoverController(IDevicePoller devicePoller) : Controller
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
         IDevice? device = await devicePoller.PollDetails(snmpConnectionInfo);
         
-        if (device == null) return NotFound();
+        if (device is null) return NotFound();
         
         return Ok(new
         {
@@ -39,7 +39,7 @@ public class DiscoverController(IDevicePoller devicePoller) : Controller
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
         IDevice? device = await devicePoller.PollFull(snmpConnectionInfo);
         
-        return device == null ? NotFound() : Ok(DeviceOverviewDTO.FromDevice(device));
+        return device is null ? NotFound() : Ok(DeviceOverviewDTO.FromDevice(device));
     }
     
     [HttpPost("Disks")]
@@ -48,7 +48,7 @@ public class DiscoverController(IDevicePoller devicePoller) : Controller
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
         List<IDisk>? disks = await devicePoller.PollDisks(snmpConnectionInfo);
 
-        return disks == null ? NotFound() : Ok(disks.Select(DiskDTO.FromDisk).ToList());
+        return disks is null ? NotFound() : Ok(disks.Select(DiskDTO.FromDisk).ToList());
     }
     
     [HttpPost("Memory")]
@@ -57,7 +57,7 @@ public class DiscoverController(IDevicePoller devicePoller) : Controller
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
         List<IMemory>? memory = await devicePoller.PollMemory(snmpConnectionInfo);
         
-        return memory == null ? NotFound() : Ok(memory.Select(MemoryDTO.FromMemory).ToList());
+        return memory is null ? NotFound() : Ok(memory.Select(MemoryDTO.FromMemory).ToList());
     }
     
     [HttpPost("Cpus")]
@@ -66,7 +66,7 @@ public class DiscoverController(IDevicePoller devicePoller) : Controller
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
         List<ICpu>? cpus = await devicePoller.PollCpus(snmpConnectionInfo);
         
-        return cpus == null ? NotFound() : Ok(cpus.Select(CpuDTO.FromCpu).ToList());
+        return cpus is null ? NotFound() : Ok(cpus.Select(CpuDTO.FromCpu).ToList());
     }
     
     [HttpPost("Interfaces")]
@@ -75,6 +75,6 @@ public class DiscoverController(IDevicePoller devicePoller) : Controller
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
         List<IInterface>? interfaces = await devicePoller.PollInterfaces(snmpConnectionInfo);
         
-        return interfaces == null ? NotFound() : Ok(interfaces.Select(InterfaceDTO.FromInterface).ToList());
+        return interfaces is null ? NotFound() : Ok(interfaces.Select(InterfaceDTO.FromInterface).ToList());
     }
 }

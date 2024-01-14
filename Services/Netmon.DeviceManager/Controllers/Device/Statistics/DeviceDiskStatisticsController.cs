@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Netmon.Data.Services.Read.Component.Disk;
 using Netmon.DeviceManager.DTO.Device.Statistics;
 using Netmon.Models.Component.Disk;
@@ -6,6 +7,7 @@ using Netmon.Models.Component.Disk;
 namespace Netmon.DeviceManager.Controllers.Device.Statistics;
 
 [ApiController]
+[Authorize]
 [Route("device/{id}/statistics/disk")]
 public class DeviceDiskStatisticsController(IDiskReadService diskReadService) : BaseController
 {

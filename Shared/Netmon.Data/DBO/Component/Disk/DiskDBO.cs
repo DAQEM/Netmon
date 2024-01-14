@@ -25,7 +25,7 @@ public class DiskDBO : IComponentDBO
 
     public static DiskDBO FromDisk(IDisk? disk)
     {
-        if (disk == null) return new DiskDBO();
+        if (disk is null) return new DiskDBO();
         
         return new DiskDBO
         {

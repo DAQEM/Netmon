@@ -12,14 +12,14 @@ public class InterfaceWriteRepository(
 {
     public async Task AddOrUpdate(InterfaceDBO @interface)
     {
-        if (@interface == null)
+        if (@interface is null)
         {
             throw new ArgumentNullException(nameof(@interface));
         }
         
         InterfaceDBO? existingInterface = await database.Interfaces.FirstOrDefaultAsync(i => i.DeviceId == @interface.DeviceId && i.Index == @interface.Index);
         
-        if (existingInterface == null)
+        if (existingInterface is null)
         {
             @interface.Id = Guid.NewGuid();
             await database.Interfaces.AddAsync(@interface);
@@ -29,7 +29,7 @@ public class InterfaceWriteRepository(
             @interface.Id = existingInterface.Id;
             database.Entry(existingInterface).CurrentValues.SetValues(@interface);
             
-            if (@interface.InterfaceMetrics != null!)
+            if (@interface.InterfaceMetrics is not null)
             {
                 foreach (InterfaceMetricsDBO interfaceMetrics in @interface.InterfaceMetrics)
                 {

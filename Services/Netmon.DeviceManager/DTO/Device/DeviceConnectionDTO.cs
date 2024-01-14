@@ -32,7 +32,7 @@ public class DeviceConnectionDTO
     
     public static DeviceConnectionDTO FromDeviceConnection(IDeviceConnection? deviceConnection)
     {
-        if (deviceConnection == null) return new DeviceConnectionDTO();
+        if (deviceConnection is null) return new DeviceConnectionDTO();
         return new DeviceConnectionDTO
         {
             Port = deviceConnection.Port,

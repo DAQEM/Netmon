@@ -25,7 +25,7 @@ public class MemoryDBO : IComponentDBO
 
     public static MemoryDBO FromMemory(IMemory? memory)
     {
-        if (memory == null) return new MemoryDBO();
+        if (memory is null) return new MemoryDBO();
         return new MemoryDBO
         {
             Id = Guid.NewGuid(),

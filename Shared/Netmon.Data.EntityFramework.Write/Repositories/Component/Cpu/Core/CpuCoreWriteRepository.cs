@@ -12,14 +12,14 @@ public class CpuCoreWriteRepository(
 {
     public async Task AddOrUpdate(CpuCoreDBO cpuCore)
     {
-        if (cpuCore == null)
+        if (cpuCore is null)
         {
             throw new ArgumentNullException(nameof(cpuCore));
         }
         
         CpuCoreDBO? existingCpuCore = await database.CpuCores.FirstOrDefaultAsync(c => c.CpuId == cpuCore.CpuId && c.Index == cpuCore.Index);
 
-        if (existingCpuCore == null)
+        if (existingCpuCore is null)
         {
             cpuCore.Id = Guid.NewGuid();
             await database.CpuCores.AddAsync(cpuCore);
@@ -29,7 +29,7 @@ public class CpuCoreWriteRepository(
             cpuCore.Id = existingCpuCore.Id;
             database.Entry(existingCpuCore).CurrentValues.SetValues(cpuCore);
             
-            if (cpuCore.CpuCoreMetrics != null!)
+            if (cpuCore.CpuCoreMetrics is not null)
             {
                 foreach (CpuCoreMetricsDBO cpuCoreMetrics in cpuCore.CpuCoreMetrics)
                 {

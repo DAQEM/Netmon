@@ -25,20 +25,20 @@ public class DeviceWriteRepository(
 {
     public async Task AddOrUpdateFullDevice(DeviceDBO device)
     {
-        if (device == null) 
+        if (device is null) 
         {
             throw new ArgumentNullException(nameof(device));
         }
 
         await AddOrUpdateDevice(device);
         
-        if (device.DeviceConnection != null!)
+        if (device.DeviceConnection is not null)
         {
             device.DeviceConnection.DeviceId = device.Id;
             await deviceConnectionWriteRepository.AddOrUpdate(device.DeviceConnection);
         }
 
-        if (device.Cpus != null!)
+        if (device.Cpus is not null)
         {
             foreach (CpuDBO cpu in device.Cpus)
             {
@@ -47,7 +47,7 @@ public class DeviceWriteRepository(
             }
         }
         
-        if (device.Disks != null!)
+        if (device.Disks is not null)
         {
             foreach (DiskDBO disk in device.Disks)
             {
@@ -56,7 +56,7 @@ public class DeviceWriteRepository(
             }
         }
         
-        if (device.Interfaces != null!)
+        if (device.Interfaces is not null)
         {
             foreach (InterfaceDBO @interface in device.Interfaces)
             {
@@ -65,7 +65,7 @@ public class DeviceWriteRepository(
             }
         }
 
-        if (device.Memory != null!)
+        if (device.Memory is not null)
         {
             foreach (MemoryDBO memory in device.Memory)
             {
@@ -77,14 +77,14 @@ public class DeviceWriteRepository(
 
     public async Task AddOrUpdateDevice(DeviceDBO device)
     {
-        if(device == null)
+        if(device is null)
         {
             throw new ArgumentNullException(nameof(device));
         }
         
         DeviceDBO? existingDevice = await database.Devices.FirstOrDefaultAsync(d => d.IpAddress == device.IpAddress);
         
-        if (existingDevice != null)
+        if (existingDevice is not null)
         {
             device.Id = existingDevice.Id;
             database.Entry(existingDevice).CurrentValues.SetValues(device);
@@ -98,12 +98,12 @@ public class DeviceWriteRepository(
     
     public async Task<IDevice> AddDeviceWithConnection(DeviceDBO device)
     {
-        if (device == null)
+        if (device is null)
         {
             throw new ArgumentNullException(nameof(device));
         }
         
-        if (device.DeviceConnection == null)
+        if (device.DeviceConnection is null)
         {
             throw new ArgumentNullException(nameof(device.DeviceConnection));
         }
@@ -114,12 +114,12 @@ public class DeviceWriteRepository(
 
     public async Task UpdateWithConnection(DeviceDBO device)
     {
-        if (device == null)
+        if (device is null)
         {
             throw new ArgumentNullException(nameof(device));
         }
         
-        if (device.DeviceConnection == null)
+        if (device.DeviceConnection is null)
         {
             throw new ArgumentNullException(nameof(device.DeviceConnection));
         }

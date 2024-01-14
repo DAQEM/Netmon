@@ -41,7 +41,7 @@ public class DevicePoller(
     {
         SystemMIB? mib = await mibsPoller.PollSystemMIB(connectionInfo);
         
-        if (mib == null) return null;
+        if (mib is null) return null;
         
         return deviceConverter.ConvertMIBsToDevice(connectionInfo, new List<IMIB> { mib });
     }

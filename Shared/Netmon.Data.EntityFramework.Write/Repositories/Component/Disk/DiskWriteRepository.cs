@@ -10,14 +10,14 @@ public class DiskWriteRepository(DevicesDatabase database, IDiskMetricsWriteRepo
 {
     public async Task AddOrUpdate(DiskDBO disk)
     {
-        if (disk == null)
+        if (disk is null)
         {
             throw new ArgumentNullException(nameof(disk));
         }
         
         DiskDBO? existingDisk = await database.Disks.FirstOrDefaultAsync(d => d.DeviceId == disk.DeviceId && d.Index == disk.Index);
 
-        if (existingDisk == null)
+        if (existingDisk is null)
         {
             disk.Id = Guid.NewGuid();
             await database.Disks.AddAsync(disk);
@@ -27,7 +27,7 @@ public class DiskWriteRepository(DevicesDatabase database, IDiskMetricsWriteRepo
             disk.Id = existingDisk.Id;
             database.Entry(existingDisk).CurrentValues.SetValues(disk);
             
-            if (disk.DiskMetrics != null!)
+            if (disk.DiskMetrics is not null)
             {
                 foreach (DiskMetricsDBO diskMetrics in disk.DiskMetrics)
                 {

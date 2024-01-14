@@ -10,14 +10,14 @@ public class MemoryWriteRepository(DevicesDatabase database, IMemoryMetricsWrite
 {
     public async Task AddOrUpdate(MemoryDBO memory)
     {
-        if (memory == null)
+        if (memory is null)
         {
             throw new ArgumentNullException(nameof(memory));
         }
         
         MemoryDBO? existingMemory = await database.Memory.FirstOrDefaultAsync(m => m.DeviceId == memory.DeviceId && m.Index == memory.Index);
 
-        if (existingMemory == null)
+        if (existingMemory is null)
         {
             memory.Id = Guid.NewGuid();
             await database.Memory.AddAsync(memory);
@@ -27,7 +27,7 @@ public class MemoryWriteRepository(DevicesDatabase database, IMemoryMetricsWrite
             memory.Id = existingMemory.Id;
             database.Entry(existingMemory).CurrentValues.SetValues(memory);
             
-            if (memory.MemoryMetrics != null!)
+            if (memory.MemoryMetrics is not null)
             {
                 foreach (MemoryMetricsDBO memoryMetrics in memory.MemoryMetrics)
                 {

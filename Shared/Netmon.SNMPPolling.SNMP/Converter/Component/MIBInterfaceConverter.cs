@@ -13,7 +13,7 @@ public class MIBInterfaceConverter : IMIBComponentConverter<IInterface>
     {
         IfMIB? ifMIB = mibs.OfType<IfMIB>().FirstOrDefault();
         
-        if (ifMIB == null)
+        if (ifMIB is null)
         {
             return new List<IInterface>();
         }

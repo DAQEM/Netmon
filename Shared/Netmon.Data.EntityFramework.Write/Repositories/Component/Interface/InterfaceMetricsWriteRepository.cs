@@ -8,7 +8,7 @@ public class InterfaceMetricsWriteRepository(DevicesDatabase database) : IInterf
 {
     public async Task Add(InterfaceMetricsDBO interfaceMetrics)
     {
-        if (interfaceMetrics == null)
+        if (interfaceMetrics is null)
         {
             throw new ArgumentNullException(nameof(interfaceMetrics));
         }

@@ -5,10 +5,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["Netmon.APIGateway.csproj", "./"]
-RUN dotnet restore "Netmon.APIGateway.csproj"
+COPY ["Services/Netmon.APIGateway/Netmon.APIGateway.csproj", "Services/Netmon.APIGateway/"]
+RUN dotnet restore "Services/Netmon.APIGateway/Netmon.APIGateway.csproj"
 COPY . .
-WORKDIR "/src/"
+WORKDIR "/src/Services/Netmon.APIGateway"
 RUN dotnet build "Netmon.APIGateway.csproj" -c Release -o /app/build
 
 FROM build AS publish

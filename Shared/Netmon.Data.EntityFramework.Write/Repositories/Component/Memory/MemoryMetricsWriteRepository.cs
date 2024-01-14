@@ -8,7 +8,7 @@ public class MemoryMetricsWriteRepository(DevicesDatabase database) : IMemoryMet
 {
     public async Task Add(MemoryMetricsDBO memoryMetrics)
     {
-        if (memoryMetrics == null)
+        if (memoryMetrics is null)
         {
             throw new ArgumentNullException(nameof(memoryMetrics));
         }

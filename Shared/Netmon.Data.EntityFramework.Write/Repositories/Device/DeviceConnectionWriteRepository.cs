@@ -9,14 +9,14 @@ public class DeviceConnectionWriteRepository(DevicesDatabase database) : IDevice
 {
     public async Task AddOrUpdate(DeviceConnectionDBO deviceConnection)
     {
-        if (deviceConnection == null)
+        if (deviceConnection is null)
         {
             throw new ArgumentNullException(nameof(deviceConnection));
         }
         
         DeviceConnectionDBO? existingDeviceConnection = await database.DeviceConnections.FirstOrDefaultAsync(d => d.DeviceId == deviceConnection.DeviceId);
         
-        if (existingDeviceConnection != null)
+        if (existingDeviceConnection is not null)
         {
             deviceConnection.Id = existingDeviceConnection.Id;
             database.Entry(existingDeviceConnection).CurrentValues.SetValues(deviceConnection);

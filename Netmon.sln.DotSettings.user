@@ -1,14 +1,21 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\basvd\AppData\Local\JetBrains\Rider2023.3\resharper-host\temp\Rider\vAny\CoverageData\_Netmon.1481318327\Snapshot\snapshot.utdcvr</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e0a1c0c7_002Df1b5_002D473d_002D9b32_002Db8cc2963f373/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetPrivacyProvider_ShouldReturnAES192PrivacyProvider_WhenAES192ProtocolIsSelected" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Or&gt;&#xD;
-    &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::7F1D3097-C146-466F-8738-9C5AD15BC72A::net8.0::Netmon.SNMPPolling.SNMP.UnitTests.Security.PrivacyProviderTests.GetPrivacyProvider_ShouldReturnAES192PrivacyProvider_WhenAES192ProtocolIsSelected&lt;/TestId&gt;&#xD;
-    &lt;/TestAncestor&gt;&#xD;
-    &lt;Project Location="G:\School Projects\Netmon\Tests\Netmon.SNMPPolling.IntegrationTests" Presentation="&amp;lt;Netmon.SNMPPolling.IntegrationTests&amp;gt;" /&gt;&#xD;
-    &lt;Project Location="G:\School Projects\Netmon\Tests\Netmon.SNMPPolling.SNMP.UnitTests" Presentation="&amp;lt;Netmon.SNMPPolling.SNMP.UnitTests&amp;gt;" /&gt;&#xD;
-  &lt;/Or&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5bde24f9_002Dc65d_002D4e0e_002Dba0b_002D2567c6f9b509/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Test #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::DFC30258-5C45-408B-88C2-A4033740C79C::net8.0::Netmon.DeviceManager.IntegrationTests.DiscoverIntegrationTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bd15442f_002D662b_002D464d_002Da47a_002D3f7d92e63832/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::DFC30258-5C45-408B-88C2-A4033740C79C::net8.0::Netmon.DeviceManager.IntegrationTests.DiscoverIntegrationTests.Test&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c71683dd_002Dd7b0_002D4d8e_002D8f85_002D88fb0030d125/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::DFC30258-5C45-408B-88C2-A4033740C79C::net8.0::Netmon.DeviceManager.IntegrationTests.DiscoverIntegrationTests.Test&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	
 	
 	
 	

@@ -26,11 +26,11 @@ public class DeviceReadService(
     public async Task<IDevice?> GetById(Guid id, bool includeConnection)
     {
         IDevice? device = await GetById(id);
-        if (device == null) return null;
+        if (device is null) return null;
         if (includeConnection)
         {
             IDeviceConnection? deviceConnection = await deviceConnectionReadService.GetByDeviceId(id);
-            if (deviceConnection != null)
+            if (deviceConnection is not null)
             {
                 device.DeviceConnection = deviceConnection;
             }

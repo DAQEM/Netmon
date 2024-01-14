@@ -236,3 +236,8 @@ using (IServiceScope scope = app.Services.CreateScope())
 }
 
 app.Run();
+
+namespace Netmon.DeviceManager
+{
+    public class DeviceManagerProgram { }
+}

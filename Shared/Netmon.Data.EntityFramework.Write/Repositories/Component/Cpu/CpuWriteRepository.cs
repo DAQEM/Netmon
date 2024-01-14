@@ -15,14 +15,14 @@ public class CpuWriteRepository(
 {
     public async Task AddOrUpdate(CpuDBO cpu)
     {
-        if (cpu == null)
+        if (cpu is null)
         {
             throw new ArgumentNullException(nameof(cpu));
         }
         
         CpuDBO? existingCpu = await database.Cpus.FirstOrDefaultAsync(c => c.DeviceId == cpu.DeviceId && c.Index == cpu.Index);
 
-        if (existingCpu == null)
+        if (existingCpu is null)
         {
             cpu.Id = Guid.NewGuid();
             await database.Cpus.AddAsync(cpu);
@@ -32,7 +32,7 @@ public class CpuWriteRepository(
             cpu.Id = existingCpu.Id;
             database.Entry(existingCpu).CurrentValues.SetValues(cpu);
             
-            if (cpu.CpuMetrics != null!)
+            if (cpu.CpuMetrics is not null)
             {
                 foreach (CpuMetricsDBO cpuMetrics in cpu.CpuMetrics)
                 {
@@ -42,7 +42,7 @@ public class CpuWriteRepository(
             }
         }
         
-        if (cpu.CpuCores != null!)
+        if (cpu.CpuCores is not null)
         {
             foreach (CpuCoreDBO cpuCore in cpu.CpuCores)
             {

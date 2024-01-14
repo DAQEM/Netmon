@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Netmon.Data.Services.Read.Device;
 using Netmon.Data.Services.Write.Device;
 
 namespace Netmon.DeviceManager.Controllers.Device;
 
 [ApiController]
+[Authorize]
 [Route("Device/Connection")]
 public class DeviceConnectionController(
     IDeviceConnectionReadService deviceConnectionReadService,

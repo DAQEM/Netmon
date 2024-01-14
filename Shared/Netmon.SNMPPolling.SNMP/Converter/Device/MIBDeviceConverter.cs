@@ -28,7 +28,7 @@ public class MIBDeviceConverter : IMIBDeviceConverter
         };
 
         SystemMIB? systemMIB = mibs.OfType<SystemMIB>().FirstOrDefault();
-        if (systemMIB == null)
+        if (systemMIB is null)
         {
             return device;
         }

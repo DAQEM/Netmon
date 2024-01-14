@@ -32,7 +32,7 @@ public class InterfaceDBO : IComponentDBO
 
     public static InterfaceDBO FromInterface(IInterface? @interface)
     {
-        if (@interface == null) return new InterfaceDBO();
+        if (@interface is null) return new InterfaceDBO();
         return new InterfaceDBO
         {
             Id = Guid.NewGuid(),

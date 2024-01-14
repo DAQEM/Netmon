@@ -13,7 +13,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("CorsPolicy",
         corsPolicyBuilder => corsPolicyBuilder.WithOrigins(builder.Configuration["Cors:AllowedOrigins"]?.Split(",") ?? Array.Empty<string>())
             .AllowAnyMethod()
-            .AllowAnyHeader());
+            .AllowAnyHeader()
+        );
 });
 
 builder.Services.AddDataProtection()

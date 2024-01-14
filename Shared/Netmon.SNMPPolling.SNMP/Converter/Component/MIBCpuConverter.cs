@@ -22,7 +22,7 @@ public class MIBCpuConverter : IMIBComponentConverter<ICpu>
 
         HostResourcesMIB? hostResourcesMIB = mibs.OfType<HostResourcesMIB>().FirstOrDefault();
         
-        if (hostResourcesMIB != null && hostResourcesMIB.HrDevice.HrProcessorTable.HrProcessorEntries.Any())
+        if (hostResourcesMIB is not null && hostResourcesMIB.HrDevice.HrProcessorTable.HrProcessorEntries.Any())
         {
             cpu.Cores = hostResourcesMIB.HrDevice.HrProcessorTable.HrProcessorEntries
                 .Select(e => new CpuCore
@@ -45,7 +45,7 @@ public class MIBCpuConverter : IMIBComponentConverter<ICpu>
         
         UCDavisMIB? ucDavisMIB = mibs.OfType<UCDavisMIB>().FirstOrDefault();
 
-        if (ucDavisMIB != null && ucDavisMIB.LaLoadTable.LaLoadEntries.Any())
+        if (ucDavisMIB is not null && ucDavisMIB.LaLoadTable.LaLoadEntries.Any())
         {
             List<LaLoadEntry> laLoadEntries = ucDavisMIB.LaLoadTable.LaLoadEntries;
             CpuMetric cpuMetric = new()

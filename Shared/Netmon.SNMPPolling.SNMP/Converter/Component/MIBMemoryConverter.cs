@@ -12,7 +12,7 @@ public class MIBMemoryConverter : IMIBComponentConverter<IMemory>
     {
         HostResourcesMIB? hostResourcesMIB = mibs.OfType<HostResourcesMIB>().FirstOrDefault();
         
-        if (hostResourcesMIB == null)
+        if (hostResourcesMIB is null)
         {
             return new List<IMemory>();
         }
