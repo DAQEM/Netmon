@@ -216,13 +216,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Docker Compose Action
-      uses: isbang/compose-action@v1.5.1
-      with:
-        compose-file: "./docker-compose.yml"
-        services: |
-          netmon-account-service
-          netmon-mysql
+    - name: Run MySQL
+      run: docker-compose up -d netmon-mysql
+
+    - name: Run Account Service
+      run: docker-compose up -d --build netmon-account-service
 
     - name: Run Integration Tests
       run: dotnet test --logger "console;verbosity=detailed" --logger "trx;LogFileName=test-results.trx" Netmon.DeviceManager.IntegrationTests.csproj
