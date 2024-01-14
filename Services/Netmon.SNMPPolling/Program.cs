@@ -180,7 +180,13 @@ using (IServiceScope scope = app.Services.CreateScope())
     DevicesDatabase database = scope.ServiceProvider.GetRequiredService<DevicesDatabase>();
     if (app.Environment.IsDevelopment())
     {
-        database.Database.EnsureCreated();
+        try
+        {
+            database.Database.EnsureCreated();
+        } 
+        catch (MySqlException)
+        {
+        }
     }
     
     try
