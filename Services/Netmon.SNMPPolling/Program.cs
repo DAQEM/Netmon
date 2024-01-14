@@ -178,9 +178,9 @@ if (!app.Environment.IsDevelopment())
 using (IServiceScope scope = app.Services.CreateScope())
 {
     DevicesDatabase database = scope.ServiceProvider.GetRequiredService<DevicesDatabase>();
-    if (database.Database.GetPendingMigrations().Any()) 
+    if (app.Environment.IsDevelopment())
     {
-        database.Database.Migrate();
+        database.Database.EnsureCreated();
     }
     
     try
