@@ -11,8 +11,6 @@ services:
       - BASE_URL=http://netmon-api-gateway:80/api
     ports:
       - "80:3000"
-    networks:
-      - netmon-network
     image: daqem/netmon:user-web-app
 
   netmon-admin-web-app:
@@ -24,32 +22,30 @@ services:
       - BASE_URL=http://netmon-api-gateway:80/api
     ports:
       - "81:3000"
-    networks:
-      - netmon-network
     image: daqem/netmon:admin-web-app
 
   netmon-api-gateway:
-    build: Services/APIGateway
+    build: 
+      context: ./
+      dockerfile: ./Services/Netmon.APIGateway/Dockerfile
     container_name: netmon-api-gateway
     environment:
       - ENV=production
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5000:80"
-    networks:
-      - netmon-network
     image: daqem/netmon:api-gateway
 
   netmon-account-service:
-    build: Services/AccountService
+    build: 
+      context: ./
+      dockerfile: ./Services/Netmon.AccountService/Dockerfile
     container_name: netmon-account-service
     environment:
       - ENV=production
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5001:80"
-    networks:
-      - netmon-network
     image: daqem/netmon:account-service
 
   netmon-device-manager-service:
@@ -65,8 +61,6 @@ services:
     depends_on:
       - netmon-mongo
       - netmon-mysql
-    networks:
-      - netmon-network
     image: daqem/netmon:device-manager-service
 
   netmon-snmp-polling-service:
@@ -81,8 +75,6 @@ services:
       - "5003:80"
     depends_on:
       - netmon-mysql
-    networks:
-      - netmon-network
     image: daqem/netmon:snmp-polling-service
 
   netmon-snmp-test-agent:
@@ -91,8 +83,6 @@ services:
     hostname: snmpd-test
     ports:
       - "161:161/udp"
-    networks:
-      - netmon-network
     image: daqem/netmon:snmp-test-agent
 
   netmon-mongo:
@@ -103,8 +93,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: mongopwd
-    networks:
-      - netmon-network
 
   netmon-mongo-web-viewer:
     image: mongo-express
@@ -117,8 +105,6 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://root:mongopwd@192.168.178.8:27017/
     depends_on:
       - netmon-mongo
-    networks:
-      - netmon-network
 
   netmon-mysql:
     image: mysql
@@ -131,9 +117,3 @@ services:
       MYSQL_DATABASE: devices
       MYSQL_USER: user
       MYSQL_PASSWORD: pass
-    networks:
-      - netmon-network
-
-networks:
-  netmon-network:
-    driver: bridge

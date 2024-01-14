@@ -2,7 +2,11 @@
 
 namespace Netmon.AccountService;
 
-public class User : IdentityUser
+public class User : IdentityUser<int>
 {
-    
+    [PersonalData]
+    public string? FullName { get; set; }
+
+    [PersonalData]
+    public string? ProfileImageName { get; set; }
 }

@@ -1,18 +1,8 @@
-﻿using System.Runtime.Serialization;
-
-namespace Netmon.Models.Exceptions;
+﻿namespace Netmon.Models.Exceptions;
 
 public class NetmonException : Exception
 {
-    public NetmonException()
-    {
-    }
-
-    protected NetmonException(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
-    }
-
-    public NetmonException(string? message) : base(message)
+    protected NetmonException(string? message) : base(message)
     {
     }
 

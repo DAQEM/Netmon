@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -5,8 +7,6 @@ using Netmon.AccountService;
 using Swashbuckle.AspNetCore.Filters;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
 {
@@ -16,16 +16,19 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader());
 });
 
-builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+builder.Services.AddDataProtection()
+    .PersistKeysToDbContext<Database>();
+
+builder.Services.AddAuthentication(IdentityConstants.BearerScheme).AddBearerToken(IdentityConstants.BearerScheme);
 builder.Services.AddAuthorizationBuilder();
-        
-string connectionString = builder.Configuration["MySQL:Identity:ConnectionString"] ?? throw new InvalidOperationException("MySQL connection string is not configured.");
+
+string connectionString = builder.Configuration["MySQL:ConnectionString"] ?? throw new InvalidOperationException("MySQL connection string is not configured.");
 
 builder.Services.AddDbContext<Database>(options =>
 {
-    options.UseMySQL(connectionString, builder =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), mySqlDbContextOptionsBuilder =>
     {
-        builder.MigrationsAssembly("Netmon.AccountService");
+        mySqlDbContextOptionsBuilder.MigrationsAssembly("Netmon.AccountService");
     });
 });
 
@@ -34,7 +37,6 @@ builder.Services.AddIdentityCore<User>()
     .AddApiEndpoints();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -52,13 +54,29 @@ WebApplication app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UsePathBase(new PathString("/api"));
 
 app.UseCors("CorsPolicy");
 
-app.MapControllers();
+app.MapGet("/authenticate", IResult (HttpContext context) =>
+{
+    if (context.User.Identity is not {IsAuthenticated: true})
+    {
+        return Results.Unauthorized();
+    }
+    return Results.Ok(new
+    {
+        context.User.Identity.IsAuthenticated,
+        Id = context.User.FindFirstValue(ClaimTypes.NameIdentifier),
+        context.User.Identity.Name,
+        Email = context.User.FindFirstValue(ClaimTypes.Email),
+    });
+}).RequireAuthorization();
 
-app.MapGet("/authenticate", IResult () => Results.Ok()).RequireAuthorization();
 app.MapIdentityApi<User>();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 using (IServiceScope scope = app.Services.CreateScope())
 {
