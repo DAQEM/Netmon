@@ -205,6 +205,12 @@ app.MapControllers();
 
 using (IServiceScope scope = app.Services.CreateScope())
 {
+    DevicesDatabase database = scope.ServiceProvider.GetRequiredService<DevicesDatabase>();
+    if (database.Database.GetPendingMigrations().Any())
+    {
+        database.Database.Migrate();
+    }
+    
     try
     {
         IPollDeviceJob pollDeviceJob = scope.ServiceProvider.GetRequiredService<IPollDeviceJob>();
