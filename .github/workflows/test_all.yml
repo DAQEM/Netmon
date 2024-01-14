@@ -178,7 +178,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: Tests/Netmon.SNMPPolling.IntegrationTests
-    needs: [account-service, device-manager-service, snmp-polling-service, user-web-app, admin-web-app]
+    needs: [account-service, device-manager-service, snmp-polling-service, user-web-app, admin-web-app, api-gateway]
 
     steps:
     - name: Checkout code
