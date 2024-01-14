@@ -219,6 +219,9 @@ jobs:
     - name: Run MySQL
       run: docker-compose up -d netmon-mysql
 
+    - name: Run MongoDB
+      run: docker-compose up -d netmon-mongo
+
     - name: Run Account Service
       run: docker-compose up -d --build netmon-account-service
 
