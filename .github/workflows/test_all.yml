@@ -15,18 +15,40 @@ permissions:
   checks: write
 
 jobs:
-  account-service:
-    name: Account Service
+  api-gateway:
+    name: API Gateway
     runs-on: ubuntu-latest
     env:
-      working-directory: Services/AccountService
+      working-directory: Services/Netmon.APIGateway
 
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: ${{env.working-directory}}
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: ${{env.working-directory}}
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./TestResults
+      working-directory: ${{env.working-directory}}
+
+  account-service:
+    name: Account Service
+    runs-on: ubuntu-latest
+    env:
+      working-directory: Services/Netmon.AccountService
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
       working-directory: ${{env.working-directory}}
@@ -48,7 +70,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore DeviceManagerService.sln
       working-directory: ${{env.working-directory}}
@@ -71,7 +93,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
 
     - name: Restore dependencies
       run: dotnet restore SNMPPollingService.sln
