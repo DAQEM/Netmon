@@ -82,7 +82,10 @@ app.UseAuthorization();
 using (IServiceScope scope = app.Services.CreateScope())
 {
     Database database = scope.ServiceProvider.GetRequiredService<Database>();
-    await database.Database.MigrateAsync();
+    if (database.Database.GetPendingMigrations().Any())
+    {
+        database.Database.Migrate();
+    }
 }
 
 app.Run();

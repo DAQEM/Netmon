@@ -87,7 +87,10 @@ string? connectionString = builder.Configuration["MySQL:ConnectionString"];
 
 builder.Services.AddDbContext<DevicesDatabase>(options =>
 {
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), mySqlDbContextOptionsBuilder =>
+    {
+        mySqlDbContextOptionsBuilder.MigrationsAssembly("Netmon.DeviceManager");
+    });
 });
 
 builder.Services.AddScoped<ISNMPManager, SNMPManager>();
@@ -172,15 +175,12 @@ if (!app.Environment.IsDevelopment())
     app.UseMiddleware<ExceptionMiddleware>();
 }
 
-using (IServiceScope scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+using (IServiceScope scope = app.Services.CreateScope())
 {
-    DevicesDatabase? context = scope.ServiceProvider.GetService<DevicesDatabase>();
-    try
+    DevicesDatabase database = scope.ServiceProvider.GetRequiredService<DevicesDatabase>();
+    if (database.Database.GetPendingMigrations().Any()) 
     {
-        context?.Database.EnsureCreated();
-    }
-    catch (MySqlException)
-    {
+        database.Database.Migrate();
     }
     
     try

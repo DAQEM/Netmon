@@ -66,7 +66,10 @@ string? connectionString = builder.Configuration["MySQL:ConnectionString"];
 
 builder.Services.AddDbContext<DevicesDatabase>(options =>
 {
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), mySqlDbContextOptionsBuilder =>
+    {
+        mySqlDbContextOptionsBuilder.MigrationsAssembly("Netmon.DeviceManager");
+    });
 });
 
 builder.Services.AddAuthentication().AddBearerToken();
