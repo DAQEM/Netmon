@@ -2,22 +2,14 @@
 using Netmon.Data.DBO.Component.Interface;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Write.Component.Interface;
-using Netmon.Models.Component.Interface;
 
 namespace Netmon.Data.Write.Repositories.Component.Interface;
 
-public class InterfaceWriteRepository : IInterfaceWriteRepository
+public class InterfaceWriteRepository(
+    DevicesDatabase database,
+    IInterfaceMetricsWriteRepository interfaceMetricsWriteRepository)
+    : IInterfaceWriteRepository
 {
-    private readonly DevicesDatabase _database;
-    
-    private readonly IInterfaceMetricsWriteRepository _interfaceMetricsWriteRepository;
-
-    public InterfaceWriteRepository(DevicesDatabase database, IInterfaceMetricsWriteRepository interfaceMetricsWriteRepository)
-    {
-        _database = database;
-        _interfaceMetricsWriteRepository = interfaceMetricsWriteRepository;
-    }
-
     public async Task AddOrUpdate(InterfaceDBO @interface)
     {
         if (@interface == null)
@@ -25,24 +17,24 @@ public class InterfaceWriteRepository : IInterfaceWriteRepository
             throw new ArgumentNullException(nameof(@interface));
         }
         
-        InterfaceDBO? existingInterface = await _database.Interfaces.FirstOrDefaultAsync(i => i.DeviceId == @interface.DeviceId && i.Index == @interface.Index);
+        InterfaceDBO? existingInterface = await database.Interfaces.FirstOrDefaultAsync(i => i.DeviceId == @interface.DeviceId && i.Index == @interface.Index);
         
         if (existingInterface == null)
         {
             @interface.Id = Guid.NewGuid();
-            await _database.Interfaces.AddAsync(@interface);
+            await database.Interfaces.AddAsync(@interface);
         }
         else
         {
             @interface.Id = existingInterface.Id;
-            _database.Entry(existingInterface).CurrentValues.SetValues(@interface);
+            database.Entry(existingInterface).CurrentValues.SetValues(@interface);
             
             if (@interface.InterfaceMetrics != null!)
             {
                 foreach (InterfaceMetricsDBO interfaceMetrics in @interface.InterfaceMetrics)
                 {
                     interfaceMetrics.InterfaceId = @interface.Id;
-                    await _interfaceMetricsWriteRepository.Add(interfaceMetrics);
+                    await interfaceMetricsWriteRepository.Add(interfaceMetrics);
                 }
             }
         }
@@ -50,6 +42,6 @@ public class InterfaceWriteRepository : IInterfaceWriteRepository
     
     public async Task SaveChanges()
     {
-        await _database.SaveChangesAsync();
+        await database.SaveChangesAsync();
     }
 }

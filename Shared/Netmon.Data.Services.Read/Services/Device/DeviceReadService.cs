@@ -6,26 +6,20 @@ using Netmon.Models.Device.Connection;
 
 namespace Netmon.Data.Services.Read.Services.Device;
 
-public class DeviceReadService : IDeviceReadService
+public class DeviceReadService(
+    IDeviceReadRepository deviceReadRepository,
+    IDeviceConnectionReadService deviceConnectionReadService)
+    : IDeviceReadService
 {
-    private readonly IDeviceReadRepository _deviceReadRepository;
-    private readonly IDeviceConnectionReadService _deviceConnectionReadService;
-    
-    public DeviceReadService(IDeviceReadRepository deviceReadRepository, IDeviceConnectionReadService deviceConnectionReadService)
-    {
-        _deviceReadRepository = deviceReadRepository;
-        _deviceConnectionReadService = deviceConnectionReadService;
-    }
-    
     public async Task<List<IDevice>> GetAll()
     {
-        List<DeviceDBO> deviceDbOs = await _deviceReadRepository.GetAll();
+        List<DeviceDBO> deviceDbOs = await deviceReadRepository.GetAll();
         return deviceDbOs?.Select(x => x.ToDevice()).ToList() ?? new List<IDevice>();
     }
 
     public async Task<IDevice?> GetById(Guid id)
     {
-        DeviceDBO? deviceDBO = await _deviceReadRepository.GetById(id);
+        DeviceDBO? deviceDBO = await deviceReadRepository.GetById(id);
         return deviceDBO?.ToDevice();
     }
 
@@ -35,7 +29,7 @@ public class DeviceReadService : IDeviceReadService
         if (device == null) return null;
         if (includeConnection)
         {
-            IDeviceConnection? deviceConnection = await _deviceConnectionReadService.GetByDeviceId(id);
+            IDeviceConnection? deviceConnection = await deviceConnectionReadService.GetByDeviceId(id);
             if (deviceConnection != null)
             {
                 device.DeviceConnection = deviceConnection;
@@ -46,7 +40,7 @@ public class DeviceReadService : IDeviceReadService
 
     public async Task<IDevice?> GetByIpAddress(string deviceDBOIpAddress)
     {
-        DeviceDBO? deviceDBO = await _deviceReadRepository.GetByIpAddress(deviceDBOIpAddress);
+        DeviceDBO? deviceDBO = await deviceReadRepository.GetByIpAddress(deviceDBOIpAddress);
         return deviceDBO?.ToDevice();
     }
 }

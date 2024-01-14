@@ -8,19 +8,12 @@ namespace AccountService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AuthController : ControllerBase
+public class AuthController(AccountDatabase database) : ControllerBase
 {
-    private readonly AccountDatabase _database;
-    
-    public AuthController(AccountDatabase database)
-    {
-        _database = database;
-    }
-    
     [HttpPost]
     public IActionResult VerifySession(VerifyModel model)
     {
-        Session? session = _database.Sessions.Find(model.SessionId);
+        Session? session = database.Sessions.Find(model.SessionId);
         
         if (session == null)
         {
@@ -31,7 +24,7 @@ public class AuthController : ControllerBase
             });
         }
         
-        User? user = _database.Accounts
+        User? user = database.Accounts
             .Include(u => u.Roles)
             .FirstOrDefault(u => u.Id == session.UserId);
 

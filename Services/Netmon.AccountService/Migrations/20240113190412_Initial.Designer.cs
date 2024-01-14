@@ -4,15 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Netmon.AccountService;
-using Netmon.Identity;
 
 #nullable disable
 
 namespace Netmon.AccountService.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20240113160234_Initial")]
+    [Migration("20240113190412_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -151,7 +149,7 @@ namespace Netmon.AccountService.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Netmon.AccountService.User", b =>
+            modelBuilder.Entity("Netmon.Identity.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -226,7 +224,7 @@ namespace Netmon.AccountService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Netmon.AccountService.User", null)
+                    b.HasOne("Netmon.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -235,7 +233,7 @@ namespace Netmon.AccountService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Netmon.AccountService.User", null)
+                    b.HasOne("Netmon.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -250,7 +248,7 @@ namespace Netmon.AccountService.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Netmon.AccountService.User", null)
+                    b.HasOne("Netmon.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -259,7 +257,7 @@ namespace Netmon.AccountService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Netmon.AccountService.User", null)
+                    b.HasOne("Netmon.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

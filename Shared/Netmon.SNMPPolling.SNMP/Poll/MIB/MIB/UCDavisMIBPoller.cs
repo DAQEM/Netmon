@@ -6,15 +6,8 @@ using Netmon.SNMPPolling.SNMP.Result;
 
 namespace Netmon.SNMPPolling.SNMP.Poll.MIB.MIB;
 
-public class UCDavisMIBPoller : IMIBPoller<UCDavisMIB>
+public class UCDavisMIBPoller(ISNMPManager snmpManager) : IMIBPoller<UCDavisMIB>
 {
-    private readonly ISNMPManager snmpManager;
-    
-    public UCDavisMIBPoller(ISNMPManager snmpManager)
-    {
-        this.snmpManager = snmpManager;
-    }
-    
     public async Task<UCDavisMIB?> PollMIB(SNMPConnectionInfo connectionInfo)
     {
         ISNMPResult snmpResult = await snmpManager.BulkWalkAsync(connectionInfo, LaLoadTable.OID, 3000);

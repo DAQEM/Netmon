@@ -4,15 +4,8 @@ using Netmon.Models.Component.Disk;
 
 namespace Netmon.Data.Services.Read.Services.Component.Disk;
 
-public class DiskReadService : IDiskReadService
+public class DiskReadService(IDiskReadRepository diskReadRepository) : IDiskReadService
 {
-    private readonly IDiskReadRepository _diskReadRepository;
-    
-    public DiskReadService(IDiskReadRepository diskReadRepository)
-    {
-        _diskReadRepository = diskReadRepository;
-    }
-
     public Task<List<IDisk>> GetAll()
     {
         throw new NotImplementedException();
@@ -35,7 +28,7 @@ public class DiskReadService : IDiskReadService
     
     public async Task<List<IDisk>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
     {
-        return (await _diskReadRepository.GetByDeviceIdWithMetrics(deviceId, from, to))
+        return (await diskReadRepository.GetByDeviceIdWithMetrics(deviceId, from, to))
             .Select(x => x.ToDisk())
             .ToList();
     }

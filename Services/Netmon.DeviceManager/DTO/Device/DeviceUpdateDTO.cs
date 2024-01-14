@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using Netmon.Data.DBO.Device;
+﻿using Netmon.Data.DBO.Device;
 using Netmon.Models.Attribute.Validator;
 using Netmon.Models.Device.Connection.Protocol;
 

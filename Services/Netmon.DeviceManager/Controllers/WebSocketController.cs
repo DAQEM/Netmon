@@ -4,15 +4,8 @@ using Netmon.DeviceManager.Jobs.Poll;
 
 namespace Netmon.DeviceManager.Controllers;
 
-public class WebSocketController : ControllerBase
+public class WebSocketController(IPollDeviceJob pollDeviceJob) : ControllerBase
 {
-    private readonly IPollDeviceJob _pollDeviceJob;
-
-    public WebSocketController(IPollDeviceJob pollDeviceJob)
-    {
-        _pollDeviceJob = pollDeviceJob;
-    }
-
     [HttpGet("ws")]
     public async Task<IActionResult> Get()
     {
@@ -61,6 +54,6 @@ public class WebSocketController : ControllerBase
 
     private void OnWebSocketOpened(WebSocket webSocket)
     {
-        _pollDeviceJob.Subscribe(webSocket);
+        pollDeviceJob.Subscribe(webSocket);
     }
 }

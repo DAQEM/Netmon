@@ -7,19 +7,12 @@ namespace AccountService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class LogoutController : ControllerBase
+public class LogoutController(AccountDatabase database) : ControllerBase
 {
-    private readonly AccountDatabase _database;
-    
-    public LogoutController(AccountDatabase database)
-    {
-        _database = database;
-    }
-    
     [HttpPost]
     public IActionResult Logout(LogoutModel model)
     {
-        Session? session = _database.Sessions.Find(model.SessionId);
+        Session? session = database.Sessions.Find(model.SessionId);
         
         if (session == null)
         {
@@ -30,8 +23,8 @@ public class LogoutController : ControllerBase
             });
         }
         
-        _database.Sessions.Remove(session);
-        _database.SaveChanges();
+        database.Sessions.Remove(session);
+        database.SaveChanges();
         
         return Ok();
     }

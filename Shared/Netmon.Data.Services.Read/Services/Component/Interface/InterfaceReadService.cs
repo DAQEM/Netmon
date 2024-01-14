@@ -4,15 +4,8 @@ using Netmon.Models.Component.Interface;
 
 namespace Netmon.Data.Services.Read.Services.Component.Interface;
 
-public class InterfaceReadService : IInterfaceReadService
+public class InterfaceReadService(IInterfaceReadRepository interfaceReadRepository) : IInterfaceReadService
 {
-    private readonly IInterfaceReadRepository _interfaceReadRepository;
-    
-    public InterfaceReadService(IInterfaceReadRepository interfaceReadRepository)
-    {
-        _interfaceReadRepository = interfaceReadRepository;
-    }
-
     public Task<List<IInterface>> GetAll()
     {
         throw new NotImplementedException();
@@ -35,7 +28,7 @@ public class InterfaceReadService : IInterfaceReadService
     
     public async Task<List<IInterface>> GetByDeviceIdWithMetrics(Guid deviceId, DateTime from, DateTime to)
     {
-        return (await _interfaceReadRepository.GetByDeviceIdWithMetrics(deviceId, from, to))
+        return (await interfaceReadRepository.GetByDeviceIdWithMetrics(deviceId, from, to))
             .Select(x => x.ToInterface())
             .ToList();
     }

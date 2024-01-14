@@ -12,20 +12,13 @@ namespace Netmon.SNMPPolling.Controllers;
 
 [ApiController]
 [Route("Discover")]
-public class DiscoverController : Controller
+public class DiscoverController(IDevicePoller devicePoller) : Controller
 {
-    private readonly IDevicePoller _devicePoller;
-    
-    public DiscoverController(IDevicePoller devicePoller)
-    {
-        _devicePoller = devicePoller;
-    }
-    
     [HttpPost("Details")]
     public async Task<IActionResult> Details([FromBody] SNMPConnectionDTO snmpConnectionDto)
     {
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
-        IDevice? device = await _devicePoller.PollDetails(snmpConnectionInfo);
+        IDevice? device = await devicePoller.PollDetails(snmpConnectionInfo);
         
         if (device == null) return NotFound();
         
@@ -44,7 +37,7 @@ public class DiscoverController : Controller
     public async Task<IActionResult> Device([FromBody] SNMPConnectionDTO snmpConnectionDto)
     {
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
-        IDevice? device = await _devicePoller.PollFull(snmpConnectionInfo);
+        IDevice? device = await devicePoller.PollFull(snmpConnectionInfo);
         
         return device == null ? NotFound() : Ok(DeviceOverviewDTO.FromDevice(device));
     }
@@ -53,7 +46,7 @@ public class DiscoverController : Controller
     public async Task<IActionResult> Disks([FromBody] SNMPConnectionDTO snmpConnectionDto)
     {
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
-        List<IDisk>? disks = await _devicePoller.PollDisks(snmpConnectionInfo);
+        List<IDisk>? disks = await devicePoller.PollDisks(snmpConnectionInfo);
 
         return disks == null ? NotFound() : Ok(disks.Select(DiskDTO.FromDisk).ToList());
     }
@@ -62,7 +55,7 @@ public class DiscoverController : Controller
     public async Task<IActionResult> Memory([FromBody] SNMPConnectionDTO snmpConnectionDto)
     {
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
-        List<IMemory>? memory = await _devicePoller.PollMemory(snmpConnectionInfo);
+        List<IMemory>? memory = await devicePoller.PollMemory(snmpConnectionInfo);
         
         return memory == null ? NotFound() : Ok(memory.Select(MemoryDTO.FromMemory).ToList());
     }
@@ -71,7 +64,7 @@ public class DiscoverController : Controller
     public async Task<IActionResult> Cpus([FromBody] SNMPConnectionDTO snmpConnectionDto)
     {
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
-        List<ICpu>? cpus = await _devicePoller.PollCpus(snmpConnectionInfo);
+        List<ICpu>? cpus = await devicePoller.PollCpus(snmpConnectionInfo);
         
         return cpus == null ? NotFound() : Ok(cpus.Select(CpuDTO.FromCpu).ToList());
     }
@@ -80,7 +73,7 @@ public class DiscoverController : Controller
     public async Task<IActionResult> Interfaces([FromBody] SNMPConnectionDTO snmpConnectionDto)
     {
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
-        List<IInterface>? interfaces = await _devicePoller.PollInterfaces(snmpConnectionInfo);
+        List<IInterface>? interfaces = await devicePoller.PollInterfaces(snmpConnectionInfo);
         
         return interfaces == null ? NotFound() : Ok(interfaces.Select(InterfaceDTO.FromInterface).ToList());
     }

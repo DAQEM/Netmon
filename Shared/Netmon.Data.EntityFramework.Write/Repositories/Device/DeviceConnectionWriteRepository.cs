@@ -2,19 +2,11 @@
 using Netmon.Data.DBO.Device;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Write.Device;
-using Netmon.Models.Device.Connection;
 
 namespace Netmon.Data.Write.Repositories.Device;
 
-public class DeviceConnectionWriteRepository : IDeviceConnectionWriteRepository
+public class DeviceConnectionWriteRepository(DevicesDatabase database) : IDeviceConnectionWriteRepository
 {
-    private readonly DevicesDatabase _database;
-    
-    public DeviceConnectionWriteRepository(DevicesDatabase database)
-    {
-        _database = database;
-    }
-    
     public async Task AddOrUpdate(DeviceConnectionDBO deviceConnection)
     {
         if (deviceConnection == null)
@@ -22,21 +14,21 @@ public class DeviceConnectionWriteRepository : IDeviceConnectionWriteRepository
             throw new ArgumentNullException(nameof(deviceConnection));
         }
         
-        DeviceConnectionDBO? existingDeviceConnection = await _database.DeviceConnections.FirstOrDefaultAsync(d => d.DeviceId == deviceConnection.DeviceId);
+        DeviceConnectionDBO? existingDeviceConnection = await database.DeviceConnections.FirstOrDefaultAsync(d => d.DeviceId == deviceConnection.DeviceId);
         
         if (existingDeviceConnection != null)
         {
             deviceConnection.Id = existingDeviceConnection.Id;
-            _database.Entry(existingDeviceConnection).CurrentValues.SetValues(deviceConnection);
+            database.Entry(existingDeviceConnection).CurrentValues.SetValues(deviceConnection);
         }
         else
         {
-            await _database.DeviceConnections.AddAsync(deviceConnection);
+            await database.DeviceConnections.AddAsync(deviceConnection);
         }
     }
     
     public async Task SaveChanges()
     {
-        await _database.SaveChangesAsync();
+        await database.SaveChangesAsync();
     }
 }

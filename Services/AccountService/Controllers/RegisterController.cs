@@ -7,15 +7,8 @@ namespace AccountService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class RegisterController : ControllerBase
+public class RegisterController(AccountDatabase database) : ControllerBase
 {
-    private readonly AccountDatabase _database;
-    
-    public RegisterController(AccountDatabase database)
-    {
-        _database = database;
-    }
-    
     [HttpPost]
     public IActionResult Register(RegisterModel model)
     {
@@ -53,15 +46,15 @@ public class RegisterController : ControllerBase
         };
         
         //add user to database
-        _database.Accounts.Add(user);
-        _database.SaveChanges();
+        database.Accounts.Add(user);
+        database.SaveChanges();
         
         //create session
         Session session = new(user.Id);
 
         //add session to database
-        _database.Sessions.Add(session);
-        _database.SaveChanges();
+        database.Sessions.Add(session);
+        database.SaveChanges();
         
         //return session
         return Ok(new SessionDetailsModel
@@ -73,7 +66,7 @@ public class RegisterController : ControllerBase
 
     private bool CheckIfEmailIsInUse(RegisterModel model, out string error)
     {
-        if (_database.Accounts.Any(u => u.Email == model.Email))
+        if (database.Accounts.Any(u => u.Email == model.Email))
         {
             {
                 error = "Email is already in use";
@@ -87,7 +80,7 @@ public class RegisterController : ControllerBase
 
     private bool CheckIfUsernameIsInUse(RegisterModel model, out string error)
     {
-        if (_database.Accounts.Any(u => u.Username == model.Username))
+        if (database.Accounts.Any(u => u.Username == model.Username))
         {
             {
                 error = "Username is already in use";

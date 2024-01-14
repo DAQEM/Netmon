@@ -9,30 +9,22 @@ using Netmon.SNMPPolling.SNMP.Request;
 
 namespace Netmon.SNMPPolling.SNMP.Poll.MIB.MIBs;
 
-public class MIBsPoller : IMIBsPoller
+public class MIBsPoller(
+    ISNMPManager snmpManager,
+    IMIBPoller<SystemMIB> systemMIBPoller,
+    IMIBPoller<HostResourcesMIB> hostResourcesMIBPoller,
+    IMIBPoller<IfMIB> ifMIBPoller,
+    IMIBPoller<UCDavisMIB> ucDavisMIBPoller)
+    : IMIBsPoller
 {
-    private readonly ISNMPManager _snmpManager;
-    
-    private readonly IMIBPoller<SystemMIB> _systemMIBPoller;
-    private readonly IMIBPoller<HostResourcesMIB> _hostResourcesMIBPoller;
-    private readonly IMIBPoller<IfMIB> _ifMIBPoller;
-    private readonly IMIBPoller<UCDavisMIB> _ucDavisMIBPoller;
-
-    public MIBsPoller(ISNMPManager snmpManager, IMIBPoller<SystemMIB> systemMIBPoller, IMIBPoller<HostResourcesMIB> hostResourcesMIBPoller, IMIBPoller<IfMIB> ifMIBPoller, IMIBPoller<UCDavisMIB> ucDavisMIBPoller)
-    {
-        _snmpManager = snmpManager;
-        _systemMIBPoller = systemMIBPoller;
-        _hostResourcesMIBPoller = hostResourcesMIBPoller;
-        _ifMIBPoller = ifMIBPoller;
-        _ucDavisMIBPoller = ucDavisMIBPoller;
-    }
+    private readonly ISNMPManager _snmpManager = snmpManager;
 
     public async Task<List<IMIB>> PollAllMIBs(SNMPConnectionInfo snmpConnectionInfo)
     {
-        Task<SystemMIB?> systemMibTask = _systemMIBPoller.PollMIB(snmpConnectionInfo);
-        Task<HostResourcesMIB?> hostMibTask = _hostResourcesMIBPoller.PollMIB(snmpConnectionInfo);
-        Task<IfMIB?> ifMibTask = _ifMIBPoller.PollMIB(snmpConnectionInfo);
-        Task<UCDavisMIB?> ucDavisMibTask = _ucDavisMIBPoller.PollMIB(snmpConnectionInfo);
+        Task<SystemMIB?> systemMibTask = systemMIBPoller.PollMIB(snmpConnectionInfo);
+        Task<HostResourcesMIB?> hostMibTask = hostResourcesMIBPoller.PollMIB(snmpConnectionInfo);
+        Task<IfMIB?> ifMibTask = ifMIBPoller.PollMIB(snmpConnectionInfo);
+        Task<UCDavisMIB?> ucDavisMibTask = ucDavisMIBPoller.PollMIB(snmpConnectionInfo);
 
         await Task.WhenAll(systemMibTask, hostMibTask, ifMibTask, ucDavisMibTask);
 
@@ -52,6 +44,6 @@ public class MIBsPoller : IMIBsPoller
 
     public async Task<SystemMIB?> PollSystemMIB(SNMPConnectionInfo snmpConnectionInfo)
     {
-        return await _systemMIBPoller.PollMIB(snmpConnectionInfo);
+        return await systemMIBPoller.PollMIB(snmpConnectionInfo);
     }
 }

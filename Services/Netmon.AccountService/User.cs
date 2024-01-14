@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Netmon.Identity;
+namespace Netmon.AccountService;
 
 public class User : IdentityUser
 {

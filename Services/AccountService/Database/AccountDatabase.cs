@@ -3,12 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccountService.Database;
 
-public class AccountDatabase : DbContext
+public class AccountDatabase(DbContextOptions options) : DbContext(options)
 {
-    public AccountDatabase(DbContextOptions options) : base(options)
-    {
-    }
-    
     public DbSet<User> Accounts { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<Session> Sessions { get; set; }

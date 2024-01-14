@@ -5,18 +5,11 @@ using Netmon.SNMPPolling.SNMP.Result;
 
 namespace Netmon.SNMPPolling.SNMP.Poll.MIB.MIB;
 
-public class SystemMIBPoller : IMIBPoller<SystemMIB>
+public class SystemMIBPoller(ISNMPManager snmpManager) : IMIBPoller<SystemMIB>
 {
-    private readonly ISNMPManager _snmpManager;
-    
-    public SystemMIBPoller(ISNMPManager snmpManager)
-    {
-        _snmpManager = snmpManager;
-    }
-    
     public async Task<SystemMIB?> PollMIB(SNMPConnectionInfo connectionInfo)
     {
-        ISNMPResult sysSystemResult = await _snmpManager.BulkWalkAsync(connectionInfo, SystemMIB.OID, 3000);
+        ISNMPResult sysSystemResult = await snmpManager.BulkWalkAsync(connectionInfo, SystemMIB.OID, 3000);
         
         if (!sysSystemResult.Variables.Any()) return null;
         

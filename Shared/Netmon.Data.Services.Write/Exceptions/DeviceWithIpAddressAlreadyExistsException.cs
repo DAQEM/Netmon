@@ -2,10 +2,5 @@
 
 namespace Netmon.Data.Services.Write.Exceptions;
 
-public class DeviceWithIpAddressAlreadyExistsException : NetmonException
-{
-    public DeviceWithIpAddressAlreadyExistsException(string ipAddress) 
-        : base($"Device with this IP address ({ipAddress}) already exists.")
-    {
-    }
-}
+public class DeviceWithIpAddressAlreadyExistsException(string ipAddress)
+    : NetmonException($"Device with this IP address ({ipAddress}) already exists.");

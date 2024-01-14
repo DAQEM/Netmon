@@ -9,26 +9,18 @@ namespace Netmon.SNMPPolling.Controllers;
 
 [ApiController]
 [Route("Poll")]
-public class PollController : ControllerBase
+public class PollController(IDeviceWriteService deviceWriteService, IDevicePoller devicePoller)
+    : ControllerBase
 {
-    private readonly IDeviceWriteService _deviceWriteService;
-    private readonly IDevicePoller _devicePoller;
-    
-    public PollController(IDeviceWriteService deviceWriteService, IDevicePoller devicePoller)
-    {
-        _deviceWriteService = deviceWriteService;
-        _devicePoller = devicePoller;
-    }
-
     [HttpPost("Device")]
     public async Task<IActionResult> Device([FromBody] SNMPConnectionDTO connectionInfo)
     {
         SNMPConnectionInfo snmpConnectionInfo = connectionInfo.ToSNMPConnectionInfo();
-        IDevice? device = await _devicePoller.PollFull(snmpConnectionInfo);
+        IDevice? device = await devicePoller.PollFull(snmpConnectionInfo);
 
         if (device == null) return NotFound();
         
-        await _deviceWriteService.AddOrUpdateFullDevice(device);
+        await deviceWriteService.AddOrUpdateFullDevice(device);
         
         return Ok(DeviceOverviewDTO.FromDevice(device));
     }

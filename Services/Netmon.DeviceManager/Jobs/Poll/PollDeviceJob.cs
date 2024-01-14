@@ -9,21 +9,15 @@ using Newtonsoft.Json;
 
 namespace Netmon.DeviceManager.Jobs.Poll;
 
-public class PollDeviceJob : IPollDeviceJob
+public class PollDeviceJob(DevicesDatabase database) : IPollDeviceJob
 {
-    private readonly DevicesDatabase _database;
     private static readonly List<WebSocket> Subscribers = new();
-    
-    public PollDeviceJob(DevicesDatabase database)
-    {
-        _database = database;
-    }
-    
+
     public async Task Execute()
     {
         string url = UrlHandler.GetSNMPPollingURL("poll/device");
         
-        List<DeviceDBO> devices = await _database.Devices
+        List<DeviceDBO> devices = await database.Devices
             .Include(d => d.DeviceConnection)
             .ToListAsync();
 

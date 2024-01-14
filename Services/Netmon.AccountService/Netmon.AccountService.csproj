@@ -19,16 +19,13 @@
         <PackageReference Include="MySql.Data" Version="8.2.0" />
         <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.10" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\Shared\Netmon.Identity\Netmon.Identity.csproj" />
     </ItemGroup>
 
 </Project>

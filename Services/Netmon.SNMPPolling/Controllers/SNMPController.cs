@@ -7,20 +7,13 @@ using Netmon.SNMPPolling.SNMP.Result;
 namespace Netmon.SNMPPolling.Controllers;
 
 [Route("SNMP")]
-public class SNMPController : Controller
+public class SNMPController(ISNMPManager snmpManager) : Controller
 {
-    private readonly ISNMPManager _snmpManager;
-    
-    public SNMPController(ISNMPManager snmpManager)
-    {
-        _snmpManager = snmpManager;
-    }
-
     [HttpPost("GetBulkWalk")]
     public async Task<IActionResult> GetBulkWalk([FromBody] SNMPConnectionDTO snmpConnectionDto, string oid, int timeoutMillis)
     {
         SNMPConnectionInfo snmpConnectionInfo = snmpConnectionDto.ToSNMPConnectionInfo();
-        ISNMPResult result = await _snmpManager.BulkWalkAsync(snmpConnectionInfo, oid, timeoutMillis);
+        ISNMPResult result = await snmpManager.BulkWalkAsync(snmpConnectionInfo, oid, timeoutMillis);
 
         if (!result.Variables.Any()) return NotFound();
         

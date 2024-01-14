@@ -1,20 +1,12 @@
 ﻿namespace Netmon.SNMPPolling.SNMP.Exception;
 
-public class ExceptionResult
+public class ExceptionResult(string message, int code)
 {
-    public string Message { get; private set; }
-    public int StatusCode { get; }
+    public string Message { get; private set; } = message;
+    public int StatusCode { get; } = code;
     public bool IsSuccess => StatusCode == 200;
-    
-    public ExceptionResult(string message, int code)
+
+    public ExceptionResult() : this(string.Empty, 200)
     {
-        Message = message;
-        StatusCode = code;
-    }
-    
-    public ExceptionResult()
-    {
-        Message = string.Empty;
-        StatusCode = 200;
     }
 }

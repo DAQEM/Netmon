@@ -1,5 +1,4 @@
 ﻿using Lextm.SharpSnmpLib;
-using Netmon.SNMPPolling.SNMP.MIB.If.Interface;
 using Netmon.SNMPPolling.SNMP.MIB.If.InterfaceX;
 using Netmon.SNMPPolling.SNMP.Result;
 using NUnit.Framework;

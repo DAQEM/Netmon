@@ -7,19 +7,12 @@ using Netmon.SNMPPolling.SNMP.Result;
 
 namespace Netmon.SNMPPolling.SNMP.Poll.MIB.MIB;
 
-public class HostResourcesMIBPoller : IMIBPoller<HostResourcesMIB>
+public class HostResourcesMIBPoller(ISNMPManager snmpManager) : IMIBPoller<HostResourcesMIB>
 {
-    private readonly ISNMPManager _snmpManager;
-    
-    public HostResourcesMIBPoller(ISNMPManager snmpManager)
-    {
-        _snmpManager = snmpManager;
-    }
-    
     public async Task<HostResourcesMIB?> PollMIB(SNMPConnectionInfo connectionInfo)
     {
-        Task<ISNMPResult> hrStorageTask = _snmpManager.BulkWalkAsync(connectionInfo, HrStorage.OID, 3000);
-        Task<ISNMPResult> hrDeviceTask = _snmpManager.BulkWalkAsync(connectionInfo, HrDevice.OID, 3000);
+        Task<ISNMPResult> hrStorageTask = snmpManager.BulkWalkAsync(connectionInfo, HrStorage.OID, 3000);
+        Task<ISNMPResult> hrDeviceTask = snmpManager.BulkWalkAsync(connectionInfo, HrDevice.OID, 3000);
 
         await Task.WhenAll(hrStorageTask, hrDeviceTask);
 

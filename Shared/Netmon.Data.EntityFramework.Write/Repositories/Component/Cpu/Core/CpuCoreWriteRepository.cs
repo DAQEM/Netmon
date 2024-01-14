@@ -2,22 +2,14 @@
 using Netmon.Data.DBO.Component.Cpu.Core;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Write.Component.Cpu.Core;
-using Netmon.Models.Component.Cpu.Core;
 
 namespace Netmon.Data.Write.Repositories.Component.Cpu.Core;
 
-public class CpuCoreWriteRepository : ICpuCoreWriteRepository
+public class CpuCoreWriteRepository(
+    DevicesDatabase database,
+    ICpuCoreMetricsWriteRepository cpuCoreMetricsWriteRepository)
+    : ICpuCoreWriteRepository
 {
-    private readonly DevicesDatabase _database;
-    
-    private readonly ICpuCoreMetricsWriteRepository _cpuCoreMetricsWriteRepository;
-
-    public CpuCoreWriteRepository(DevicesDatabase database, ICpuCoreMetricsWriteRepository cpuCoreMetricsWriteRepository)
-    {
-        _database = database;
-        _cpuCoreMetricsWriteRepository = cpuCoreMetricsWriteRepository;
-    }
-
     public async Task AddOrUpdate(CpuCoreDBO cpuCore)
     {
         if (cpuCore == null)
@@ -25,24 +17,24 @@ public class CpuCoreWriteRepository : ICpuCoreWriteRepository
             throw new ArgumentNullException(nameof(cpuCore));
         }
         
-        CpuCoreDBO? existingCpuCore = await _database.CpuCores.FirstOrDefaultAsync(c => c.CpuId == cpuCore.CpuId && c.Index == cpuCore.Index);
+        CpuCoreDBO? existingCpuCore = await database.CpuCores.FirstOrDefaultAsync(c => c.CpuId == cpuCore.CpuId && c.Index == cpuCore.Index);
 
         if (existingCpuCore == null)
         {
             cpuCore.Id = Guid.NewGuid();
-            await _database.CpuCores.AddAsync(cpuCore);
+            await database.CpuCores.AddAsync(cpuCore);
         }
         else
         {
             cpuCore.Id = existingCpuCore.Id;
-            _database.Entry(existingCpuCore).CurrentValues.SetValues(cpuCore);
+            database.Entry(existingCpuCore).CurrentValues.SetValues(cpuCore);
             
             if (cpuCore.CpuCoreMetrics != null!)
             {
                 foreach (CpuCoreMetricsDBO cpuCoreMetrics in cpuCore.CpuCoreMetrics)
                 {
                     cpuCoreMetrics.CpuCoreId = cpuCore.Id;
-                    await _cpuCoreMetricsWriteRepository.Add(cpuCoreMetrics);
+                    await cpuCoreMetricsWriteRepository.Add(cpuCoreMetrics);
                 }
             }
         }
@@ -50,6 +42,6 @@ public class CpuCoreWriteRepository : ICpuCoreWriteRepository
 
     public async Task SaveChanges()
     {
-        await _database.SaveChangesAsync();
+        await database.SaveChangesAsync();
     }
 }

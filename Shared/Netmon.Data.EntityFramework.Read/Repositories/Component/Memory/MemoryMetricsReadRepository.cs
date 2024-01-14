@@ -2,36 +2,28 @@
 using Netmon.Data.DBO.Component.Memory;
 using Netmon.Data.EntityFramework.Database;
 using Netmon.Data.Repositories.Read.Component.Memory;
-using Netmon.Models.Component.Memory.Metric;
 
 namespace Netmon.Data.EntityFramework.Read.Repositories.Component.Memory;
 
-public class MemoryMetricsReadRepository : IMemoryMetricReadRepository
+public class MemoryMetricsReadRepository(DevicesDatabase database) : IMemoryMetricReadRepository
 {
-    private readonly DevicesDatabase _database;
-
-    public MemoryMetricsReadRepository(DevicesDatabase database)
-    {
-        _database = database;
-    }
-
     public async Task<List<MemoryMetricsDBO>> GetAll()
     {
-        return await _database.MemoryMetrics.ToListAsync();
+        return await database.MemoryMetrics.ToListAsync();
     }
 
     public async Task<MemoryMetricsDBO?> GetById(Guid id)
     {
-        return await _database.MemoryMetrics.FirstOrDefaultAsync(device => device.Id == id);
+        return await database.MemoryMetrics.FirstOrDefaultAsync(device => device.Id == id);
     }
     
     public async Task<List<MemoryMetricsDBO>> GetByComponentId(Guid componentId)
     {
-        return await _database.MemoryMetrics.Where(memory => memory.MemoryId == componentId).ToListAsync();
+        return await database.MemoryMetrics.Where(memory => memory.MemoryId == componentId).ToListAsync();
     }
 
     public async Task<List<MemoryMetricsDBO>> GetByComponentIds(List<Guid> componentIds)
     {
-        return await _database.MemoryMetrics.Where(memory => componentIds.Contains(memory.MemoryId)).ToListAsync();
+        return await database.MemoryMetrics.Where(memory => componentIds.Contains(memory.MemoryId)).ToListAsync();
     }
 }

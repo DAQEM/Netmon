@@ -1,8 +1,3 @@
 ﻿namespace Netmon.SNMPPolling.SNMP.Exception.SNMP;
 
-public abstract class SNMPBaseException : BaseException
-{
-    protected SNMPBaseException(string? message) : base(message)
-    {
-    }
-}
+public abstract class SNMPBaseException(string? message) : BaseException(message);

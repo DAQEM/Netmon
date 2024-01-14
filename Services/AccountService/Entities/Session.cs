@@ -2,28 +2,21 @@
 
 namespace AccountService.Entities;
 
-public class Session
+public class Session(Guid userId)
 {
-    public Session(Guid userId)
-    {
-        UserId = userId;
-        Token = GetRandomSessionToken();
-        ExpirationDate = DateTime.UtcNow.AddDays(7);
-    }
-
     [Key]
     public Guid Id { get; set; }
     
     [Required]
-    public Guid UserId { get; set; }
-    
+    public Guid UserId { get; set; } = userId;
+
     [Required]
     [MaxLength(64)]
-    public string Token { get; set; }
-    
+    public string Token { get; set; } = GetRandomSessionToken();
+
     [Required]
-    public DateTime ExpirationDate { get; set; }
-    
+    public DateTime ExpirationDate { get; set; } = DateTime.UtcNow.AddDays(7);
+
     public User? User { get; set; }
     
     private static readonly Random Random = new();

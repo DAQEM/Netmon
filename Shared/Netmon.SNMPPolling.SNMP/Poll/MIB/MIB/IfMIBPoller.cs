@@ -7,15 +7,8 @@ using Netmon.SNMPPolling.SNMP.Result;
 
 namespace Netmon.SNMPPolling.SNMP.Poll.MIB.MIB;
 
-public class IfMIBPoller : IMIBPoller<IfMIB>
+public class IfMIBPoller(ISNMPManager snmpManager) : IMIBPoller<IfMIB>
 {
-    private readonly ISNMPManager snmpManager;
-    
-    public IfMIBPoller(ISNMPManager snmpManager)
-    {
-        this.snmpManager = snmpManager;
-    }
-    
     public async Task<IfMIB?> PollMIB(SNMPConnectionInfo connectionInfo)
     {
         Task<ISNMPResult> ifTableTask = snmpManager.BulkWalkAsync(connectionInfo, IfTable.OID, 10000);

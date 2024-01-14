@@ -1,5 +1,4 @@
 ﻿using Netmon.Data.DBO.Device;
-using Netmon.Models.Device.Connection;
 
 namespace Netmon.Data.Repositories.Read.Device;
 

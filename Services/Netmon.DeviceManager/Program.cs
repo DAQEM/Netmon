@@ -4,7 +4,9 @@ using Hangfire;
 using Hangfire.Mongo;
 using Hangfire.Mongo.Migration.Strategies;
 using Hangfire.Mongo.Migration.Strategies.Backup;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using Netmon.Data.EntityFramework.Read.Repositories.Component.Cpu;
 using Netmon.Data.EntityFramework.Read.Repositories.Component.Cpu.Core;
@@ -55,6 +57,8 @@ using Netmon.Data.Write.Repositories.Component.Interface;
 using Netmon.Data.Write.Repositories.Component.Memory;
 using Netmon.Data.Write.Repositories.Device;
 using Netmon.DeviceManager.Jobs.Poll;
+using Swashbuckle.AspNetCore.Filters;
+using AuthorizationMiddleware = Netmon.DeviceManager.Middleware.AuthorizationMiddleware;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -65,9 +69,23 @@ builder.Services.AddDbContext<DevicesDatabase>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
+builder.Services.AddAuthentication().AddBearerToken();
+builder.Services.AddAuthorizationBuilder();
+builder.Services.AddHttpClient();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+    
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
 
 builder.Services.AddCors(options =>
 {
@@ -156,6 +174,8 @@ builder.Services.AddScoped<ICpuCoreReadService, CpuCoreReadService>();
 builder.Services.AddScoped<ICpuCoreMetricReadService, CpuCoreMetricsReadService>();
 
 builder.Services.AddScoped<IPollDeviceJob, PollDeviceJob>();
+
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationMiddleware>();
 
 WebApplication app = builder.Build();
 

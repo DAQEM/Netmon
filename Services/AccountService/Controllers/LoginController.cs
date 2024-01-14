@@ -7,20 +7,13 @@ namespace AccountService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class LoginController : ControllerBase
+public class LoginController(AccountDatabase database) : ControllerBase
 {
-    private readonly AccountDatabase _database;
-    
-    public LoginController(AccountDatabase database)
-    {
-        _database = database;
-    }
-    
     [HttpPost]
     public IActionResult Login(LoginModel model)
     {
         //check if email exists
-        User? user = _database.Accounts
+        User? user = database.Accounts
             .Where(u => u.Email == model.Email)
             .Select(u => new User
             {
@@ -52,8 +45,8 @@ public class LoginController : ControllerBase
         Session session = new(user.Id);
         
         //add session to database
-        _database.Sessions.Add(session);
-        _database.SaveChanges();
+        database.Sessions.Add(session);
+        database.SaveChanges();
 
         return new JsonResult(new SessionDetailsModel
         {

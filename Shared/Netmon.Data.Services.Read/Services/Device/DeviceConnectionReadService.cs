@@ -4,18 +4,12 @@ using Netmon.Models.Device.Connection;
 
 namespace Netmon.Data.Services.Read.Services.Device;
 
-public class DeviceConnectionReadService : IDeviceConnectionReadService
+public class DeviceConnectionReadService(IDeviceConnectionReadRepository deviceConnectionReadRepository)
+    : IDeviceConnectionReadService
 {
-    private readonly IDeviceConnectionReadRepository _deviceConnectionReadRepository;
-    
-    public DeviceConnectionReadService(IDeviceConnectionReadRepository deviceConnectionReadRepository)
-    {
-        _deviceConnectionReadRepository = deviceConnectionReadRepository;
-    }
-    
     public async Task<List<IDeviceConnection>> GetAll()
     {
-        return (await _deviceConnectionReadRepository.GetAll())
+        return (await deviceConnectionReadRepository.GetAll())
             .Select(x => x.ToDeviceConnection())
             .ToList();
     }
@@ -27,6 +21,6 @@ public class DeviceConnectionReadService : IDeviceConnectionReadService
 
     public async Task<IDeviceConnection?> GetByDeviceId(Guid id)
     {
-        return (await _deviceConnectionReadRepository.GetByDeviceId(id))?.ToDeviceConnection();
+        return (await deviceConnectionReadRepository.GetByDeviceId(id))?.ToDeviceConnection();
     }
 }

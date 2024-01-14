@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Netmon.DeviceManager.DTO.Device;
+﻿namespace Netmon.DeviceManager.DTO.Device;
 
 public class DeviceDTO
 {

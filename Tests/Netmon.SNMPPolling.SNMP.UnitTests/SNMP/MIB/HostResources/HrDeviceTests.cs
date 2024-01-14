@@ -1,6 +1,5 @@
 ﻿using Lextm.SharpSnmpLib;
 using Netmon.SNMPPolling.SNMP.MIB.HostResources.Device;
-using Netmon.SNMPPolling.SNMP.MIB.HostResources.Device.Device;
 using Netmon.SNMPPolling.SNMP.Result;
 using NUnit.Framework;
 

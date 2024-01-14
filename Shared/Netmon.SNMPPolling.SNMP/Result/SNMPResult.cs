@@ -2,15 +2,10 @@ using Lextm.SharpSnmpLib;
 
 namespace Netmon.SNMPPolling.SNMP.Result;
 
-public class SNMPResult : ISNMPResult
+public class SNMPResult(List<Variable> variables) : ISNMPResult
 {
-    public SNMPResult(List<Variable> variables)
-    {
-        Variables = variables;
-    }
+    public List<Variable> Variables { get; set; } = variables;
 
-    public List<Variable> Variables { get; set; }
-    
     public List<List<Variable>> GetEntries(string oid)
     {
         return Variables

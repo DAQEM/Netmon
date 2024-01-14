@@ -1,5 +1,4 @@
-﻿using Netmon.Data.Repositories.Read.Component.Cpu.Core;
-using Netmon.Data.Services.Read.Component.Cpu.Core;
+﻿using Netmon.Data.Services.Read.Component.Cpu.Core;
 using Netmon.Models.Component.Cpu.Core.Metric;
 
 namespace Netmon.Data.Services.Read.Services.Component.Cpu.Core;

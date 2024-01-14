@@ -8,12 +8,8 @@ using Netmon.Data.DBO.Device;
 
 namespace Netmon.Data.EntityFramework.Database;
 
-public class DevicesDatabase : DbContext
+public class DevicesDatabase(DbContextOptions<DevicesDatabase> options) : DbContext(options)
 {
-    public DevicesDatabase(DbContextOptions options) : base(options)
-    {
-    }
-    
     public DbSet<DeviceDBO> Devices { get; set; }
     public DbSet<DeviceConnectionDBO> DeviceConnections { get; set; }
     
