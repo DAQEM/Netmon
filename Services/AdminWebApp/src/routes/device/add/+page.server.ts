@@ -1,4 +1,5 @@
 import deviceApi from '$lib/api/device_api';
+import urlHandler from '$lib/api/url_handler';
 import type { Device } from '$lib/types/device_types';
 import type { Actions } from './$types';
 
@@ -53,7 +54,8 @@ export const actions = {
 			if ('ipAddress' in result) {
 				return {
 					success: true,
-					device: result
+					device: result,
+					deviceUrl: urlHandler.getUserWebAppUrl('/device/' + result.id)
 				};
 			}
 		}

@@ -8,9 +8,9 @@
 	import Heading1 from '$lib/components/heading/Heading1.svelte';
 
 	export let data: PageData;
+	let search: string = data.value || '';
 
 	const devices: Device[] = data.devices;
-	let search: string = '';
 </script>
 
 <Heading1>Devices</Heading1>

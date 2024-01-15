@@ -2,14 +2,14 @@ import DiskStatisticsAPI from '$lib/api/disk_statistics_api';
 import type { DiskStatisticsList } from '$lib/types';
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ params: { id }, url: { searchParams } }) => {
+export const load: PageServerLoad = (async ({ params: { id }, url: { searchParams }, locals }) => {
 	const from: string | null = searchParams.get('from')?.replaceAll('%3A', ':') ?? null;
 	const to: string | null = searchParams.get('to')?.replaceAll('%3A', ':') ?? null;
 
 	const fromDate = from ? new Date(from) : new Date(new Date().setDate(new Date().getDate() - 1));
 	const toDate = to ? new Date(to) : new Date();
 
-	const statisticsList: DiskStatisticsList = await new DiskStatisticsAPI(fetch).getStatistics(
+	const statisticsList: DiskStatisticsList = await new DiskStatisticsAPI(fetch, locals.token).getStatistics(
 		id,
 		fromDate,
 		toDate
@@ -28,4 +28,4 @@ export const load = (async ({ params: { id }, url: { searchParams } }) => {
 	return {
 		statistics: structuredClone(statisticsList)
 	};
-}) satisfies PageServerLoad;
+});

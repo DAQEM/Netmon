@@ -11,6 +11,8 @@
 
 	const devices: Device[] = data.props.devices;
 	const users: User[] = data.props.users;
+
+	const baseUrl: string = data.props.baseUrl;
 </script>
 
 <div class="flex justify-center">
@@ -18,7 +20,7 @@
 		<h1 class="text-2xl font-bold mb-5">Dashboard</h1>
 		<div class="w-full grid grid-cols-5 grid-rows-[max-content,max-content,max-content] gap-8">
 			<div class="col-span-3 row-span-2">
-				<DevicesTable {devices} id="device-table">
+				<DevicesTable {devices} id="device-table" {baseUrl} >
 					{#if devices.length > 0}
 						<TableBodyRow>
 							<TableBodyCell colspan="5">

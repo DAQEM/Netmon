@@ -8,6 +8,7 @@
 	export let data: PageData;
 
 	let devices: Device[] = data.props.devices;
+	const baseUrl: string = data.props.baseUrl;
 
 	let value: string = '';
 
@@ -59,6 +60,6 @@
 				</Button>
 			</div>
 		</div>
-		<DevicesTable {devices} id={''} showButtons />
+		<DevicesTable {devices} id={''} showButtons {baseUrl} />
 	</div>
 </div>

@@ -13,7 +13,12 @@
 	export let search: string = '';
 
 	$: filteredDevices = devices.filter((device) =>
-		Object.values(device).some((value) => value.includes(search))
+		Object.values(device).some((value) => {
+			if (value) {
+				return value.includes(search)
+			}
+			return false;
+		})
 	);
 </script>
 
@@ -33,7 +38,7 @@
 							</div>
 							<div class="text-xs">
 								{device.location}
-							</div>
+							</div> 
 						</div>
 					</a>
 				</TableBodyCell>

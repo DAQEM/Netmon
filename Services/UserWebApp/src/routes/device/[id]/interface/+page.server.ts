@@ -2,14 +2,14 @@ import InterfaceStatisticsAPI from '$lib/api/interface_statistics_api';
 import type { InterfaceStatisticsList } from '$lib/types';
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ fetch, params: { id }, url: { searchParams } }) => {
+export const load = (async ({ fetch, params: { id }, url: { searchParams }, locals }) => {
 	const from: string | null = searchParams.get('from')?.replaceAll('%3A', ':') ?? null;
 	const to: string | null = searchParams.get('to')?.replaceAll('%3A', ':') ?? null;
 
 	const fromDate = from ? new Date(from) : new Date(new Date().setDate(new Date().getDate() - 1));
 	const toDate = to ? new Date(to) : new Date();
 
-	const statisticsList: InterfaceStatisticsList = await new InterfaceStatisticsAPI(fetch).getInOut(
+	const statisticsList: InterfaceStatisticsList = await new InterfaceStatisticsAPI(fetch, locals.token).getInOut(
 		id,
 		fromDate,
 		toDate

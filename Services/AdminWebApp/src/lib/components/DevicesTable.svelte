@@ -1,5 +1,4 @@
 <script lang="ts">
-	import urlHandler from '$lib/api/url_handler';
 	import type { Device } from '$lib/types/device_types';
 	import {
 		Button,
@@ -14,9 +13,8 @@
 	export let devices: Device[];
 	export let id: string;
 	export let showButtons: boolean = false;
-
-	const deviceUrl: (device: Device) => string = (device: Device) =>
-		urlHandler.getUserWebAppUrl(`/device/${device.id}`) || '';
+	export let baseUrl: string;
+	const deviceUrl: (device: Device) => string = (device: Device) => `${baseUrl}/device/${device.id}`;
 </script>
 
 <Table noborder={true} class="rounded-xl overflow-hidden" {id}>

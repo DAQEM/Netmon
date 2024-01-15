@@ -9,6 +9,7 @@
 	export let form: ActionData;
 
 	const device: Device | undefined = form?.device;
+	const deviceUrl: string = form?.deviceUrl || '';
 </script>
 
 <div class="flex flex-col items-center mt-12">
@@ -21,7 +22,7 @@
 		>
 			<CheckCircleSolid slot="icon" class="w-5 h-5" />
 			<p id="success-message">Device added successfully.</p>
-			<Button href="/device/{form?.device?.id}" color="green" class="ml-auto">View device</Button>
+			<Button href={deviceUrl} color="green" class="ml-auto">View device</Button>
 		</Toast>
 	{/if}
 	<div class="max-w-3xl w-full p-8 bg-white rounded-xl">

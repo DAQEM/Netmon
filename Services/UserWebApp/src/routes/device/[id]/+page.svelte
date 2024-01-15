@@ -1,11 +1,7 @@
 <script lang="ts">
 	import Heading1 from '$lib/components/heading/Heading1.svelte';
-	import CpuStatistics from '$lib/components/statistics/CpuStatistics.svelte';
-	import InterfaceStatistics from '$lib/components/statistics/InterfaceStatistics.svelte';
-	import MemoryStatistics from '$lib/components/statistics/MemoryStatistics.svelte';
-	import DiskStatistics from '$lib/components/statistics/DiskStatistics.svelte';
 	import type { Device } from '$lib/types';
-	import { Accordion, AccordionItem, DropdownDivider } from 'flowbite-svelte';
+	import { DropdownDivider } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -22,4 +18,10 @@
 			/>
 		</div>
 	</Heading1>
+
+	<p>
+		Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa, veritatis dignissimos. Sed sint
+		quia quae veritatis magni, harum numquam voluptas explicabo, mollitia amet pariatur est.
+		Repudiandae placeat maxime dolor sequi aliquid, voluptatibus corporis culpa est.
+	</p>
 </div>
