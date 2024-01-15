@@ -17,6 +17,9 @@ public class DiscoverIntegrationTests : IClassFixture<WebApplicationFactory<Devi
     public DiscoverIntegrationTests(WebApplicationFactory<DeviceManagerProgram> factory)
     {
         _factory = factory;
+        const string userName = "testuser";
+        const string fullName = "Test User";
+        const string profileImageName = "testuser.jpg";
         const string email = "test@test.com";
         const string password = "P@ssw0rd!";
 
@@ -25,9 +28,9 @@ public class DiscoverIntegrationTests : IClassFixture<WebApplicationFactory<Devi
         try
         {
             HttpResponseMessage registerResponse =
-                client.PostAsJsonAsync("http://localhost:5001/register", new { email, password }).Result;
+                client.PostAsJsonAsync("http://localhost:5001/myregister", new { userName, fullName, profileImageName, email, password }).Result;
             HttpResponseMessage loginResponse =
-                client.PostAsJsonAsync("http://localhost:5001/login", new { email, password }).Result;
+                client.PostAsJsonAsync("http://localhost:5001/login", new { email = userName, password }).Result;
             loginResponse.EnsureSuccessStatusCode();
             JsonElement jsonElement = loginResponse.Content.ReadFromJsonAsync<JsonElement>().Result;
             _token = jsonElement.GetProperty("accessToken").GetString() ?? string.Empty;
