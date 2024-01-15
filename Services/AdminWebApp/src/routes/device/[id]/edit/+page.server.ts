@@ -1,10 +1,17 @@
 import deviceApi from '$lib/api/device_api';
-import { Error } from '$lib/types/error';
+import type { Device } from '$lib/types/device_types';
+import type { Error } from '$lib/types/error';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from '../$types';
 import type { Actions } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
-	const device = await deviceApi.getDeviceWithConnection(params.id);
+export const load: PageServerLoad = async ({ params, locals }) => {
+	const device : Device | Error = await deviceApi.getDeviceWithConnection(locals.token, params.id);
+
+	if ('code' in device) {
+		throw error(device.code, device.message);
+	}
+
 	return {
 		device
 	};
@@ -44,7 +51,7 @@ export const actions = {
 			const community =
 				version === 2 ? (data.get('community') as string) : (data.get('username') as string);
 
-			const result = await deviceApi.editDevice(data.get('id') as string, {
+			const result = await deviceApi.editDevice(event.locals.token, data.get('id') as string, {
 				ipAddress: data.get('ip_address') as string,
 				connection: {
 					port: Number.parseInt(data.get('port') as string),
@@ -58,7 +65,7 @@ export const actions = {
 				}
 			});
 
-			if (result instanceof Error) {
+			if ('code' in result) {
 				errors['device'] = result.message;
 			} else {
 				return {

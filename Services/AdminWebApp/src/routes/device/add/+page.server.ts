@@ -36,7 +36,7 @@ export const actions = {
 			const community =
 				version === 2 ? (data.get('community') as string) : (data.get('username') as string);
 
-			const result = await deviceApi.addDevice({
+			const result = await deviceApi.addDevice(event.locals.token, {
 				ipAddress: data.get('ip_address') as string,
 				connection: {
 					port: Number.parseInt(data.get('port') as string),

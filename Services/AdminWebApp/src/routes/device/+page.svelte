@@ -9,18 +9,14 @@
 
 	let devices: Device[] = data.props.devices;
 
-	let searchValue: string = '';
-
-	function search(e: Event) {
-		searchValue = (e.target as HTMLInputElement).value;
-	}
+	let value: string = '';
 
 	$: devices = data.props.devices.filter((device: Device) => {
 		return (
-			device.name?.toLowerCase().includes(searchValue.toLowerCase()) ||
-			device.ipAddress?.toLowerCase().includes(searchValue.toLowerCase()) ||
-			device.location?.toLowerCase().includes(searchValue.toLowerCase()) ||
-			device.contact?.toLowerCase().includes(searchValue.toLowerCase())
+			device.name?.toLowerCase().includes(value.toLowerCase()) ||
+			device.ipAddress?.toLowerCase().includes(value.toLowerCase()) ||
+			device.location?.toLowerCase().includes(value.toLowerCase()) ||
+			device.contact?.toLowerCase().includes(value.toLowerCase())
 		);
 	});
 </script>
@@ -34,7 +30,7 @@
 					<div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
 						<SearchOutline class="w-4 h-4" />
 					</div>
-					<Input class="px-10" placeholder="Search..." on:input={(e) => search(e)} />
+					<Input class="px-10" placeholder="Search..." bind:value />
 					<Popover
 						class="w-72 text-sm font-light z-50"
 						title="Search Parameters"
@@ -63,6 +59,6 @@
 				</Button>
 			</div>
 		</div>
-		<DevicesTable {devices} id={''} />
+		<DevicesTable {devices} id={''} showButtons />
 	</div>
 </div>

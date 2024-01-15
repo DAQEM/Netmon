@@ -203,6 +203,9 @@ app.UseHangfireDashboard(builder.Configuration["Hangfire:Endpoint"], new Dashboa
 
 app.MapControllers();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 using (IServiceScope scope = app.Services.CreateScope())
 {
     DevicesDatabase database = scope.ServiceProvider.GetRequiredService<DevicesDatabase>();

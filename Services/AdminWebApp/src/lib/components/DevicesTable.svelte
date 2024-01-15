@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Map from '$lib/components/Map.svelte';
+	import urlHandler from '$lib/api/url_handler';
 	import type { Device } from '$lib/types/device_types';
 	import {
 		Button,
@@ -10,32 +10,30 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import { slide } from 'svelte/transition';
 
 	export let devices: Device[];
 	export let id: string;
+	export let showButtons: boolean = false;
 
-	let openRow: number | null = null;
-	let details: Device | null = null;
-
-	const toggleRow = (i: number) => {
-		openRow = openRow === i ? null : i;
-	};
+	const deviceUrl: (device: Device) => string = (device: Device) =>
+		urlHandler.getUserWebAppUrl(`/device/${device.id}`) || '';
 </script>
 
-<Table noborder={true} hoverable={true} class="rounded-xl overflow-hidden" {id}>
+<Table noborder={true} class="rounded-xl overflow-hidden" {id}>
 	<TableHead class="bg-primary-700 text-white">
 		<TableHeadCell>
 			<span class="sr-only">Image</span>
 		</TableHeadCell>
 		<TableHeadCell>Name</TableHeadCell>
 		<TableHeadCell>IP Address</TableHeadCell>
-		<TableHeadCell>
-			<span class="sr-only">Edit</span>
-		</TableHeadCell>
-		<TableHeadCell>
-			<span class="sr-only">View</span>
-		</TableHeadCell>
+		{#if showButtons}
+			<TableHeadCell>
+				<span class="sr-only">Edit</span>
+			</TableHeadCell>
+			<TableHeadCell>
+				<span class="sr-only">View</span>
+			</TableHeadCell>
+		{/if}
 	</TableHead>
 	<TableBody tableBodyClass="divide-y">
 		{#if devices.length === 0}
@@ -43,64 +41,30 @@
 				<TableBodyCell colspan="5" class="text-center">No devices found</TableBodyCell>
 			</TableBodyRow>
 		{/if}
-		{#each devices as device, i}
-			<TableBodyRow
-				on:click={() => toggleRow(i)}
-				class="cursor-pointer"
-				id={`device-${device.ipAddress?.replace(/\./g, '-')}`}
-			>
+		{#each devices as device}
+			<TableBodyRow id={`device-${device.ipAddress?.replace(/\./g, '-')}`}>
 				<TableBodyCell>
-					<img
-						src={'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/UbuntuCoF.svg/768px-UbuntuCoF.svg.png'}
-						alt={device.name}
-						class="w-8 h-8 rounded-full"
-					/>
-				</TableBodyCell>
-				<TableBodyCell>{device.name}</TableBodyCell>
-				<TableBodyCell>{device.ipAddress}</TableBodyCell>
-				<TableBodyCell>
-					<Button color="none" class="text-primary-700" href="/device/{device.id}/edit">Edit</Button
-					>
+					<a href={deviceUrl(device)}>
+						<img
+							src={'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/UbuntuCoF.svg/768px-UbuntuCoF.svg.png'}
+							alt={device.name}
+							class="w-8 h-8 rounded-full"
+						/>
+					</a>
 				</TableBodyCell>
 				<TableBodyCell>
-					<Button color="none" class="text-primary-700" href="/device/{device.id}">View</Button>
-				</TableBodyCell>
-			</TableBodyRow>
-			{#if openRow === i}
-				<TableBodyRow on:dblclick={() => (details = device)}>
-					<TableBodyCell colspan="5" class="p-0">
-						<div class="px-2 py-3" transition:slide={{ duration: 300, axis: 'y' }}>
-							<div class="flex gap-4">
-								<div class="h-64 w-64 rounded-2xl overflow-hidden">
-									<Map height={256} width={256} latitude={52.0} longitude={5.0} />
-								</div>
-								<div class="flex items-center">
-									<div class="flex gap-16">
-										<div class="flex flex-col gap-4">
-											<div>
-												<h2 class="text-xs font-bold">Name</h2>
-												<h3>{device.name}</h3>
-											</div>
-											<div>
-												<h2 class="text-xs font-bold">IP Address</h2>
-												<h3>{device.ipAddress}</h3>
-											</div>
-											<div>
-												<h2 class="text-xs font-bold">Location</h2>
-												<h3>{device.location}</h3>
-											</div>
-											<div>
-												<h2 class="text-xs font-bold">Contact</h2>
-												<h3>{device.contact}</h3>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+					<a href={deviceUrl(device)}>{device.name}</a></TableBodyCell
+				>
+				<TableBodyCell><a href={deviceUrl(device)}>{device.ipAddress}</a></TableBodyCell>
+				{#if showButtons}
+					<TableBodyCell tdClass="max-w-[8rem] w-[8rem]">
+						<Button color="blue" href="/device/{device.id}/edit">Edit</Button>
 					</TableBodyCell>
-				</TableBodyRow>
-			{/if}
+					<TableBodyCell tdClass="max-w-[8rem] w-[8rem]">
+						<Button color="red" href="/device/{device.id}/delete">Delete</Button>
+					</TableBodyCell>
+				{/if}
+			</TableBodyRow>
 		{/each}
 		<slot />
 	</TableBody>

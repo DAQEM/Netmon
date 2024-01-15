@@ -5,8 +5,8 @@ namespace Netmon.AccountService;
 public class User : IdentityUser<int>
 {
     [PersonalData]
-    public string? FullName { get; set; }
+    public string FullName { get; set; }
 
     [PersonalData]
-    public string? ProfileImageName { get; set; }
+    public string ProfileImageName { get; set; }
 }

@@ -1,15 +1,15 @@
-import type { User } from '@auth/core/types';
+import type { User } from '$lib/types/account_types';
+import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async () => {
-	const user: User = {
-		id: '1',
-		name: 'John Doe',
-		email: 'johndoe@gmail.com',
-		image: 'https://i.pravatar.cc/100'
-	};
+export const load: LayoutServerLoad = async ({ locals, url }) => {
+	if (locals.user) {
+		return {
+			user: locals.user as User
+		};
+	}
 
-	return {
-		user
-	};
+	if (url.pathname !== '/login') {
+		throw redirect(302, '/login');
+	}
 };

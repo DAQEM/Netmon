@@ -1,16 +1,16 @@
 <script lang="ts">
 	import DevicesTable from '$lib/components/DevicesTable.svelte';
 	import UserTable from '$lib/components/UserTable.svelte';
-	import type { User } from '@auth/core/types';
+	import type { User } from '$lib/types/account_types';
+	import type { Device } from '$lib/types/device_types';
 	import { Button, TableBodyCell, TableBodyRow } from 'flowbite-svelte';
 	import { ArrowRightSolid } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
-	import type { Device } from '$lib/types/device_types';
 
 	export let data: PageData;
 
 	const devices: Device[] = data.props.devices;
-	const user: User = data.user;
+	const users: User[] = data.props.users;
 </script>
 
 <div class="flex justify-center">
@@ -33,8 +33,8 @@
 					{/if}
 				</DevicesTable>
 			</div>
-			<div class="col-span-2 row-span-3">
-				<UserTable users={[user, user, user, user, user]} id="user-table">
+			<div class="col-span-2 row-span-2">
+				<UserTable {users} id="user-table">
 					<TableBodyRow>
 						<TableBodyCell colspan="4">
 							<div class="flex justify-end">
@@ -47,7 +47,7 @@
 					</TableBodyRow>
 				</UserTable>
 			</div>
-			<div class="col-span-3 row-span-1">
+			<div class="col-span-2 row-span-1">
 				<div class="bg-white h-full text-white rounded-xl overflow-hidden">
 					<div class="bg-primary-700 px-6 py-3">
 						<h1 class="text-xs font-bold uppercase">Statistics</h1>
@@ -58,16 +58,8 @@
 							<h2 class="text-xs font-bold">Devices</h2>
 						</div>
 						<div class="text-center px-6 py-2 border-r-2 border-gray-100">
-							<h1 class="text-2xl font-bold">5</h1>
+							<h1 class="text-2xl font-bold">{users.length}</h1>
 							<h2 class="text-xs font-bold">Users</h2>
-						</div>
-						<div class="text-center px-6 py-2 border-r-2 border-gray-100">
-							<h1 class="text-2xl font-bold">3442</h1>
-							<h2 class="text-xs font-bold">Metrics</h2>
-						</div>
-						<div class="text-center px-6 py-2">
-							<h1 class="text-2xl font-bold">3213</h1>
-							<h2 class="text-xs font-bold">Something</h2>
 						</div>
 					</div>
 				</div>

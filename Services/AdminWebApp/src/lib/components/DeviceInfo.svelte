@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Device } from '$lib/types/device_types';
+
 	export let device: Device;
 </script>
 
@@ -20,7 +22,7 @@
 				</div>
 				<div>
 					<h2 class="text-sm font-bold">IP Address</h2>
-					<p>{device.ip_address}</p>
+					<p>{device.ipAddress}</p>
 				</div>
 			</div>
 			<div class="grid gap-2">

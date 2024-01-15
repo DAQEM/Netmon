@@ -8,10 +8,11 @@ export class Error {
         this.message = message;
     }
 
-    static fromResponse(res: Response): Promise<Error> {
-        return res.json().then((data) => {
-            return new Error(res.status, data.message);
-        });
+    static async fromResponse(res: Response): Promise<Error> {
+        if (res.status === 500) return Promise.resolve(Error.unknown());
+        else if (res.status === 401) return Promise.resolve(new Error(401, 'Unauthorized'));
+        const data = await res.json();
+        return new Error(res.status, data.message);
     }
 
     static unknown(): Error {

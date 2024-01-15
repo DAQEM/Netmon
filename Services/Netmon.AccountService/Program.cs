@@ -1,9 +1,9 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Netmon.AccountService;
+using Netmon.AccountService.Extensions;
 using Swashbuckle.AspNetCore.Filters;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -59,22 +59,8 @@ app.UsePathBase(new PathString("/api"));
 
 app.UseCors("CorsPolicy");
 
-app.MapGet("/authenticate", IResult (HttpContext context) =>
-{
-    if (context.User.Identity is not {IsAuthenticated: true})
-    {
-        return Results.Unauthorized();
-    }
-    return Results.Ok(new
-    {
-        context.User.Identity.IsAuthenticated,
-        Id = context.User.FindFirstValue(ClaimTypes.NameIdentifier),
-        context.User.Identity.Name,
-        Email = context.User.FindFirstValue(ClaimTypes.Email),
-    });
-}).RequireAuthorization();
-
 app.MapIdentityApi<User>();
+app.MapMyIdentityApi();
 
 app.UseAuthentication();
 app.UseAuthorization();
