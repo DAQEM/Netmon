@@ -107,6 +107,9 @@
 			},
 			toolbar: {
 				show: true
+			},
+			animations: {
+				enabled: false
 			}
 		},
 		tooltip: {

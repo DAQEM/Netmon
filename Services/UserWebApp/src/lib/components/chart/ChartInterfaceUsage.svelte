@@ -115,6 +115,9 @@
 				stacked: true,
 				toolbar: {
 					show: true
+				},
+				animations: {
+					enabled: false
 				}
 			},
 			plotOptions: {

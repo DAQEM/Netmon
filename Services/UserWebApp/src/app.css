@@ -42,6 +42,10 @@ img.full-width {
 	object-fit: cover;
 }
 
+.full-width > .breakout {
+	grid-column: breakout;
+}
+
 .apexcharts-legend-text {
 	@apply dark:!text-neutral-200 !text-neutral-800;
 }

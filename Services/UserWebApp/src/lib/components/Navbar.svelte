@@ -51,7 +51,7 @@
 			<DropdownItem href="/logout">Sign out</DropdownItem>
 		</Dropdown>
 		<NavUl>
-			<NavLi href="/device">Devices</NavLi>
+			<NavLi href="/device" class="text-lg">Devices</NavLi>
 		</NavUl>
 	{:else}
 		<Button href="/login">Login</Button>
