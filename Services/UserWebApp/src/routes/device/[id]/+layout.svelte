@@ -11,8 +11,12 @@
 </script>
 
 <div class="breakout">
-	<div class="breakout col-span-5 grid grid-cols-[max-content,1fr] gap-8">
-		<DeviceSidebar {device} {activeUrl} />
+	<div class="col-span-5 grid grid-cols-[max-content,1fr] gap-8 h-full">
+		<div>
+			<div class="sticky top-10">
+				<DeviceSidebar {device} {activeUrl} />
+			</div>
+		</div>
 		<div class="breakout p-8 bg-white dark:bg-gray-800 rounded-xl h-max">
 			<slot />
 		</div>
