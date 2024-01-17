@@ -40,7 +40,7 @@
 				btnClass="mr-8"
 				class="bg-primary-500 dark:bg-primary-600 w-10 h-10 rounded-xl text-white flex justify-center items-center"
 			/>
-			<Avatar id="avatar-menu" src={user.profileImageName ?? ''} />
+			<Avatar id="avatar-menu" src={user.profileImageName ?? ''} class="cursor-pointer" />
 			<NavHamburger class1="w-full md:flex md:w-auto md:order-1" />
 		</div>
 		<Dropdown placement="bottom" triggeredBy="#avatar-menu">
